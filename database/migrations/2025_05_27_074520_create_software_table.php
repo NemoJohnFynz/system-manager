@@ -9,17 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-public function up(): void
+    public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('software', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 100)->unique();
-            $table->string('password', 500);
-            $table->string('fullName', 100);
-            $table->string('email', 100)->unique();
-            $table->string('phone_number', 12)->nullable();
-            $table->boolean('hidden')->default(false);
+            $table->string('hardware_id', 7);
+            $table->string('softwareName', 100);
+            $table->string('language', 15);
+            $table->string('version', 100);
+            $table->string('owner', 7);
             $table->boolean('is_delete')->default(false);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ public function up(): void
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('software');
     }
 };

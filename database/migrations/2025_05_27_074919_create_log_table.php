@@ -9,16 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-public function up(): void
+    public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('log', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 100)->unique();
-            $table->string('password', 500);
-            $table->string('fullName', 100);
-            $table->string('email', 100)->unique();
-            $table->string('phone_number', 12)->nullable();
-            $table->boolean('hidden')->default(false);
+            $table->string('username', 100);
+            $table->string('software_id', length: 7);
+            $table->text('hardware_ip');
+            $table->text('message');
             $table->boolean('is_delete')->default(false);
             $table->timestamps();
         });
@@ -29,6 +27,6 @@ public function up(): void
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('log');
     }
 };
