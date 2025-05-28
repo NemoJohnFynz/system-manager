@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\TryCatch;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
@@ -41,13 +42,13 @@ class AuthController extends Controller
 
 public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Invalid credentials',
+                    'message' => 'username or password is incorrect',
                 ], 401);
             }
         } catch (JWTException $e) {
@@ -88,6 +89,71 @@ public function login(Request $request)
         }
 
         return response()->json(compact('user'));
+    }
+
+public function updateUser(Request $request)
+    {
+        try {
+
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User not found.'
+                ], 404);
+            }
+        } catch (TokenExpiredException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token has expired.'
+            ], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid.'
+            ], 401);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is absent or could not be parsed.'
+            ], 401);
+        } catch (\Exception $e) { 
+             return response()->json([
+                'status' => 'error',
+                'message' => 'Could not authenticate user. ' . $e->getMessage()
+            ], 500);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'fullName' => 'sometimes|string|max:100',
+            'email' => 'sometimes|string|email|max:100|unique:users,email,' . $user->id,
+            'phone_number' => 'sometimes|nullable|string|max:12',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $validatedData = $validator->validated();
+
+        try {
+            $user->update($validatedData);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to update user. ' . $e->getMessage(),
+            ], 500); // Internal Server Error
+        }
+
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User updated successfully.',
+            'users' => $user->fresh(),
+        ]);
     }
 
 }
