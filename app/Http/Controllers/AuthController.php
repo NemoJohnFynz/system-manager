@@ -156,4 +156,38 @@ public function updateUser(Request $request)
         ]);
     }
 
+    public function changePassword(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (TokenExpiredException $e) {
+            return response()->json(['token_expired'], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json(['token_invalid'], 401);
+        } catch (JWTException $e) {
+            return response()->json(['token_absent'], 401);
+        }
+
+        $validatedData = $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8|',
+        ]);
+
+        if (!Hash::check($validatedData['current_password'], $user->password)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Current password is incorrect.',
+            ], 400);
+        }
+        $user->password = Hash::make($validatedData['new_password']);
+        $user->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Password changed successfully.',
+        ]);
+
+    }
+
 }
