@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('hardware', function (Blueprint $table) {
+            $table->id();
+            $table->string('ip', 25) ->unique();
+            $table->unsignedBigInteger('domain_id');
+            $table->string('dbname',100);
+            $table->string('dbversion', 100);
+            $table->boolean('server');
+            $table->string('hdd', 50);
+            $table->string('ram', 50);
+            $table->boolean('is_delete')->default(false);
+            $table->text('services');
+            $table->foreign('domain_id')->references('id')->on('domain')->onDelete('cascade');
+            
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('hardware');
+    }
+};
