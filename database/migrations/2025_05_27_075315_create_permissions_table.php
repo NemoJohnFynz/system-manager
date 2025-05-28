@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_creately');
             $table->string('permissions_name', 150);
-            $table->boolean('type');
+            $table->string('type',100);
             $table->foreign('user_creately')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

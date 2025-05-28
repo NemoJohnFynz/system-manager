@@ -17,7 +17,7 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function CreateUser(Request $request)
     {
         $request->validate([
             'username' => 'required|string|max:255|unique:users',
@@ -34,7 +34,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
-            'token' => $token,
+            // 'token' => $token, hông cần token vì đây là tạo tk từ admin
             'user' => $user,
         ], 201);
     }
@@ -189,5 +189,6 @@ public function updateUser(Request $request)
         ]);
 
     }
+    
 
 }
