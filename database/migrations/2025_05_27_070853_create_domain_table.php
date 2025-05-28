@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('domain', function (Blueprint $table) {
             $table->id();
-            $table->string('software_id', 7);
+            $table->unsignedBigInteger('software_id');
             $table->text('name');
             $table->string('link', 200);
+            $table->foreign('software_id')->references('id')->on('software')->onDelete('cascade');
             $table->timestamps();
         });
     }
