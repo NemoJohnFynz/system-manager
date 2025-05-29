@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->string('user_creately',100);
-            $table->string('permissions_name', 150)->primary();
-            $table->string('type',100);
-            $table->foreign('user_creately')->references('username')->on('users')->onDelete('cascade');
+        Schema::create('software_rule', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('software_id');
+            $table->dateTime('assigned_at')->useCurrent();
+            $table->foreign('software_id')->references('id')->on('software')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +25,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('software_rule');
     }
 };
+
+
+//hardware ip đổi thành sofware
