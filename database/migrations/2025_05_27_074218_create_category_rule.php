@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('category_rule', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_creately');
-            $table->string('permissions_name', 150);
-            $table->string('type',100);
-            $table->foreign('user_creately')->references('id')->on('users')->onDelete('cascade');
+            $table->string('name');
+            $table->string('description', 200)->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('category_rule');
     }
 };

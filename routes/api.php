@@ -1,15 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
-Route::get('/users',  function () {
-    return response()->json([
-        'users' => [
-            ['id' => 1, 'name' => 'Alice'],
-            ['id' => 2, 'name' => 'Bob'],
-        ]
-    ]);
-}); 
-// Route::get('/users', function () {
-//     return response()->json(['name' => 'Alice']);
-// });
+require __DIR__.'/Auth.routes.php';
+require __DIR__.'/Permission.routes.php';

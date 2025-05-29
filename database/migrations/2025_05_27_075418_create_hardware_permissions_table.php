@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('hardware_permissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('hardware_id');
+            $table->string('hardware_ip',25);
             $table->unsignedBigInteger('permissions_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger(('created_by'));
             $table->timestamp('assigned_at');
-            $table->foreign('hardware_id')->references('id')->on('hardware')->onDelete('cascade');
+            $table->foreign('hardware_ip')->references('ip')->on('hardware')->onDelete('cascade');
             $table->foreign('permissions_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

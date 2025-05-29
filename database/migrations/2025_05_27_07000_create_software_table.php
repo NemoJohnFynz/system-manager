@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('software', function (Blueprint $table) {
             $table->id();
-            $table->string('hardware_id', 7);
             $table->string('softwareName', 100);
             $table->string('language', 15);
             $table->string('version', 100);

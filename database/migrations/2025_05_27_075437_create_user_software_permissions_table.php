@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('software_id')->references('id')->on('software')->onDelete('cascade');
             $table->timestamps();
         });
-    }
+    }  
 
     /**
      * Reverse the migrations.

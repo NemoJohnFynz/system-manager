@@ -15,13 +15,24 @@ public function up(): void
             $table->id();
             $table->string('username', 100)->unique();
             $table->string('password', 500);
-            $table->string('fullName', 100);
-            $table->string('email', 100)->unique();
+            $table->string('fullName', 100)->nullable();
+            $table->string('email', 100) ->nullable() ->unique();
             $table->string('phone_number', 12)->nullable();
             $table->boolean('hidden')->default(false);
             $table->boolean('is_delete')->default(false);
             $table->timestamps();
         });
+
+        
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
+
     }
 
     /**
@@ -30,5 +41,6 @@ public function up(): void
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('sessions');
     }
 };

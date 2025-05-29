@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('hardware_rule', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_creately');
-            $table->string('permissions_name', 150);
-            $table->string('type',100);
-            $table->foreign('user_creately')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('original_rule');
+            $table->string('hardware_ip', 25);
+            $table->dateTime('assigned_at')->useCurrent();
+            $table->foreign('hardware_ip')->references('ip')->on('hardware')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('hardware_rule');
     }
 };
