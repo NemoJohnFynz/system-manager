@@ -1,9 +1,3 @@
-@extends('layouts.app')
-
-@section('title', 'Trang Đăng Nhập')
-
-@section('content')
-
 <div class="login-container">
     <div class="login-logo">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo">
@@ -34,26 +28,37 @@
         <button type="submit" class="login-btn">Đăng Nhập</button>
     </form>
     <div id="error"></div>
-    <?php
-
-    ?>
+</div>
+<div class="bg-login">
 </div>
 <style>
     .login-container {
         max-width: 400px;
-        margin: 40px auto;
+        margin: 40px auto; 
         padding: 32px 28px 24px 28px;
         border-radius: 16px;
-        background: #fff;
+        background-color: lavender;
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
         animation: fadeIn 1s;
         position: relative;
     }
 
+    .bg-login {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url('https://socanth.tu.ac.th/ccscs/wp-content/uploads/2016/06/bg.jpg') no-repeat center center;
+        background-size: cover;
+        z-index: -1;
+        /* đảm bảo nó nằm sau các thành phần khác */
+    }
+
     @keyframes fadeIn {
         from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(10px);
         }
 
         to {
@@ -178,8 +183,4 @@
         letter-spacing: 0.5px;
     }
 </style>
-@endsection
-
-@section('scripts')
 <script src="{{ asset('js/login.js') }}"></script>
-@endsection
