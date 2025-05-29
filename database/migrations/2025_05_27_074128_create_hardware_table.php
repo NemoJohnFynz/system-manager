@@ -14,16 +14,15 @@ return new class extends Migration
         Schema::create('hardware', function (Blueprint $table) {
             $table->id();
             $table->string('ip', 25) ->unique();
-            $table->unsignedBigInteger('domain_id');
             $table->string('dbname',100);
             $table->string('dbversion', 100);
-            $table->boolean('server');
+            $table->boolean('isVirtualServer')->default(false); //0 ao, 1 thuc
             $table->string('hdd', 50);
             $table->string('ram', 50);
             $table->boolean('is_delete')->default(false);
             $table->text('services');
-            $table->foreign('domain_id')->references('id')->on('domain')->onDelete('cascade');
-            
+            $table->string('created_by', 100);
+            $table->foreign('created_by')->references('username')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

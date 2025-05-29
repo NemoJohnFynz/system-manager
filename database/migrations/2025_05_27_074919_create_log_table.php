@@ -16,14 +16,19 @@ return new class extends Migration
             $table->id();
             // Columns
             $table->string('username', 100);
-            $table->unsignedBigInteger('software_id',);
-            $table->string('hardware_ip',25);
+            $table->unsignedBigInteger('software_id')->nullable();
+            $table->string('hardware_ip',25)->nullable();
+            $table->unsignedBigInteger('rule_id')->nullable(); // e.g., 'create', 'update', 'delete'
             $table->text('message');
+            $table->unsignedBigInteger('software_file_id')->nullable();
             $table->boolean('is_delete')->default(false);
             // Foreign keys
             $table->foreign('software_id')->references('id')->on('software')->onDelete('cascade');
             $table->foreign('hardware_ip')->references('ip')->on('hardware')->onDelete('cascade');
             $table->foreign('username')->references('username')->on('users')->onDelete('cascade');
+            $table->foreign('rule_id')->references('id')->on('rules')->onDelete('cascade');
+            $table->foreign('software_file_id')->references('id')->on('software_file')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hardware_rule', function (Blueprint $table) {
+        Schema::create('hardware_access_domain', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('original_rule');
             $table->string('hardware_ip', 25);
-            $table->dateTime('assigned_at')->useCurrent();
-            $table->foreign('hardware_ip')->references('ip')->on('hardware')->onDelete('cascade');
+            $table->unsignedBigInteger('domain_id');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hardware_rule');
+        Schema::dropIfExists('hardware_access_domain');
     }
 };

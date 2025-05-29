@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_software_permissions', function (Blueprint $table) {
+        Schema::create('software_permissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->string('create_by', 100);
+            $table->string('user_name',100);
             $table->unsignedBigInteger('software_id');
             $table->timestamp('assigned_at');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('create_by')->references('username')->on('users')->onDelete('cascade');
+            $table->foreign('user_name')->references('username')->on('users')->onDelete('cascade');
             $table->foreign('software_id')->references('id')->on('software')->onDelete('cascade');
             $table->timestamps();
         });
@@ -27,6 +29,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_software_permissions');
+        Schema::dropIfExists('software_permissions');
     }
 };
+
+//sửa tên bảng lại => bỏ user
+// bảng phụ chỗ domain và hardware
+// rule nối cả software và hardware
+//hardwware rule + url => string
