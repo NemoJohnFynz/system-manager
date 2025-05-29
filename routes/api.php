@@ -6,3 +6,8 @@ use App\Http\Controllers\AuthController;
 
 require __DIR__.'/Auth.routes.php';
 require __DIR__.'/Permission.routes.php';
+
+
+
+// bảng sofware thêm người phân quyền
+// 

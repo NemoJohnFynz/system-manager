@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('software_id');
             $table->text('name');
-            $table->string('link', 200);
+            $table->string('link', 500);
             $table->foreign('software_id')->references('id')->on('software')->onDelete('cascade');
             $table->timestamps();
         });

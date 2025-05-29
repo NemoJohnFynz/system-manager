@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('original_rule');
             $table->string('name', 200);
-            $table->unsignedBigInteger('hardware_id');
-            $table->unsignedBigInteger('hardware_rule');
+            $table->string('file_url',250);
             $table->unsignedBigInteger('category_id');
             $table->string('username', 100);
+            $table->string('description',100);
             $table->boolean('is_delete')->default(false);
-            $table->foreign('hardware_id')->references('id')->on('hardware')->onDelete('cascade');
+            $table->dateTime('date_release');
             $table->foreign('category_id')->references('id')->on('category_rule')->onDelete('cascade');
             $table->timestamps();
         });

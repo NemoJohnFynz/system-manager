@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('softwareName', 100);
             $table->string('language', 15);
             $table->string('version', 100);
-            $table->string('owner', 7);
+            $table->string('user_createby', 100);
             $table->boolean('is_delete')->default(false);
             $table->text('description')->nullable();
+            $table->foreign('user_createby')->references('username')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
