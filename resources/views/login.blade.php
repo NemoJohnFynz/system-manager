@@ -37,7 +37,7 @@
         margin: 40px auto; 
         padding: 32px 28px 24px 28px;
         border-radius: 16px;
-        background-color: lavender;
+        background-color: white;
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
         animation: fadeIn 1s;
         position: relative;

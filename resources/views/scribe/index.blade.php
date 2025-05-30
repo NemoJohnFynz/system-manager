@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
@@ -14,16 +15,21 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 
     <link rel="stylesheet"
-          href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
+        href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
 
     <style id="language-style">
         /* starts out as display none and is replaced with js later  */
-                    body .content .bash-example code { display: none; }
-                    body .content .javascript-example code { display: none; }
-            </style>
+        body .content .bash-example code {
+            display: none;
+        }
+
+        body .content .javascript-example code {
+            display: none;
+        }
+    </style>
 
     <script>
         var tryItOutBaseUrl = "http://localhost";
@@ -38,151 +44,78 @@
 
 <body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
 
-<a href="#" id="nav-button">
-    <span>
-        MENU
-        <img src="{{ asset("/vendor/scribe/images/navbar.png") }}" alt="navbar-image"/>
-    </span>
-</a>
-<div class="tocify-wrapper">
-    
-            <div class="lang-selector">
-                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
-                                            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
-                    </div>
-    
-    <div class="search">
-        <input type="text" class="search" id="input-search" placeholder="Search">
-    </div>
+    <a href="#" id="nav-button">
+        <span>
+            MENU
+            <img src="{{ asset("/vendor/scribe/images/navbar.png") }}" alt="navbar-image" />
+        </span>
+    </a>
+    <div class="tocify-wrapper">
 
-    <div id="toc">
-                    <ul id="tocify-header-introduction" class="tocify-header">
+        <div class="lang-selector">
+            <button type="button" class="lang-button" data-language-name="bash">bash</button>
+            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+        </div>
+
+        <div class="search">
+            <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+
+        <div id="toc">
+            <ul id="tocify-header-introduction" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="introduction">
                     <a href="#introduction">Introduction</a>
                 </li>
-                            </ul>
-                    <ul id="tocify-header-authenticating-requests" class="tocify-header">
+            </ul>
+            <ul id="tocify-header-authenticating-requests" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="authenticating-requests">
                     <a href="#authenticating-requests">Authenticating requests</a>
                 </li>
-                            </ul>
-                    <ul id="tocify-header-authentication" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="authentication">
-                    <a href="#authentication">Authentication</a>
-                </li>
-                                    <ul id="tocify-subheader-authentication" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="authentication-POSTapi-login">
-                                <a href="#authentication-POSTapi-login">Log in a user.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-GETapi-getuser">
-                                <a href="#authentication-GETapi-getuser">Get the authenticated user.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-PATCHapi-updateuser">
-                                <a href="#authentication-PATCHapi-updateuser">Update the authenticated user's details.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-PATCHapi-changepassword">
-                                <a href="#authentication-PATCHapi-changepassword">Change the authenticated user's password.</a>
-                            </li>
-                                                                        </ul>
-                            </ul>
-                    <ul id="tocify-header-endpoints" class="tocify-header">
+            </ul>
+            <ul id="tocify-header-endpoints" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="endpoints">
                     <a href="#endpoints">Endpoints</a>
                 </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-documentation">
-                                <a href="#endpoints-GETapi-documentation">Handles the API request and renders the Swagger documentation view.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-oauth2-callback">
-                                <a href="#endpoints-GETapi-oauth2-callback">Handles the OAuth2 callback and retrieves the required file for the redirect.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createUser">
-                                <a href="#endpoints-POSTapi-createUser">Create a new user.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getuserbyid--id-">
-                                <a href="#endpoints-GETapi-getuserbyid--id-">GET api/getuserbyid/{id}</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getallusers">
-                                <a href="#endpoints-GETapi-getallusers">GET api/getallusers</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createPermission">
-                                <a href="#endpoints-POSTapi-createPermission">POST api/createPermission</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getAllPermission">
-                                <a href="#endpoints-GETapi-getAllPermission">GET api/getAllPermission</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByName">
-                                <a href="#endpoints-GETapi-getPermissionByName">GET api/getPermissionByName</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-updatePermission">
-                                <a href="#endpoints-PATCHapi-updatePermission">PATCH api/updatePermission</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-deletePermission">
-                                <a href="#endpoints-DELETEapi-deletePermission">DELETE api/deletePermission</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getAllPermissionsByUser">
-                                <a href="#endpoints-GETapi-getAllPermissionsByUser">GET api/getAllPermissionsByUser</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionsByType">
-                                <a href="#endpoints-GETapi-getPermissionsByType">GET api/getPermissionsByType</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByUserAndType">
-                                <a href="#endpoints-GETapi-getPermissionByUserAndType">GET api/getPermissionByUserAndType</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByUserAndName">
-                                <a href="#endpoints-GETapi-getPermissionByUserAndName">GET api/getPermissionByUserAndName</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByTypeAndName">
-                                <a href="#endpoints-GETapi-getPermissionByTypeAndName">GET api/getPermissionByTypeAndName</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByUserTypeAndName">
-                                <a href="#endpoints-GETapi-getPermissionByUserTypeAndName">GET api/getPermissionByUserTypeAndName</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByTime">
-                                <a href="#endpoints-GETapi-getPermissionByTime">GET api/getPermissionByTime</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createRole">
-                                <a href="#endpoints-POSTapi-createRole">POST api/createRole</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-deleteRole">
-                                <a href="#endpoints-DELETEapi-deleteRole">DELETE api/deleteRole</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-updateRole">
-                                <a href="#endpoints-PATCHapi-updateRole">PATCH api/updateRole</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getRoleByName">
-                                <a href="#endpoints-GETapi-getRoleByName">GET api/getRoleByName</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getAllRoles">
-                                <a href="#endpoints-GETapi-getAllRoles">GET api/getAllRoles</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getRolesByUser">
-                                <a href="#endpoints-GETapi-getRolesByUser">GET api/getRolesByUser</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createRolePermission">
-                                <a href="#endpoints-POSTapi-createRolePermission">POST api/createRolePermission</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-updateRolePermission">
-                                <a href="#endpoints-PATCHapi-updateRolePermission">PATCH api/updateRolePermission</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-deleteRolePermission">
-                                <a href="#endpoints-DELETEapi-deleteRolePermission">DELETE api/deleteRolePermission</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getAllrolePermission">
-                                <a href="#endpoints-GETapi-getAllrolePermission">GET api/getAllrolePermission</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getRolePermissionByName">
-                                <a href="#endpoints-GETapi-getRolePermissionByName">GET api/getRolePermissionByName</a>
-                            </li>
-                                                                        </ul>
-                            </ul>
-            </div>
+                <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-documentation">
+                        <a href="#endpoints-GETapi-documentation">Handles the API request and renders the Swagger documentation view.</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-oauth2-callback">
+                        <a href="#endpoints-GETapi-oauth2-callback">Handles the OAuth2 callback and retrieves the required file for the redirect.</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createUser">
+                        <a href="#endpoints-POSTapi-createUser">POST api/createUser</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-login">
+                        <a href="#endpoints-POSTapi-login">POST api/login</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-getuser">
+                        <a href="#endpoints-GETapi-getuser">GET api/getuser</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-updateuser">
+                        <a href="#endpoints-PATCHapi-updateuser">PATCH api/updateuser</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-changepassword">
+                        <a href="#endpoints-PATCHapi-changepassword">PATCH api/changepassword</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-getuserbyid--id-">
+                        <a href="#endpoints-GETapi-getuserbyid--id-">GET api/getuserbyid/{id}</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-getallusers">
+                        <a href="#endpoints-GETapi-getallusers">GET api/getallusers</a>
+                    </li>
+                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createPermission">
+                        <a href="#endpoints-POSTapi-createPermission">POST api/createPermission</a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
 
-    <ul class="toc-footer" id="toc-footer">
-                    <li style="padding-bottom: 5px;"><a href="{{ route("scribe.postman") }}">View Postman collection</a></li>
-                            <li style="padding-bottom: 5px;"><a href="{{ route("scribe.openapi") }}">View OpenAPI spec</a></li>
-                <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
-    </ul>
+        <ul class="toc-footer" id="toc-footer">
+            <li style="padding-bottom: 5px;"><a href="{{ route("scribe.postman") }}">View Postman collection</a></li>
+            <li style="padding-bottom: 5px;"><a href="{{ route("scribe.openapi") }}">View OpenAPI spec</a></li>
+            <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+        </ul>
 
     <ul class="toc-footer" id="last-updated">
         <li>Last updated: May 29, 2025</li>
@@ -1040,20 +973,28 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-GETapi-documentation">
-<blockquote>Example request:</blockquote>
+            <h2 id="endpoints-GETapi-documentation">Handles the API request and renders the Swagger documentation view.</h2>
+
+            <p>
+            </p>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
+
+            <span id="example-requests-GETapi-documentation">
+                <blockquote>Example request:</blockquote>
+
+
+                <div class="bash-example">
+                    <pre><code class="language-bash">curl --request GET \
     --get "http://localhost/api/documentation" \
     --header "Authorization: {YOUR_JWT_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json"</code></pre>
+                </div>
 
 
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
+                <div class="javascript-example">
+                    <pre><code class="language-javascript">const url = new URL(
     "http://localhost/api/documentation"
 );
 
@@ -1066,38 +1007,41 @@ const headers = {
 fetch(url, {
     method: "GET",
     headers,
-}).then(response =&gt; response.json());</code></pre></div>
+}).then(response =&gt; response.json());</code></pre>
+                </div>
 
-</span>
+            </span>
 
-<span id="example-responses-GETapi-documentation">
-            <blockquote>
-            <p>Example response (500):</p>
-        </blockquote>
+            <span id="example-responses-GETapi-documentation">
+                <blockquote>
+                    <p>Example response (500):</p>
+                </blockquote>
                 <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+                    <summary style="cursor: pointer;">
+                        <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+                    </summary>
+                    <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 access-control-allow-origin: *
- </code></pre></details>         <pre>
+ </code></pre>
+                </details>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;message&quot;: &quot;Server Error&quot;
 }</code>
  </pre>
-    </span>
-<span id="execution-results-GETapi-documentation" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-documentation"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-documentation"
+            </span>
+            <span id="execution-results-GETapi-documentation" hidden>
+                <blockquote>Received response<span
+                        id="execution-response-status-GETapi-documentation"></span>:
+                </blockquote>
+                <pre class="json"><code id="execution-response-content-GETapi-documentation"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-documentation" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-documentation">
+            </span>
+            <span id="execution-error-GETapi-documentation" hidden>
+                <blockquote>Request failed with error:</blockquote>
+                <pre><code id="execution-error-message-GETapi-documentation">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
@@ -1113,27 +1057,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-documentation"
-                    onclick="tryItOut('GETapi-documentation');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-documentation"
-                    onclick="cancelTryOut('GETapi-documentation');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-documentation"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/documentation</code></b>
-        </p>
+                        style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-tryout-GETapi-documentation"
+                        onclick="tryItOut('GETapi-documentation');">Try it out ⚡
+                    </button>
+                    <button type="button"
+                        style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-canceltryout-GETapi-documentation"
+                        onclick="cancelTryOut('GETapi-documentation');" hidden>Cancel 🛑
+                    </button>&nbsp;&nbsp;
+                    <button type="submit"
+                        style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-executetryout-GETapi-documentation"
+                        data-initial-text="Send Request 💥"
+                        data-loading-text="⏱ Sending..."
+                        hidden>Send Request 💥
+                    </button>
+                </h3>
+                <p>
+                    <small class="badge badge-green">GET</small>
+                    <b><code>api/documentation</code></b>
+                </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
@@ -1170,7 +1114,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-GETapi-oauth2-callback">Handles the OAuth2 callback and retrieves the required file for the redirect.</h2>
+            <h2 id="endpoints-GETapi-oauth2-callback">Handles the OAuth2 callback and retrieves the required file for the redirect.</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -1178,20 +1122,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-GETapi-oauth2-callback">
-<blockquote>Example request:</blockquote>
+            <span id="example-requests-GETapi-oauth2-callback">
+                <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
+                <div class="bash-example">
+                    <pre><code class="language-bash">curl --request GET \
     --get "http://localhost/api/oauth2-callback" \
     --header "Authorization: {YOUR_JWT_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json"</code></pre>
+                </div>
 
 
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
+                <div class="javascript-example">
+                    <pre><code class="language-javascript">const url = new URL(
     "http://localhost/api/oauth2-callback"
 );
 
@@ -1204,22 +1149,25 @@ const headers = {
 fetch(url, {
     method: "GET",
     headers,
-}).then(response =&gt; response.json());</code></pre></div>
+}).then(response =&gt; response.json());</code></pre>
+                </div>
 
-</span>
+            </span>
 
-<span id="example-responses-GETapi-oauth2-callback">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
+            <span id="example-responses-GETapi-oauth2-callback">
+                <blockquote>
+                    <p>Example response (200):</p>
+                </blockquote>
                 <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">content-type: text/html; charset=UTF-8
+                    <summary style="cursor: pointer;">
+                        <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+                    </summary>
+                    <pre><code class="language-http">content-type: text/html; charset=UTF-8
 cache-control: no-cache, private
 access-control-allow-origin: *
- </code></pre></details>         <pre>
+ </code></pre>
+                </details>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">&lt;!doctype html&gt;
 &lt;html lang=&quot;en-US&quot;&gt;
@@ -1302,17 +1250,17 @@ access-control-allow-origin: *
 &lt;/html&gt;
 </code>
  </pre>
-    </span>
-<span id="execution-results-GETapi-oauth2-callback" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-oauth2-callback"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-oauth2-callback"
+            </span>
+            <span id="execution-results-GETapi-oauth2-callback" hidden>
+                <blockquote>Received response<span
+                        id="execution-response-status-GETapi-oauth2-callback"></span>:
+                </blockquote>
+                <pre class="json"><code id="execution-response-content-GETapi-oauth2-callback"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-oauth2-callback" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-oauth2-callback">
+            </span>
+            <span id="execution-error-GETapi-oauth2-callback" hidden>
+                <blockquote>Request failed with error:</blockquote>
+                <pre><code id="execution-error-message-GETapi-oauth2-callback">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
@@ -1328,27 +1276,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-oauth2-callback"
-                    onclick="tryItOut('GETapi-oauth2-callback');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-oauth2-callback"
-                    onclick="cancelTryOut('GETapi-oauth2-callback');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-oauth2-callback"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/oauth2-callback</code></b>
-        </p>
+                        style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-tryout-GETapi-oauth2-callback"
+                        onclick="tryItOut('GETapi-oauth2-callback');">Try it out ⚡
+                    </button>
+                    <button type="button"
+                        style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-canceltryout-GETapi-oauth2-callback"
+                        onclick="cancelTryOut('GETapi-oauth2-callback');" hidden>Cancel 🛑
+                    </button>&nbsp;&nbsp;
+                    <button type="submit"
+                        style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-executetryout-GETapi-oauth2-callback"
+                        data-initial-text="Send Request 💥"
+                        data-loading-text="⏱ Sending..."
+                        hidden>Send Request 💥
+                    </button>
+                </h3>
+                <p>
+                    <small class="badge badge-green">GET</small>
+                    <b><code>api/oauth2-callback</code></b>
+                </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
@@ -1393,12 +1341,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-POSTapi-createUser">
-<blockquote>Example request:</blockquote>
+            <span id="example-requests-POSTapi-createUser">
+                <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
+                <div class="bash-example">
+                    <pre><code class="language-bash">curl --request POST \
     "http://localhost/api/createUser" \
     --header "Authorization: {YOUR_JWT_TOKEN}" \
     --header "Content-Type: application/json" \
@@ -1407,11 +1355,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"username\": \"nemo\",
     \"password\": \"password123\"
 }"
-</code></pre></div>
+</code></pre>
+                </div>
 
 
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
+                <div class="javascript-example">
+                    <pre><code class="language-javascript">const url = new URL(
     "http://localhost/api/createUser"
 );
 
@@ -1430,9 +1379,10 @@ fetch(url, {
     method: "POST",
     headers,
     body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
+}).then(response =&gt; response.json());</code></pre>
+                </div>
 
-</span>
+            </span>
 
 <span id="example-responses-POSTapi-createUser">
             <blockquote>
@@ -1482,10 +1432,10 @@ fetch(url, {
     </blockquote>
     <pre class="json"><code id="execution-response-content-POSTapi-createUser"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-createUser" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-createUser">
+            </span>
+            <span id="execution-error-POSTapi-createUser" hidden>
+                <blockquote>Request failed with error:</blockquote>
+                <pre><code id="execution-error-message-POSTapi-createUser">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
@@ -1501,27 +1451,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-createUser"
-                    onclick="tryItOut('POSTapi-createUser');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-createUser"
-                    onclick="cancelTryOut('POSTapi-createUser');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-createUser"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/createUser</code></b>
-        </p>
+                        style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-tryout-POSTapi-createUser"
+                        onclick="tryItOut('POSTapi-createUser');">Try it out ⚡
+                    </button>
+                    <button type="button"
+                        style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-canceltryout-POSTapi-createUser"
+                        onclick="cancelTryOut('POSTapi-createUser');" hidden>Cancel 🛑
+                    </button>&nbsp;&nbsp;
+                    <button type="submit"
+                        style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-executetryout-POSTapi-createUser"
+                        data-initial-text="Send Request 💥"
+                        data-loading-text="⏱ Sending..."
+                        hidden>Send Request 💥
+                    </button>
+                </h3>
+                <p>
+                    <small class="badge badge-black">POST</small>
+                    <b><code>api/createUser</code></b>
+                </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
@@ -1593,7 +1543,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="endpoints-GETapi-getuserbyid--id-">GET api/getuserbyid/{id}</h2>
+            <h2 id="endpoints-GETapi-getuserbyid--id-">GET api/getuserbyid/{id}</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -1601,20 +1551,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-GETapi-getuserbyid--id-">
-<blockquote>Example request:</blockquote>
+            <span id="example-requests-GETapi-getuserbyid--id-">
+                <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
+                <div class="bash-example">
+                    <pre><code class="language-bash">curl --request GET \
     --get "http://localhost/api/getuserbyid/architecto" \
     --header "Authorization: {YOUR_JWT_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json"</code></pre>
+                </div>
 
 
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
+                <div class="javascript-example">
+                    <pre><code class="language-javascript">const url = new URL(
     "http://localhost/api/getuserbyid/architecto"
 );
 
@@ -1627,39 +1578,42 @@ const headers = {
 fetch(url, {
     method: "GET",
     headers,
-}).then(response =&gt; response.json());</code></pre></div>
+}).then(response =&gt; response.json());</code></pre>
+                </div>
 
-</span>
+            </span>
 
-<span id="example-responses-GETapi-getuserbyid--id-">
-            <blockquote>
-            <p>Example response (401):</p>
-        </blockquote>
+            <span id="example-responses-GETapi-getuserbyid--id-">
+                <blockquote>
+                    <p>Example response (401):</p>
+                </blockquote>
                 <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+                    <summary style="cursor: pointer;">
+                        <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+                    </summary>
+                    <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 access-control-allow-origin: *
- </code></pre></details>         <pre>
+ </code></pre>
+                </details>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;status&quot;: &quot;error&quot;,
     &quot;message&quot;: &quot;Token is absent or could not be parsed.&quot;
 }</code>
  </pre>
-    </span>
-<span id="execution-results-GETapi-getuserbyid--id-" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-getuserbyid--id-"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-getuserbyid--id-"
+            </span>
+            <span id="execution-results-GETapi-getuserbyid--id-" hidden>
+                <blockquote>Received response<span
+                        id="execution-response-status-GETapi-getuserbyid--id-"></span>:
+                </blockquote>
+                <pre class="json"><code id="execution-response-content-GETapi-getuserbyid--id-"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-getuserbyid--id-" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-getuserbyid--id-">
+            </span>
+            <span id="execution-error-GETapi-getuserbyid--id-" hidden>
+                <blockquote>Request failed with error:</blockquote>
+                <pre><code id="execution-error-message-GETapi-getuserbyid--id-">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
@@ -1675,27 +1629,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-getuserbyid--id-"
-                    onclick="tryItOut('GETapi-getuserbyid--id-');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-getuserbyid--id-"
-                    onclick="cancelTryOut('GETapi-getuserbyid--id-');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-getuserbyid--id-"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/getuserbyid/{id}</code></b>
-        </p>
+                        style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-tryout-GETapi-getuserbyid--id-"
+                        onclick="tryItOut('GETapi-getuserbyid--id-');">Try it out ⚡
+                    </button>
+                    <button type="button"
+                        style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-canceltryout-GETapi-getuserbyid--id-"
+                        onclick="cancelTryOut('GETapi-getuserbyid--id-');" hidden>Cancel 🛑
+                    </button>&nbsp;&nbsp;
+                    <button type="submit"
+                        style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-executetryout-GETapi-getuserbyid--id-"
+                        data-initial-text="Send Request 💥"
+                        data-loading-text="⏱ Sending..."
+                        hidden>Send Request 💥
+                    </button>
+                </h3>
+                <p>
+                    <small class="badge badge-green">GET</small>
+                    <b><code>api/getuserbyid/{id}</code></b>
+                </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
@@ -1744,7 +1698,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="endpoints-GETapi-getallusers">GET api/getallusers</h2>
+            <h2 id="endpoints-GETapi-getallusers">GET api/getallusers</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -1752,20 +1706,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-GETapi-getallusers">
-<blockquote>Example request:</blockquote>
+            <span id="example-requests-GETapi-getallusers">
+                <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
+                <div class="bash-example">
+                    <pre><code class="language-bash">curl --request GET \
     --get "http://localhost/api/getallusers" \
     --header "Authorization: {YOUR_JWT_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json"</code></pre>
+                </div>
 
 
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
+                <div class="javascript-example">
+                    <pre><code class="language-javascript">const url = new URL(
     "http://localhost/api/getallusers"
 );
 
@@ -1778,39 +1733,42 @@ const headers = {
 fetch(url, {
     method: "GET",
     headers,
-}).then(response =&gt; response.json());</code></pre></div>
+}).then(response =&gt; response.json());</code></pre>
+                </div>
 
-</span>
+            </span>
 
-<span id="example-responses-GETapi-getallusers">
-            <blockquote>
-            <p>Example response (401):</p>
-        </blockquote>
+            <span id="example-responses-GETapi-getallusers">
+                <blockquote>
+                    <p>Example response (401):</p>
+                </blockquote>
                 <details class="annotation">
-            <summary style="cursor: pointer;">
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+                    <summary style="cursor: pointer;">
+                        <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+                    </summary>
+                    <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 access-control-allow-origin: *
- </code></pre></details>         <pre>
+ </code></pre>
+                </details>
+                <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;status&quot;: &quot;error&quot;,
     &quot;message&quot;: &quot;Token is absent or could not be parsed.&quot;
 }</code>
  </pre>
-    </span>
-<span id="execution-results-GETapi-getallusers" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-getallusers"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-getallusers"
+            </span>
+            <span id="execution-results-GETapi-getallusers" hidden>
+                <blockquote>Received response<span
+                        id="execution-response-status-GETapi-getallusers"></span>:
+                </blockquote>
+                <pre class="json"><code id="execution-response-content-GETapi-getallusers"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-GETapi-getallusers" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-getallusers">
+            </span>
+            <span id="execution-error-GETapi-getallusers" hidden>
+                <blockquote>Request failed with error:</blockquote>
+                <pre><code id="execution-error-message-GETapi-getallusers">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
@@ -1826,27 +1784,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-getallusers"
-                    onclick="tryItOut('GETapi-getallusers');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-getallusers"
-                    onclick="cancelTryOut('GETapi-getallusers');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-getallusers"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/getallusers</code></b>
-        </p>
+                        style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-tryout-GETapi-getallusers"
+                        onclick="tryItOut('GETapi-getallusers');">Try it out ⚡
+                    </button>
+                    <button type="button"
+                        style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-canceltryout-GETapi-getallusers"
+                        onclick="cancelTryOut('GETapi-getallusers');" hidden>Cancel 🛑
+                    </button>&nbsp;&nbsp;
+                    <button type="submit"
+                        style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-executetryout-GETapi-getallusers"
+                        data-initial-text="Send Request 💥"
+                        data-loading-text="⏱ Sending..."
+                        hidden>Send Request 💥
+                    </button>
+                </h3>
+                <p>
+                    <small class="badge badge-green">GET</small>
+                    <b><code>api/getallusers</code></b>
+                </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
@@ -1883,7 +1841,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-POSTapi-createPermission">POST api/createPermission</h2>
+            <h2 id="endpoints-POSTapi-createPermission">POST api/createPermission</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -1891,20 +1849,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 
 
-<span id="example-requests-POSTapi-createPermission">
-<blockquote>Example request:</blockquote>
+            <span id="example-requests-POSTapi-createPermission">
+                <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
+                <div class="bash-example">
+                    <pre><code class="language-bash">curl --request POST \
     "http://localhost/api/createPermission" \
     --header "Authorization: {YOUR_JWT_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json"</code></pre>
+                </div>
 
 
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
+                <div class="javascript-example">
+                    <pre><code class="language-javascript">const url = new URL(
     "http://localhost/api/createPermission"
 );
 
@@ -1917,9 +1876,10 @@ const headers = {
 fetch(url, {
     method: "POST",
     headers,
-}).then(response =&gt; response.json());</code></pre></div>
+}).then(response =&gt; response.json());</code></pre>
+                </div>
 
-</span>
+            </span>
 
 <span id="example-responses-POSTapi-createPermission">
             <blockquote>
@@ -1946,10 +1906,10 @@ access-control-allow-origin: *
     </blockquote>
     <pre class="json"><code id="execution-response-content-POSTapi-createPermission"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-createPermission" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-createPermission">
+            </span>
+            <span id="execution-error-POSTapi-createPermission" hidden>
+                <blockquote>Request failed with error:</blockquote>
+                <pre><code id="execution-error-message-POSTapi-createPermission">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
@@ -1965,27 +1925,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-createPermission"
-                    onclick="tryItOut('POSTapi-createPermission');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-createPermission"
-                    onclick="cancelTryOut('POSTapi-createPermission');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-createPermission"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/createPermission</code></b>
-        </p>
+                        style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-tryout-POSTapi-createPermission"
+                        onclick="tryItOut('POSTapi-createPermission');">Try it out ⚡
+                    </button>
+                    <button type="button"
+                        style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-canceltryout-POSTapi-createPermission"
+                        onclick="cancelTryOut('POSTapi-createPermission');" hidden>Cancel 🛑
+                    </button>&nbsp;&nbsp;
+                    <button type="submit"
+                        style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                        id="btn-executetryout-POSTapi-createPermission"
+                        data-initial-text="Send Request 💥"
+                        data-loading-text="⏱ Sending..."
+                        hidden>Send Request 💥
+                    </button>
+                </h3>
+                <p>
+                    <small class="badge badge-black">POST</small>
+                    <b><code>api/createPermission</code></b>
+                </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
@@ -5071,14 +5031,16 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
             
 
-        
-    </div>
-    <div class="dark-box">
-                    <div class="lang-selector">
-                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
-                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
-                            </div>
+
+
+        </div>
+        <div class="dark-box">
+            <div class="lang-selector">
+                <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
             </div>
-</div>
+        </div>
+    </div>
 </body>
+
 </html>
