@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Laravel</title>
+    <link href="assets\css\bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
+    <link href="assets\css\app.min.css" id="app-style" rel="stylesheet" type="text/css">
     @php
     $routeName = Route::currentRouteName(); // Lấy tên route hiện tại
     @endphp
@@ -29,7 +31,10 @@
     <!-- <div class="container mt-4">    
         @yield('content')
     </div> -->
+    <main class="main-content">
+        @yield('content')
 
+    </main>
 
     {{-- Phần script riêng từng trang --}}
     @yield('scripts')
@@ -40,7 +45,7 @@
     $cssPath = isset($page) ? 'js/' . $page . '.js' : null;
     @endphp
 
-    @if($cssPath && file_exists(public_path($cssPath))) 
+    @if($cssPath && file_exists(public_path($cssPath)))
     <script src="{{ asset($cssPath) }}"></script>
     @endif
 </body>

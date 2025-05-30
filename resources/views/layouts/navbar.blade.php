@@ -59,7 +59,7 @@
             </a>
           </li>
           <li class="item">
-            <a href="#" class="link flex">
+            <a href="/software_overview" class="link flex">
               <i class="bx bx-folder"></i>
               <span> SoftWare File</span>
             </a>
@@ -114,12 +114,6 @@
       <img src="images/profile.jpg" alt="logo_img" />
     </span>
   </nav>
-
-  <main class="main-content">
-    @yield('content')
-
-  </main>
-
 </body>
 
 <script src="{{ asset('js/style/bar/bar.js') }}"></script>

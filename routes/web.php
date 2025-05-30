@@ -11,10 +11,12 @@ Route::get('/', function () {
 
 
 Route::get('/{page}', function ($page) {
-    $view = str_replace('/', '.', $page);
+    // Chuyển đổi thành tên view trong thư mục 'pages'
+    $view = 'pages.' . str_replace('/', '.', $page);
 
     if (View::exists($view)) {
-        return view($view, ['page' => $page]); // Truyền page vào view
+        return view($view, ['page' => $page]);
     }
+
     abort(404);
 })->where('page', '.*');
