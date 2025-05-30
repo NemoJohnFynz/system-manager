@@ -1,8 +1,5 @@
 @extends('layouts.app') 
-@section('title', 'Dashboard Home') 
-<!-- section('head')
- vite(['resources/css/home.css', 'resources/js/home.js'])
-endsection -->
+@section('title', 'Dashboard Home')
 @section('content')
 <div class="dashboard-overview">
     <h2>Overview</h2>
