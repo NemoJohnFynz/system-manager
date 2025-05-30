@@ -11,13 +11,22 @@
         href="/login" class="nav_image">
         <img src="images/logo.png" alt="logo_img" />
       </a>
-      <span class="logo_name">CodingNepal</span>
+      <span class="logo_name">SystemMNG</span>
       <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
       <i class="bx bx-x" id="sidebar-close"></i>
     </div>
     <div class="menu_container">
       <div class="menu_items">
         <ul class="menu_item">
+          <div class="sidebar_profile flex">
+            <span class="nav_image">
+              <img src="images/profile.jpg" alt="logo_img" />
+            </span>
+            <div class="data_text">
+              <span class="name">David Oliva</span>
+              <span class="email">david@gmail.com</span>
+            </div>
+          </div>
           <div class="menu_title flex">
             <span class="title">Dashboard</span>
             <span class="line"></span>
@@ -96,15 +105,7 @@
           </li>
         </ul>
       </div>
-      <div class="sidebar_profile flex">
-        <span class="nav_image">
-          <img src="images/profile.jpg" alt="logo_img" />
-        </span>
-        <div class="data_text">
-          <span class="name">David Oliva</span>
-          <span class="email">david@gmail.com</span>
-        </div>
-      </div>
+
     </div>
   </nav>
   <nav class="navbar flex">

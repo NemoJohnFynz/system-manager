@@ -1,8 +1,8 @@
 <div class="login-container">
+    <div class="login-title">Đăng Nhập</div>
     <div class="login-logo">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo">
     </div>
-    <div class="login-title">Đăng Nhập</div>
     <form id="loginForm" action="/login" method="POST" autocomplete="off">
         @csrf
         <div class="form-group">
@@ -13,7 +13,7 @@
                 class="form-input"
                 placeholder=" "
                 autocomplete="username">
-            <label class="form-label">Email</label>
+            <label class="form-label">Username</label>
         </div>
         <div class="form-group">
             <input
@@ -34,9 +34,9 @@
 <style>
     .login-container {
         max-width: 400px;
-        margin: 40px auto; 
+        margin: 50px auto;
         padding: 32px 28px 24px 28px;
-        border-radius: 16px;
+        border-radius: 4px;
         background-color: white;
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
         animation: fadeIn 1s;
@@ -140,7 +140,7 @@
         color: white;
         font-weight: 600;
         border: none;
-        border-radius: 8px;
+        border-radius: 4px;
         width: 100%;
         cursor: pointer;
         font-size: 17px;
@@ -169,7 +169,7 @@
 
     .login-btn:hover {
         background: linear-gradient(135deg, #3b82f6, #2563eb);
-        transform: translateY(-2px) scale(1.04);
+        transform: translateY(-1px) scale(1.004);
         box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
     }
 
