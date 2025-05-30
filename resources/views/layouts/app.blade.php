@@ -9,7 +9,7 @@
     <link href="assets\css\bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
     <link href="assets\css\app.min.css" id="app-style" rel="stylesheet" type="text/css">
     @php
-    $routeName = Route::currentRouteName(); // Lấy tên route hiện tại
+    $routeName = Route::currentRouteName();
     @endphp
     @php
     $cssPath = isset($page) ? 'css/' . $page . '.css' : null;
@@ -17,29 +17,18 @@
 
     @if($cssPath && file_exists(public_path($cssPath)))
     <link href="{{ asset($cssPath) }}" rel="stylesheet" />
-    @endif
-    <!-- Fonts -->
-    <!-- @vite(['resources/css/app.css', 'resources/js/app.js']) {{-- Common assets --}}
-    @yield('head') {{-- Inject per-page Vite assets --}} -->
+    @endif 
 </head>
 
 <body>
-    {{-- Phần navbar --}}
-    @include('layouts.navbar')
-    {{-- Phần thông báo lỗi --}}
-    {{-- Phần nội dung riêng từng trang --}}
-    <!-- <div class="container mt-4">    
-        @yield('content')
-    </div> -->
+    @include('layouts.navbar') 
     <main class="main-content">
         @yield('content')
 
-    </main>
-
-    {{-- Phần script riêng từng trang --}}
+    </main> 
     @yield('scripts')
     @php
-    $routeName = Route::currentRouteName(); // Lấy tên route hiện tại
+    $routeName = Route::currentRouteName();
     @endphp
     @php
     $cssPath = isset($page) ? 'js/' . $page . '.js' : null;
