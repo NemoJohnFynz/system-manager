@@ -18,12 +18,19 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var list<string>
      */
+
+     protected $primaryKey = 'username'; // Đặt username làm khóa chính
+    public $incrementing = false; // Username không tự tăng (không phải số)
+    protected $keyType = 'string'; // Khóa chính là kiểu chuỗi (string)
+    
     protected $fillable = [
         'username',
         'password',
         'email',
         'fullName',
         'phone_number',
+        'hidden',
+        'is_delete',
     ];
 
     /**
@@ -46,7 +53,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims(){
         return [
-            'id' => $this->getKey(),
+            'username' => $this->getKey(),
         ];
     }
 
