@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 
 // Route riêng cho root "/"
 Route::get('/', function () {
-    return view('home'); // hoặc 'welcome', hoặc trang chính của bạn
+    return view('pages/software_manager.blade'); // hoặc 'welcome', hoặc trang chính của bạn
 });
 
 
@@ -16,7 +16,9 @@ Route::get('/{page}', function ($page) {
 
     if (View::exists($view)) {
         return view($view, ['page' => $page]);
+    } else {
+        return view('pages/software_manager');
     }
 
-    abort(404);
+    // abort(404);
 })->where('page', '.*');

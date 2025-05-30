@@ -18,14 +18,14 @@ const toggleLock = () => {
 }; 
 const hideSidebar = () => {
   console.log('Mouse left sidebar');
-  if (sidebar.classList.contains("hoverable")) {
+  if (sidebar.classList.contains("hoverable")&& !sidebar.classList.contains("locked")) {
     sidebar.classList.add("close");
   }
 }; 
 const showSidebar = () => { 
-  // if (sidebar.classList.contains("hoverable")) {
+   if (sidebar.classList.contains("hoverable")) {
     sidebar.classList.remove("close");
-  // }
+   }
 }; 
 const toggleSidebar = () => {
   sidebar.classList.toggle("close");

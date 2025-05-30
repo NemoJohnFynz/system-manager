@@ -37,6 +37,7 @@
     @if($cssPath && file_exists(public_path($cssPath)))
     <script src="{{ asset($cssPath) }}"></script>
     @endif
+    
 </body>
 
 </html>
