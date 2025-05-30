@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class roles extends Model
+{
+
+    public $primaryKey = 'role_name';
+    public $incrementing = false; // khoá 9 0 tự tăng
+    protected $keyType = 'string'; // Khóa chính là kiểu chuỗi (string)
+    protected $fillable = [
+        'role_name',
+        'assigned_at',
+    ];
+
+    protected function casts(): array
+    {
+    return [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'assigned_at' => 'datetime',
+    ];
+    }
+
+}

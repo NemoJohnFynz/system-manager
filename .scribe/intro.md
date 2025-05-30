@@ -1,6 +1,6 @@
 # Introduction
 
-
+THIS DOCUMENTATION IS FOR THE API OF THE SOFTWARE MANAGEMENT SYSTEM. IT IS USED TO MANAGE USERS, ROLES, PERMISSIONS, AND OTHER RELATED FEATURES.
 
 <aside>
     <strong>Base URL</strong>: <code>http://localhost</code>

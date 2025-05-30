@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 
 require __DIR__.'/Auth.routes.php';
 require __DIR__.'/Permission.routes.php';
+require __DIR__.'/roles.routes.php';
+require __DIR__.'/rolesPermission.routes.php';
 
 
 
