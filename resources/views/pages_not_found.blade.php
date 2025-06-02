@@ -1,8 +1,9 @@
-﻿ <head> 
+﻿ <head>
      <meta charset="utf-8">
-     <title>404 Error Page</title> 
-     <link href="assets\css\bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css"> 
-     <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css"> 
+     <title>404 Error Page</title>
+     <link href="assets\css\bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
+     <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
+     <link href="assets\css\boxicons.min.css" rel="stylesheet" type="text/css">
 
  </head>
 
@@ -22,5 +23,5 @@
                  </div>
              </div>
          </div>
-     </div> 
+     </div>
  </body>
