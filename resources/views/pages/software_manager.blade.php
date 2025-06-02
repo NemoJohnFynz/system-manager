@@ -5,7 +5,7 @@
      <div class="row">
          <div class="col-12">
              <div class="page-title-box d-flex align-items-center justify-content-between">
-                 <h4 class="mb-0 font-size-18">software manager</h4>
+                 <h4 class="mb-0 font-size-18">Quản lý phần mềm</h4>
              </div>
          </div>
      </div>
@@ -22,19 +22,16 @@
                                      <img src="images\img-1.jpg" alt="" height="30">
                                  </span>
                              </div>
-
                              <div class="media-body overflow-hidden">
-                                 <h5 class="text-truncate font-size-15"><a href="#" class="text-dark">New admin Design</a></h5>
+                                 <h5 class="text-truncate font-size-15"><a href="software_detail" class="text-dark">New admin Design</a></h5>
                                  <p class="text-muted mb-4">It will be as simple as Occidental</p>
                                  <div class="team">
                                      <a href="javascript: void(0);" class="team-member d-inline-block" data-toggle="tooltip" data-placement="top" title="" data-original-title="Daniel Canales">
                                          <img src="images\avatar-1.jpg" class="rounded-circle avatar-xs m-1" alt="">
                                      </a>
-
                                      <a href="javascript: void(0);" class="team-member d-inline-block" data-toggle="tooltip" data-placement="top" title="" data-original-title="Jennifer Walker">
                                          <img src="images\avatar-1.jpg" class="rounded-circle avatar-xs m-1" alt="">
                                      </a>
-
                                  </div>
                              </div>
                          </div>
@@ -54,7 +51,6 @@
                      </div>
                  </div>
              </div>
-
              <div class="col-xl-4 col-sm-6">
                  <div class="card">
                      <div class="card-body">
@@ -64,15 +60,13 @@
                                      <img src="images\img-1.jpg" alt="" height="30">
                                  </span>
                              </div>
-
                              <div class="media-body overflow-hidden">
-                                 <h5 class="text-truncate font-size-15"><a href="#" class="text-dark">Brand logo design</a></h5>
+                                 <h5 class="text-truncate font-size-15"><a href="software_detail" class="text-dark">Brand logo design</a></h5>
                                  <p class="text-muted mb-4">To achieve it would be necessary</p>
                                  <div class="team">
                                      <a href="javascript: void(0);" class="team-member d-inline-block" data-toggle="tooltip" data-placement="top" title="" data-original-title="Kenneth Johnson">
                                          <img src="images\avatar-1.jpg" class="rounded-circle avatar-xs m-1" alt="">
                                      </a>
-
                                  </div>
                              </div>
                          </div>
@@ -92,7 +86,6 @@
                      </div>
                  </div>
              </div>
-
              <div class="col-xl-4 col-sm-6">
                  <div class="card">
                      <div class="card-body">
@@ -102,9 +95,8 @@
                                      <img src="images\img-1.jpg" alt="" height="30">
                                  </span>
                              </div>
-
                              <div class="media-body overflow-hidden">
-                                 <h5 class="text-truncate font-size-15"><a href="#" class="text-dark">New Landing Design</a></h5>
+                                 <h5 class="text-truncate font-size-15"><a href="software_detail" class="text-dark">New Landing Design</a></h5>
                                  <p class="text-muted mb-4"> For science, music, sport, etc</p>
                                  <div class="team">
                                      <a href="javascript: void(0);" class="team-member d-inline-block" data-toggle="tooltip" data-placement="top" title="" data-original-title="Natalie Salerno">
@@ -117,7 +109,6 @@
                                              </span>
                                          </div>
                                      </a>
-
                                      <a href="javascript: void(0);" class="team-member d-inline-block" data-toggle="tooltip" data-placement="top" title="" data-original-title="Helen Chaffin">
                                          <img src="images\avatar-1.jpg" class="rounded-circle avatar-xs m-1" alt="">
                                      </a>
@@ -140,11 +131,9 @@
                      </div>
                  </div>
              </div>
-
          </div>
      <?php
         }
-
         ?>
      <div class="row">
          <div class="col-lg-12">

@@ -14,16 +14,13 @@
              <div class="card">
                  <div class="card-body">
                      <div class="media">
-                         <img src="images\img-1.png" alt="" class="avatar-sm mr-4">
-
+                         <img src="images\img-1.png" alt="" class="avatar-sm mr-4"> 
                          <div class="media-body overflow-hidden">
                              <h5 class="text-truncate font-size-15">Skote Dashboard UI</h5>
                              <p class="text-muted">Separate existence is a myth. For science, music, sport, etc.</p>
                          </div>
-                     </div>
-
-                     <h5 class="font-size-15 mt-4">software Details :</h5>
-
+                     </div> 
+                     <h5 class="font-size-15 mt-4">software Details :</h5> 
                      <p class="text-muted">To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is. The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc,</p>
 
                      <div class="text-muted mt-4">

@@ -8,6 +8,8 @@
     <title>Laravel</title>
     <link href="assets\css\bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
     <link href="assets\css\app.min.css" id="app-style" rel="stylesheet" type="text/css">
+    <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
+    <link href="assets\css\boxicons.min.css" rel="stylesheet" type="text/css">
     @php
     $routeName = Route::currentRouteName();
     @endphp
@@ -17,15 +19,15 @@
 
     @if($cssPath && file_exists(public_path($cssPath)))
     <link href="{{ asset($cssPath) }}" rel="stylesheet" />
-    @endif 
+    @endif
 </head>
 
 <body>
-    @include('layouts.navbar') 
+    @include('layouts.navbar')
     <main class="main-content">
         @yield('content')
 
-    </main> 
+    </main>
     @yield('scripts')
     @php
     $routeName = Route::currentRouteName();
@@ -37,7 +39,7 @@
     @if($cssPath && file_exists(public_path($cssPath)))
     <script src="{{ asset($cssPath) }}"></script>
     @endif
-    
+
 </body>
 
 </html>

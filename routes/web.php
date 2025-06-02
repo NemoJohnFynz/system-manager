@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 
 // Route riêng cho root "/"
 Route::get('/', function () {
-    return view('pages/software_manager.blade'); // hoặc 'welcome', hoặc trang chính của bạn
+    return view('pages/software_manager'); // hoặc 'welcome', hoặc trang chính của bạn
 });
 
 

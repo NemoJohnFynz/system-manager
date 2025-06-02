@@ -38,7 +38,7 @@
             </a>
           </li>
           <li class="item">
-            <a href="#" class="link flex">
+            <a href="/user_list" class="link flex">
               <i class="bx bx-grid-alt"></i>
               <span>Users</span>
             </a>
@@ -51,7 +51,7 @@
           </div>
 
           <li class="item">
-            <a href="#" class="link flex">
+            <a href="/hardware_manager" class="link flex">
               <i class="bx"><svg
                   style="width: 22px;height: 22px;"
                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -68,7 +68,7 @@
             </a>
           </li>
           <li class="item">
-            <a href="/software_overview" class="link flex">
+            <a href="/software_detail" class="link flex">
               <i class="bx bx-folder"></i>
               <span> SoftWare File</span>
             </a>
