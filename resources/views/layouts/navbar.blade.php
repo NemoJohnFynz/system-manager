@@ -111,9 +111,26 @@
   <nav class="navbar flex">
     <i class="bx bx-menu" id="sidebar-open"></i>
     <input type="text" placeholder="Search..." class="search_box" />
-    <span class="nav_image">
+    <!-- <span class="nav_image">
       <img src="images/profile.jpg" alt="logo_img" />
-    </span>
+    </span> -->
+
+    <div class="dropdown d-inline-block">
+      <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img class="rounded-circle header-profile-user" src="images/profile.jpg" alt="Header Avatar">
+        <span class="d-none d-xl-inline-block ml-1">Henry</span>
+        <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <!-- item-->
+        <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a> 
+        <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
+        <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout</a>
+      </div>
+    </div>
+
   </nav>
-</body> 
+</body>
 <script src="{{ asset('js/style/bar/bar.js') }}"></script>
