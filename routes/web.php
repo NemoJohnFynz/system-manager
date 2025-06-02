@@ -17,8 +17,8 @@ Route::get('/{page}', function ($page) {
     if (View::exists($view)) {
         return view($view, ['page' => $page]);
     } else {
-        return view('pages/software_manager');
+        return view('pages_not_found');
     }
-
-    // abort(404);
 })->where('page', '.*');
+
+   
