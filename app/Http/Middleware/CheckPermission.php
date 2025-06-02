@@ -62,7 +62,7 @@ class CheckPermission
             $userPermissions = Cache::remember($cacheKeyUserPermissions, now()->addHours(1), function () use ($userRoles) {
                 return DB::table('role_permissions')
                     ->whereIn('role_name', $userRoles)
-                    ->pluck('permission_name') // Giả định 'permission_name' trong 'role_permissions' là tên quyền chuẩn
+                    ->pluck('permissions_name') // Giả định 'permission_name' trong 'role_permissions' là tên quyền chuẩn
                     ->unique() // Đảm bảo các quyền là duy nhất
                     ->all();
             });

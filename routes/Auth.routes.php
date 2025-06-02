@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\User;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-Route::post('/createUser', [AuthController::class, 'CreateUser']);
+Route::post('/createUser', [AuthController::class, 'CreateUser'])->middleware('check.permission')->name('user.create');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/getuser',[AuthController::class, 'getAuthenticatedUser']);
 Route::patch('/updateuser', [AuthController::class, 'updateUser']);
