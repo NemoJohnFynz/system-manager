@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserModel as UserModel;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -51,7 +51,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        $user = User::create([
+        $user = UserModel::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
         ]);
@@ -247,7 +247,13 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), [
             'fullName' => 'sometimes|string|max:100',
-            'email' => 'sometimes|string|email|max:100|unique:users,email,' . $user->username,
+            'email' => [
+            'sometimes',
+            'string',
+            'email',
+            'max:100',
+            $request->filled('email') ? 'unique:users,email,' . $user->username . ',username' : '',
+        ],
             'phone_number' => 'sometimes|nullable|string|max:12',
         ]);
 

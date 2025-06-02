@@ -18,6 +18,11 @@ class Kernel extends HttpKernel
         'throttle:api',
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
     ],
+    
+];
+    protected $routeMiddleware = [
+    // Các middleware khác...
+    'check.permission' => \App\Http\Middleware\CheckPermission::class,
 ];
 }
 

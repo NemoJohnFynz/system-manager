@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hardware', function (Blueprint $table) {
-            $table->id();
-            $table->string('ip', 25) ->unique();
+            $table->string('ip', 25) ->primary();
             $table->string('dbname',100);
             $table->string('dbversion', 100);
             $table->boolean('isVirtualServer')->default(false); //0 ao, 1 thuc
