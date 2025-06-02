@@ -1,9 +1,10 @@
-window.addEventListener('DOMContentLoaded', () => {
+ function updateMainContentMargin() {
   const navbar = document.getElementById("main_navbar");
-  const layoutContent = document.getElementById("layout-main-content");
-
-  if (navbar && layoutContent) {
-    const navbarHeight = navbar.offsetHeight;
-    layoutContent.style.marginTop = `${navbarHeight}px`;
+  const mainContent = document.getElementById("layout-main-content");
+  if (navbar && mainContent) {
+    mainContent.style.marginTop = `${navbar.offsetHeight}px`;
   }
-});
+}
+
+window.addEventListener("DOMContentLoaded", updateMainContentMargin);
+window.addEventListener("resize", updateMainContentMargin);

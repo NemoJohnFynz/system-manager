@@ -108,14 +108,10 @@
 
     </div>
   </nav>
-  <nav class="navbar flex" id="main_navbar">
+  <nav class="navbar flex flex-row" id="main_navbar">
     <i class="bx bx-menu" id="sidebar-open"></i>
-    <input type="text" placeholder="Search..." class="search_box" />
-    <!-- <span class="nav_image">
-      <img src="images/profile.jpg" alt="logo_img" />
-    </span> -->
-
-    <div class="dropdown d-inline-block">
+    <input type="text" placeholder="Search..." class="search_box" /> 
+    <div class="dropdown">
       <div type="button" class="" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img class="rounded-circle header-profile-user" src="images/profile.jpg" alt="Header Avatar">
         <span class="d-none d-xl-inline-block ml-1">Henry</span>
@@ -132,4 +128,4 @@
 
   </nav>
 </body>
-<script src="{{ asset('js/style/bar/bar.js') }}"></script>
+<script src="{{ asset('js/style/bar.js') }}"></script>

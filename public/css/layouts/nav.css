@@ -160,8 +160,8 @@
      border-radius: 4px;
  }
 
- .sidebar_profile {  
-    padding-bottom: 10px;
+ .sidebar_profile {
+     padding-bottom: 10px;
      gap: 15px;
      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
  }
@@ -180,15 +180,15 @@
 
  .navbar {
      width: calc(100% - 270px);
-     box-shadow: gray 0px 0px 1px; 
+     box-shadow: gray 0px 0px 1px;
      position: fixed;
      top: 0;
-     left: 270px; 
+     left: 270px;
      padding: 10px 20px;
      justify-content: space-between;
-     background: #fff; 
+     background: #fff;
      transition: all 0.4s ease;
-     z-index: 998; 
+     z-index: 998;
  }
 
 
@@ -219,7 +219,8 @@
  }
 
  /* Main Content Area */
- .main-content { 
+ .main-content {
+     margin-top: 66px;
      /* Space for the fixed navbar */
      margin-left: 270px;
      /* Initial margin for the open sidebar */

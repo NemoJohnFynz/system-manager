@@ -3,9 +3,7 @@ const sidebar = document.querySelector(".sidebar");
 const sidebarOpenBtn = document.querySelector("#sidebar-open");
 const sidebarCloseBtn = document.querySelector("#sidebar-close");
 const navbar = document.querySelector(".navbar"); 
-const sidebarLockBtn = document.querySelector("#lock-icon"); 
-
-// Load sidebar lock state from sessionStorage
+const sidebarLockBtn = document.querySelector("#lock-icon");  
 const savedLockState = sessionStorage.getItem("sidebarLocked");
 if (savedLockState === "true") {
   sidebar.classList.add("locked");
