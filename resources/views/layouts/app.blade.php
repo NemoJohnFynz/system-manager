@@ -28,9 +28,8 @@
 
 <body>
     @include('layouts.navbar')
-    <main class="main-content">
+    <main class="main-content" id="layout-main-content">
         @yield('content')
-
     </main>
     @yield('scripts')
     @php
@@ -43,6 +42,7 @@
     <script src="{{ asset($scriptPath) }}"></script>
     @endif
 
+    <script src="js\style\app.js"></script>
     <script src="assets\libs\jquery\jquery.min.js"></script>
     <script src="assets\libs\bootstrap\js\bootstrap.bundle.min.js"></script>
     <script src="assets\libs\metismenu\metisMenu.min.js"></script>
