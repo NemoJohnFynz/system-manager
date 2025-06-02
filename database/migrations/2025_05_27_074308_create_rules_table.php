@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('is_delete')->default(false);
             $table->dateTime('date_release');
             $table->foreign('category_id')->references('id')->on('category_rule')->onDelete('cascade');
+            $table->foreign('username')->references('username')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
