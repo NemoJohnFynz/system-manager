@@ -38,7 +38,7 @@
             </a>
           </li>
           <li class="item">
-            <a href="/user_list" class="link flex">
+            <a data-key="users" class="link flex">
               <i class="bx bx-grid-alt"></i>
               <span>Users</span>
             </a>
@@ -51,7 +51,7 @@
           </div>
 
           <li class="item">
-            <a href="/hardware_manager" class="link flex">
+            <a data-key="hardware" class="link flex">
               <i class="bx"><svg
                   style="width: 22px;height: 22px;"
                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -60,21 +60,20 @@
               <span>hardware</span>
             </a>
           </li>
-
           <li class="item">
-            <a href="/software_manager" class="link flex">
+            <a data-key="software" class="link flex">
               <i class="bx bx-cloud-upload"></i>
               <span>SoftWare</span>
             </a>
           </li>
           <li class="item">
-            <a href="/software_detail" class="link flex">
+            <a data-key="software_file" class="link flex">
               <i class="bx bx-folder"></i>
               <span> SoftWare File</span>
             </a>
           </li>
           <li class="item">
-            <a href="#" class="link flex">
+            <a data-key="rule" class="link flex">
               <i class="bx bxs-magic-wand"></i>
               <span>rule</span>
             </a>
@@ -109,15 +108,20 @@
     </div>
   </nav>
   <nav class="navbar flex flex-row" id="main_navbar">
-    <i class="bx bx-menu" id="sidebar-open"></i>
-    <input type="text" placeholder="Search..." class="search_box" /> 
+    <i class="bx bx-menu" id="sidebar-open"></i> 
+    <form class="app-search d-none d-lg-block ">
+      <div class="position-relative">
+        <input type="text" class="form-control" placeholder="Search...">
+        <span class="bx bx-search-alt"></span>
+      </div>
+    </form> 
     <div class="dropdown">
       <div type="button" class="" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img class="rounded-circle header-profile-user" src="images/profile.jpg" alt="Header Avatar">
         <span class="d-none d-xl-inline-block ml-1">Henry</span>
         <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
       </div>
-      <div class="dropdown-menu dropdown-menu-right"> 
+      <div class="dropdown-menu dropdown-menu-right">
         <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>
         <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
         <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>

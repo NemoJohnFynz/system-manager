@@ -244,12 +244,7 @@
 
  /* Responsive */
  @media screen and (max-width: 1100px) {
-
-     /* 
-        .sidebar.close~.navbar {
-            left: calc(55px + 20px);
-            width: calc(100% - (55px + 20px));
-        } */
+ 
      .sidebar.close~.navbar {
          left: calc(0px);
          width: calc(100%);
@@ -266,7 +261,7 @@
      }
  }
 
- @media screen and (max-width: 800px) {
+ @media screen and (max-width: 1200px) {
      .sidebar {
          left: 0;
          z-index: 1000;

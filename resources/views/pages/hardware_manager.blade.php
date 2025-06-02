@@ -40,10 +40,10 @@
                       <div class="card-footer bg-transparent border-top">
                           <div class="contact-links d-flex font-size-20">
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Message"><i class="bx bx-message-square-dots"></i></a>
+                                  <a href="" data-toggle="tooltip" data-placement="top" title="edit"><i class="bx bx-wrench"></i></a>
                               </div>
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Projects"><i class="bx bx-pie-chart-alt"></i></a>
+                                  <a href="" data-toggle="tooltip" data-placement="top" title="Log"><i class="bx bx-pie-chart-alt"></i></a>
                               </div>
                               <div class="flex-fill">
                                   <a href="" data-toggle="tooltip" data-placement="top" title="Profile"><i class="bx bx-user-circle"></i></a>
@@ -55,8 +55,10 @@
               <div class="col-xl-3 col-sm-6">
                   <div class="card text-center">
                       <div class="card-body">
-                          <div class="mb-4">
-                              <img class="rounded-circle avatar-sm" src="assets\images\users\avatar-2.jpg" alt="">
+                          <div class="avatar-sm mx-auto mb-4">
+                              <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-16">
+                                  L
+                              </span>
                           </div>
                           <h5 class="font-size-15"><a href="#" class="text-dark">linux</a></h5>
                           <p class="text-muted">Frontend Developer</p>
@@ -70,10 +72,10 @@
                       <div class="card-footer bg-transparent border-top">
                           <div class="d-flex font-size-20 contact-links">
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Message"><i class="bx bx-message-square-dots"></i></a>
+                                  <a href="" data-toggle="tooltip" data-placement="top" title="edit"><i class="bx bx-wrench"></i></a>
                               </div>
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Projects"><i class="bx bx-pie-chart-alt"></i></a>
+                                  <a href="" data-toggle="tooltip" data-placement="top" title="Log"><i class="bx bx-pie-chart-alt"></i></a>
                               </div>
                               <div class="flex-fill">
                                   <a href="" data-toggle="tooltip" data-placement="top" title="Profile"><i class="bx bx-user-circle"></i></a>
@@ -85,8 +87,10 @@
               <div class="col-xl-3 col-sm-6">
                   <div class="card text-center">
                       <div class="card-body">
-                          <div class="mb-4">
-                              <img class="rounded-circle avatar-sm" src="assets\images\users\avatar-3.jpg" alt="">
+                          <div class="avatar-sm mx-auto mb-4">
+                              <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-16">
+                                  W
+                              </span>
                           </div>
                           <h5 class="font-size-15"><a href="#" class="text-dark">Win</a></h5>
                           <p class="text-muted">Backend Developer</p>
@@ -100,10 +104,10 @@
                       <div class="card-footer bg-transparent border-top">
                           <div class="d-flex font-size-20 contact-links">
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Message"><i class="bx bx-message-square-dots"></i></a>
+                                  <a href="" data-toggle="tooltip" data-placement="top" title="edit"> <i class="bx bx-wrench"></i> </a>
                               </div>
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Projects"><i class="bx bx-pie-chart-alt"></i></a>
+                                  <a href="" data-toggle="tooltip" data-placement="top" title="Log"><i class="bx bx-pie-chart-alt"></i></a>
                               </div>
                               <div class="flex-fill">
                                   <a href="" data-toggle="tooltip" data-placement="top" title="Profile"><i class="bx bx-user-circle"></i></a>
@@ -132,7 +136,7 @@
                       <div class="card-footer bg-transparent border-top">
                           <div class="d-flex font-size-20 contact-links">
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Message"><i class="bx bx-message-square-dots"></i></a>
+                                  <a href="" data-toggle="tooltip" data-placement="top" title="Message"><i class="bx bx-wrench"></i></a>
                               </div>
                               <div class="flex-fill">
                                   <a href="" data-toggle="tooltip" data-placement="top" title="Projects"><i class="bx bx-pie-chart-alt"></i></a>
