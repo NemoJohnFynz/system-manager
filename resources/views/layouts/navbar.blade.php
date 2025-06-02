@@ -115,6 +115,5 @@
       <img src="images/profile.jpg" alt="logo_img" />
     </span>
   </nav>
-</body>
-
+</body> 
 <script src="{{ asset('js/style/bar/bar.js') }}"></script>

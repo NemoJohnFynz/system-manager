@@ -8,16 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
 function initLoginForm() {
     const form = document.getElementById("loginForm");
     if (!form) return;
-
     const errorDiv = document.getElementById("error");
     const csrfToken = getCsrfToken();
-
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         errorDiv.textContent = "";
-
         const formData = new FormData(form);
-
         try {
             const res = await fetch(form.action, {
                 method: "POST",
@@ -27,7 +23,6 @@ function initLoginForm() {
                 },
                 body: formData,
             });
-
             const data = await res.json();
 
             // $credentials = $request->only('email', 'password');

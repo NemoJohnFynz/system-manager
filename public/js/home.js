@@ -4,6 +4,7 @@ const sidebarOpenBtn = document.querySelector("#sidebar-open");
 const sidebarCloseBtn = document.querySelector("#sidebar-close");
 const sidebarLockBtn = document.querySelector("#lock-icon");
 // Function to toggle the lock state of the sidebar
+console.log('home.js Running');
 const toggleLock = () => {
   sidebar.classList.toggle("locked");
   // If the sidebar is not locked
