@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User as ModelsUser;
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -57,7 +57,7 @@ class UserController extends Controller
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['please login to use the function'], 404);
             }
-            $users = ModelsUser::all();
+            $users = UserModel::all();
             return response()->json([
                 'status' => 'success',
                 'users' => $users,
@@ -86,25 +86,29 @@ class UserController extends Controller
     }
 
     public function getUserByName(Request $request)
-{
+    {
     try {
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['please login to use the function'], 404);
         }
-        $name = $request->query('name'); // Lấy từ query parameter
+        $name = $request->query('fullName'); // Lấy từ query parameter
         if (!$name) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Name is required.',
             ], 400);
         }
-        $users = ModelsUser::where('fullName', 'like', '%' . $name . '%')->get();
+        $users = UserModel::where('fullName', 'like', '%' . $name . '%')->get();
         if ($users->isEmpty()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'User not found.'
             ], 404);
         }
+        return response()->json([
+            'status' => 'success',
+            'users' => $users,
+        ]);
     } catch (ModelNotFoundException $e) {
         return response()->json([
             'status' => 'error',
@@ -146,7 +150,7 @@ public function getUserByUSerName(Request $request)
                 'message' => 'Username is required.',
             ], 400);
         }
-        $user = ModelsUser::where('username', $username)->firstOrFail();
+        $user = UserModel::where('username', 'like', '%' . $username . '%')->get();
         return response()->json([
             'status' => 'success',
             'user' => $user,

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class roles extends Model
+class rolesModel extends Model
 {
 
     public $primaryKey = 'role_name';
