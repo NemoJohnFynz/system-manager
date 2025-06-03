@@ -230,7 +230,7 @@
                                      class="text-muted font-weight-medium">
                                      Trạng thái phần cứng
                                  </p>
-                                 <h4 class="mb-0">đang hoạt động</h4>
+                                 <h4 class="mb-0 text-success">đang hoạt động</h4>
                              </div>
 
                              <div
