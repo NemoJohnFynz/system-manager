@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class domainModel extends Model
+{   
+
+    protected $fillable = [
+        'software_id',
+        'name',
+        'link',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
+
+    public function software()
+    {
+        return $this->belongsTo('App\Models\softwareModel', 'software_id', 'id');
+    }
+
+}

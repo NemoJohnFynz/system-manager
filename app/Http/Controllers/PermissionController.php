@@ -49,14 +49,14 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    public function getPermissionById($id)
+    public function getPermissionByName($name)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);
             }
 
-            $permission = DB::table('permissions')->where('id', $id)->first();
+            $permission = DB::table('permissions')->where('permissions_name', $name)->first();
 
             if (!$permission) {
                 return response()->json([
@@ -111,7 +111,7 @@ class PermissionController extends Controller
             }
 
             $permission = DB::table('permissions')->insert([
-                'user_creately' => $user->id,
+                'user_creately' => $user->username,
                 'permissions_name' => $request->permissions_name,
                 'type' => $request->type,
                 'created_at' => now(),
@@ -121,6 +121,13 @@ class PermissionController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Permission created successfully.',
+                'permission' => [
+                    'permissions_name' => $request->permissions_name,
+                    'type' => $request->type,
+                    'user_creately' => $user->username,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
             ]);
         } catch (TokenExpiredException $e) {
             return response()->json([
@@ -144,7 +151,7 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    public function updatePermission(Request $request, $id)
+    public function updatePermission(Request $request, $name)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -163,7 +170,7 @@ class PermissionController extends Controller
                 ], 422);
             }
 
-            $permission = DB::table('permissions')->where('id', $id)->first();
+            $permission = DB::table('permissions')->where('permissions_name', $name)->first();
 
             if (!$permission) {
                 return response()->json([
@@ -172,7 +179,7 @@ class PermissionController extends Controller
                 ], 404);
             }
 
-            DB::table('permissions')->where('id', $id)->update(array_filter($request->only(['permission_name', 'type'])));
+            DB::table('permissions')->where('permissions_name', $name)->update(array_filter($request->only(['permission_name', 'type'])));
 
             return response()->json([
                 'status' => 'success',
@@ -200,14 +207,14 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    public function deletePermission($id)
+    public function deletePermission($name)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);
             }
 
-            $permission = DB::table('permissions')->where('id', $id)->first();
+            $permission = DB::table('permissions')->where('permission_name', $name)->first();
 
             if (!$permission) {
                 return response()->json([
@@ -216,7 +223,7 @@ class PermissionController extends Controller
                 ], 404);
             }
 
-            DB::table('permissions')->where('id', $id)->delete();
+            DB::table('permissions')->where('permissions_name', $name)->delete();
 
             return response()->json([
                 'status' => 'success',
@@ -244,14 +251,14 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    public function getPermissionsByUserId($userId)
+    public function getPermissionsByUser($username)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);
             }
 
-            $permissions = DB::table('permissions')->where('user_creately', $userId)->get();
+            $permissions = DB::table('permissions')->where('user_creately', $username)->get();
 
             return response()->json([
                 'status' => 'success',
@@ -314,42 +321,42 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    public function getPermissionsByName($name)
-    {
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['message' => 'Please login to use this function'], 401);
-            }
+    // public function getPermissionsByName($name)
+    // {
+    //     try {
+    //         if (!$user = JWTAuth::parseToken()->authenticate()) {
+    //             return response()->json(['message' => 'Please login to use this function'], 401);
+    //         }
 
-            $permissions = DB::table('permissions')->where('permission_name', 'like', '%' . $name . '%')->get();
+    //         $permissions = DB::table('permissions')->where('permission_name', 'like', '%' . $name . '%')->get();
 
-            return response()->json([
-                'status' => 'success',
-                'permissions' => $permissions,
-            ]);
-        } catch (TokenExpiredException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token has expired.'
-            ], 401);
-        } catch (TokenInvalidException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token is invalid.'
-            ], 401);
-        } catch (JWTException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token is absent or could not be parsed.'
-            ], 401);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Could not retrieve permissions. ' . $e->getMessage()
-            ], 500);
-        }
-    }
-    public function getPermissionsByUserAndType($userId, $type)
+    //         return response()->json([
+    //             'status' => 'success',
+    //             'permissions' => $permissions,
+    //         ]);
+    //     } catch (TokenExpiredException $e) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => 'Token has expired.'
+    //         ], 401);
+    //     } catch (TokenInvalidException $e) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => 'Token is invalid.'
+    //         ], 401);
+    //     } catch (JWTException $e) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => 'Token is absent or could not be parsed.'
+    //         ], 401);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => 'Could not retrieve permissions. ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+    public function getPermissionsByUserAndType($username, $type)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -357,7 +364,7 @@ class PermissionController extends Controller
             }
 
             $permissions = DB::table('permissions')
-                ->where('user_creately', $userId)
+                ->where('user_creately', $username)
                 ->where('type', $type)
                 ->get();
 
@@ -387,7 +394,7 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    public function getPermissionsByUserAndName($userId, $name)
+    public function getPermissionsByUserAndName($username, $name)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -395,7 +402,7 @@ class PermissionController extends Controller
             }
 
             $permissions = DB::table('permissions')
-                ->where('user_creately', $userId)
+                ->where('user_creately', $username)
                 ->where('permission_name', 'like', '%' . $name . '%')
                 ->get();
 
@@ -463,7 +470,7 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    public function getPermissionsByUserTypeAndName($userId, $type, $name)
+    public function getPermissionsByUserTypeAndName($username, $type, $name)
     {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
@@ -471,88 +478,9 @@ class PermissionController extends Controller
             }
 
             $permissions = DB::table('permissions')
-                ->where('user_creately', $userId)
+                ->where('user_creately', $username)
                 ->where('type', $type)
                 ->where('permission_name', 'like', '%' . $name . '%')
-                ->get();
-
-            return response()->json([
-                'status' => 'success',
-                'permissions' => $permissions,
-            ]);
-        } catch (TokenExpiredException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token has expired.'
-            ], 401);
-        } catch (TokenInvalidException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token is invalid.'
-            ], 401);
-        } catch (JWTException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token is absent or could not be parsed.'
-            ], 401);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Could not retrieve permissions. ' . $e->getMessage()
-            ], 500);
-        }
-    }
-    public function getPermissionsByUserIdAndTypeAndName($userId, $type, $name)
-    {
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['message' => 'Please login to use this function'], 401);
-            }
-
-            $permissions = DB::table('permissions')
-                ->where('user_creately', $userId)
-                ->where('type', $type)
-                ->where('permission_name', 'like', '%' . $name . '%')
-                ->get();
-
-            return response()->json([
-                'status' => 'success',
-                'permissions' => $permissions,
-            ]);
-        } catch (TokenExpiredException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token has expired.'
-            ], 401);
-        } catch (TokenInvalidException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token is invalid.'
-            ], 401);
-        } catch (JWTException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token is absent or could not be parsed.'
-            ], 401);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Could not retrieve permissions. ' . $e->getMessage()
-            ], 500);
-        }
-    }
-    public function getPermissionsByUserIdAndTypeAndNameAndId($userId, $type, $name, $id)
-    {
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['message' => 'Please login to use this function'], 401);
-            }
-
-            $permissions = DB::table('permissions')
-                ->where('user_creately', $userId)
-                ->where('type', $type)
-                ->where('permission_name', 'like', '%' . $name . '%')
-                ->where('id', $id)
                 ->get();
 
             return response()->json([
