@@ -8,6 +8,9 @@ use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('pages/software_manager'); // hoặc 'welcome', hoặc trang chính của bạn
 });
+Route::get('/apis', function () {
+    return view('scribe/index'); // hoặc 'welcome', hoặc trang chính của bạn
+});
 
 
 Route::get('/{page}', function ($page) {

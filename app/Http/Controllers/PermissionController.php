@@ -144,6 +144,7 @@ class PermissionController extends Controller
                 'người dùng' => 'user',
                 'user' => 'user',
                 'quyền hạn' => 'permission',
+                'quyền' => 'permission',
                 'permission' => 'permission',
                 'pháp lý' => 'legal',
                 'legal' => 'legal',
@@ -168,8 +169,8 @@ class PermissionController extends Controller
                 'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create',
                 'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit',
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
-                'xem danh sách' => 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list',
-                'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail'
+                'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
+                'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail'
             ];
 
             $resource = '';
