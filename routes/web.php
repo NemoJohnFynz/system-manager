@@ -6,15 +6,19 @@ use App\Http\Controllers\AuthController;
 
 // Route riêng cho root "/"
 Route::get('/', function () {
-    return view('home'); // hoặc 'welcome', hoặc trang chính của bạn
+    return view('pages/software_manager'); // hoặc 'welcome', hoặc trang chính của bạn
 });
 
 
 Route::get('/{page}', function ($page) {
-    $view = str_replace('/', '.', $page);
+    // Chuyển đổi thành tên view trong thư mục 'pages'
+    $view = 'pages.' . str_replace('/', '.', $page);
 
     if (View::exists($view)) {
-        return view($view, ['page' => $page]); // Truyền page vào view
+        return view($view, ['page' => $page]);
+    } else {
+        return view('pages_not_found');
     }
-    abort(404);
 })->where('page', '.*');
+
+   
