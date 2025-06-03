@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\client\AuthController;
 
 // Route riêng cho root "/"
 Route::get('/', function () {
@@ -23,5 +23,3 @@ Route::get('/{page}', function ($page) {
         return view('pages_not_found');
     }
 })->where('page', '.*');
-
-   

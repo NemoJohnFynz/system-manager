@@ -7,7 +7,7 @@
     <div class="login-logo">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo">
     </div>
-    <form id="loginForm" action="/login" method="POST" autocomplete="off">
+    <form id="loginForm"  autocomplete="off">
         @csrf
         <div class="form-group">
             <input
@@ -16,7 +16,7 @@
                 required
                 class="form-input"
                 placeholder=" "
-                autocomplete="username">
+                autocomplete="username">    
             <label class="form-label">Username</label>
         </div>
         <div class="form-group">
@@ -34,8 +34,5 @@
     <div id="error"></div>
 </div>
 <div class="bg-login">
-</div>
-<style>
-
-</style>
+</div> 
 <script src="{{ asset('js/login.js') }}"></script>

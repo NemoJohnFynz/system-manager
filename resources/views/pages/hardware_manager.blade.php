@@ -46,7 +46,7 @@
                                   <a href="" data-toggle="tooltip" data-placement="top" title="Log"><i class="bx bx-pie-chart-alt"></i></a>
                               </div>
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Profile"><i class="bx bx-user-circle"></i></a>
+                                  <a href="/hardware_detail"  title="Detail"><i class="bx bx-user-circle"></i></a>
                               </div>
                           </div>
                       </div>
@@ -78,7 +78,7 @@
                                   <a href="" data-toggle="tooltip" data-placement="top" title="Log"><i class="bx bx-pie-chart-alt"></i></a>
                               </div>
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Profile"><i class="bx bx-user-circle"></i></a>
+                                  <a href="hardware_detail"   data-placement="top" title="Detail"><i class="bx bx-user-circle"></i></a>
                               </div>
                           </div>
                       </div>
@@ -110,7 +110,7 @@
                                   <a href="" data-toggle="tooltip" data-placement="top" title="Log"><i class="bx bx-pie-chart-alt"></i></a>
                               </div>
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Profile"><i class="bx bx-user-circle"></i></a>
+                                  <a href="/hardware_detail" data-toggle="tooltip" data-placement="top" title="Detail"><i class="bx bx-user-circle"></i></a>
                               </div>
                           </div>
                       </div>
@@ -142,7 +142,7 @@
                                   <a href="" data-toggle="tooltip" data-placement="top" title="Projects"><i class="bx bx-pie-chart-alt"></i></a>
                               </div>
                               <div class="flex-fill">
-                                  <a href="" data-toggle="tooltip" data-placement="top" title="Profile"><i class="bx bx-user-circle"></i></a>
+                                  <a href="hardware_detail" data-toggle="tooltip" data-placement="top" title="Detail"><i class="bx bx-user-circle"></i></a>
                               </div>
                           </div>
                       </div>
