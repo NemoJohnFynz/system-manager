@@ -211,22 +211,6 @@
                                  <a href="" class="text-success">@Henry</a>
                                  To an English person it will like simplified
                              </p>
-                             <div class="media mt-3">
-                                 <div class="avatar-xs mr-3">
-                                     <span class="avatar-title rounded-circle bg-soft-primary text-primary font-size-16">
-                                         J
-                                     </span>
-                                 </div>
-                                 <div class="media-body">
-                                     <h5 class="font-size-13 mb-1">Jeffrey Walker</h5>
-                                     <p class="text-muted mb-1">
-                                         as a skeptical Cambridge friend
-                                     </p>
-                                 </div>
-                                 <div class="ml-3">
-                                     <a href="" class="text-primary">Reply</a>
-                                 </div>
-                             </div>
                          </div>
                          <div class="ml-3">
                              <a href="" class="text-primary">Reply</a>

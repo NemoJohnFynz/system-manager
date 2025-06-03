@@ -8,3 +8,5 @@
 
 window.addEventListener("DOMContentLoaded", updateMainContentMargin);
 window.addEventListener("resize", updateMainContentMargin);
+
+

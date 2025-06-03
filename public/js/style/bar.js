@@ -42,9 +42,7 @@ const toggleLock = () => {
     } else {
         sidebar.classList.remove("hoverable");
         sidebarLockBtn.classList.replace("bx-lock-open-alt", "bx-lock-alt");
-    }
-
-    // Save lock state to sessionStorage
+    } 
     sessionStorage.setItem("sidebarLocked", isLocked);
 };
 
