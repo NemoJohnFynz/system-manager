@@ -39,7 +39,7 @@ class userRoleController extends Controller
                 ], 422);
             }
 
-            $user_role = DB::table('role_permissions')->insert([
+            $user_role = DB::table('user_role')->insert([
                 'username' => $request->input('username'),
                 'role_name' => $request->input('role_name'),
                 'assigned_at' => now(),
@@ -49,7 +49,14 @@ class userRoleController extends Controller
             if ($user_role) {
                 return response()->json([
                     'status' => 'success',
-                    'message' => 'User role created successfully'
+                    'message' => 'User role created successfully',
+                    'user role' => [
+                        'username' => $request->input('username'),
+                        'role_name' => $request->input('role_name'),
+                        'assigned_at' => now(),
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]
                 ], 201);
             } else {
                 return response()->json([
@@ -84,8 +91,6 @@ class userRoleController extends Controller
                 'status' => 'error',
                 'message' => 'Could not delete role. ' . $e->getMessage()
             ], 500);
-        }
-
-    
-}
+        }    
+    }
 }
