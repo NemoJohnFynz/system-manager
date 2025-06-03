@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('route_permission', function (Blueprint $table) {
             $table->id();
             $table->string('route_name',100);
-            $table->string('permissions_name',100);
-            $table->timestamps();
+            $table->string('permissions_name',150);
             $table->foreign('permissions_name')->references('permissions_name')->on('permissions');
+            $table->timestamps();
+            
         });
     }
 
-    /**
+    /**5
      * Reverse the migrations.
      */
     public function down(): void

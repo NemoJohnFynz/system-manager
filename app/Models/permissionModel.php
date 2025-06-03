@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class permissionModel extends Model
 {
-    
+    protected $table = 'permissions';
+    protected $primaryKey = 'permissions_name'; // Khóa chính của bảng permissions
+    public $incrementing = false; // Vì khóa chính là string
+    protected $keyType = 'string';
         protected $fillable = [
             'user_creately',
             'permissions_name',
