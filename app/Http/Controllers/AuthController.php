@@ -139,7 +139,7 @@ class AuthController extends Controller
 
         LogController::createLogAuto([
             'username' => $request->username, 
-            'message' => "{$request->username} đã đăng nhập thành công",
+            'message' => "{$request->username} đã đăng nhập vào hệ thống",
         ]);
 
         return response()->json([
