@@ -7,7 +7,7 @@
     <div class="login-logo">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo">
     </div>
-    <form id="loginForm"  autocomplete="off">
+    <form id="loginForm" autocomplete="off">
         @csrf
         <div class="form-group">
             <input
@@ -16,7 +16,7 @@
                 required
                 class="form-input"
                 placeholder=" "
-                autocomplete="username">    
+                autocomplete="username">
             <label class="form-label">Username</label>
         </div>
         <div class="form-group">
@@ -28,6 +28,15 @@
                 placeholder=" "
                 autocomplete="current-password">
             <label class="form-label">Mật khẩu</label>
+        </div>
+        <div class="form-group">
+            <div class="flex items-center justify-between">
+                <label class="flex items-center">
+                    <input type="checkbox" name="remember" class="mr-2">
+                    <span>Nhớ tài khoản</span>
+                </label>
+                <a href="{{ route('password.request') }}" class="text-sm text-blue-500 hover:text-blue-700">Quên mật khẩu?</a>
+            </div>
         </div>
         <button type="submit" class="login-btn">Đăng Nhập</button>
     </form>
