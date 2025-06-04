@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class userRoleModel extends Model
+{
+    protected $table = 'user_role';
+    protected $fillable = [
+        'username',
+        'role_name',
+        'assigned_at',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\UserModel', 'username', 'username');
+    }
+    public function role()
+    {
+        return $this->belongsTo('App\Models\rolesModel', 'role_name', 'role_name');
+    }
+    protected function casts(): array
+    {
+        return [
+            'assigned_at' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
+}
