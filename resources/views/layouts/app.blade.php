@@ -21,8 +21,6 @@
     <link href="{{ asset($cssPath) }}" rel="stylesheet" />
     @endif
 </head>
-
-<body>
     @include('layouts.navbar')
     <main class="main-content" id="layout-main-content">
         @yield('content')
@@ -36,8 +34,7 @@
     @endphp
     @if($scriptPath && file_exists(public_path($scriptPath)))
     <script src="{{ asset($scriptPath) }}"></script>
-    @endif
-
+    @endif 
     <script src="js\style\app.js"></script>
     <script src="assets\libs\jquery\jquery.min.js"></script>
     <script src="assets\libs\bootstrap\js\bootstrap.bundle.min.js"></script>

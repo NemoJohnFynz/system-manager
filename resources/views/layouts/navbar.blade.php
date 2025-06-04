@@ -85,7 +85,7 @@
             <span class="line"></span>
           </div>
           <li class="item">
-            <a href="#" class="link flex">
+            <a href="hardware_detail" class="link flex">
               <i class="bx bx-flag"></i>
               <span>Notice Board</span>
             </a>
