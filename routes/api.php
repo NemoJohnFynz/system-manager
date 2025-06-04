@@ -12,5 +12,3 @@ require __DIR__.'/userRole.routes.php';
 require __DIR__.'/Log.routes.php';
 
 
-// bảng sofware thêm người phân quyền
-// 

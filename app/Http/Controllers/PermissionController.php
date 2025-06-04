@@ -135,7 +135,8 @@ class PermissionController extends Controller
 
             $input = mb_strtolower($request->permissions_name, 'UTF-8');
             $defaultPermission = $request->permissions_name;
-            // Map tiếng Việt sang resource tiếng Anh
+
+            // Map resource và action như cũ...
             $resourceMap = [
                 'phần cứng' => 'hardware',
                 'hardware' => 'hardware',
@@ -164,19 +165,18 @@ class PermissionController extends Controller
                 'system_role' => 'system_role',
             ];
 
-            // Map hành động sang action chuẩn
             $actionMap = [
                 'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create',
                 'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit',
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
                 'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
-                'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail'
+                'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
+                'tìm kiếm' => 'search', 'search' => 'search', 'lấy' => 'get', 'get' => 'get',
             ];
 
             $resource = '';
             $action = '';
 
-            // Tìm resource
             foreach ($resourceMap as $vi => $en) {
                 if (str_contains($input, $vi)) {
                     $resource = $en;
@@ -185,7 +185,6 @@ class PermissionController extends Controller
                 }
             }
 
-            // Tìm action
             foreach ($actionMap as $vi => $en) {
                 if (str_contains($input, $vi)) {
                     $action = $en;
@@ -193,11 +192,19 @@ class PermissionController extends Controller
                 }
             }
 
-            // Nếu không tìm thấy thì giữ nguyên
             if (!$resource) $resource = 'other';
             if (!$action) $action = 'other';
 
             $permissions_name = $resource . '.' . $action;
+
+            // Kiểm tra route_permission đã tồn tại chưa
+            $routeExists = DB::table('route_permission')->where('route_name', $permissions_name)->exists();
+            if ($routeExists) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => "Route name '{$permissions_name}' đã tồn tại trong hệ thống. Permission này có thể đã được thêm trước đó với tên khác."
+                ], 409);
+            }
 
             $now = now();
             DB::table('permissions')->insert([
@@ -217,12 +224,12 @@ class PermissionController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Permission and route_permission created successfully.',
+                'message' => 'Permission và route_permission đã được tạo thành công.',
                 'permission' => [
                     'permissions_name' => $defaultPermission,
                     'type' => $request->type,
                     'user_creately' => $user->username,
-                    'route_permission' =>$permissions_name,
+                    'route_permission' => $permissions_name,
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]
@@ -379,6 +386,8 @@ class PermissionController extends Controller
             ], 500);
         }
     }
+
+    
     public function getUserCreatePermissions(Request $request)
     {
         try {
