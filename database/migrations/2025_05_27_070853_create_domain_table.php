@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('software_id');
             $table->text('name');
-            $table->string('link', 500);
+            $table->string('link', 500)->unique();
+            $table->string('createBy',100);
             $table->foreign('software_id')->references('id')->on('software')->onDelete('cascade');
+            $table->foreign('createBy')->references('username')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

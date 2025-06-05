@@ -13,7 +13,12 @@ class logModel extends Model
         'hardware_ip',
         'rule_id',
         'message',
+        'role_id',
         'software_file_id',
+        'link_domain',
+        'sw_permission_user',
+        'hw_permission_user',
+        'permissions_name',
         'is_delete',
     ];
     public function software()
@@ -28,9 +33,29 @@ class logModel extends Model
     {
         return $this->belongsTo('App\Models\rulesModel', 'rule_id', 'id');
     }
+    public function role()
+    {
+        return $this->belongsTo('App\Models\rolesModel', 'role_id', 'id');
+    }
     public function softwareFile()
     {
         return $this->belongsTo('App\Models\softwareFileModel', 'software_file_id', 'id');
+    }
+    public function domain()
+    {
+        return $this->belongsTo('App\Models\domainModel', 'link_domain', 'link');
+    }
+    public function softwarePermission()
+    {
+        return $this->belongsTo('App\Models\softwarePermissionModel', 'sw_permission_user', 'user_name');
+    }
+    public function hardwarePermission()
+    {
+        return $this->belongsTo('App\Models\hardwarePermissionModel', 'hw_permission_user', 'user_name');
+    }
+    public function permission()
+    {
+        return $this->belongsTo('App\Models\permissionModel', 'permissions_name', 'permissions_name');
     }
     public function user()
     {
