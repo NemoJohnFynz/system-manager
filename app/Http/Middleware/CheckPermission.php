@@ -136,6 +136,9 @@ class CheckPermission
                         case 'delete': // Thêm 'delete' nếu có thể dùng
                             $standardizedPermissionAction = 'delete';
                             break;
+                        case 'detail':
+                            $standardizedPermissionAction = 'detail';
+                            break;
                         // Thêm các action tùy chỉnh và ánh xạ của chúng ở đây
                         // ví dụ: case 'export': $standardizedPermissionAction = 'export'; break;
                         default:

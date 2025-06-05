@@ -12,8 +12,61 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+/**
+ * @OA\Info(
+ *     title="Permission API",
+ *     version="1.0.0",
+ *     description="API for managing permissions in the system"
+ * )
+ * @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
+ * )
+ */
 class PermissionController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/getAllPermissions",
+     *     summary="Retrieve all permissions",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permissions", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permissions. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getAllPermissions()
     {
         try {
@@ -49,6 +102,70 @@ class PermissionController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/getPermissionByName",
+     *     summary="Retrieve permissions by name (partial match)",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Name to search for (partial match)",
+     *         required=true,
+     *         @OA\Schema(type="string", example="phân quyền")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permission", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="name is required.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Permission not found.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permission. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getPermissionByName(Request $request)
     {
         try {
@@ -100,20 +217,69 @@ class PermissionController extends Controller
         }
     }
 
-    // /**
-    //  * Create a new permission.
-    //  *
-    //  * @param \Illuminate\Http\Request $request
-    //  * @return \Illuminate\Http\JsonResponse
-    //  * @throws \Tymon\JWTAuth\Exceptions\TokenExpiredException
-    //  */
-    // private function formatPermissionName($permissionsName)
-    // {
-    //     $permissionsName = mb_strtolower($permissionsName, 'UTF-8');
-
-    // }
-    
-
+    /**
+     * @OA\Post(
+     *     path="/api/createPermission",
+     *     summary="Create a new permission",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng", description="Name of the permission"),
+     *             @OA\Property(property="type", type="string", example="user", description="Type of the permission")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Permission và route_permission đã được tạo thành công."),
+     *             @OA\Property(property="permission", type="object",
+     *                 @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                 @OA\Property(property="type", type="string", example="user"),
+     *                 @OA\Property(property="user_creately", type="string", example="admin"),
+     *                 @OA\Property(property="route_permission", type="string", example="user.create"),
+     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=409,
+     *         description="Conflict",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Route name '{permissions_name}' đã tồn tại trong hệ thống. Permission này có thể đã được thêm trước đó với tên khác.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="object", example={"permissions_name": {"The permissions name field is required."}})
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not create permission. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function createPermission(Request $request)
     {
         try {
@@ -171,7 +337,7 @@ class PermissionController extends Controller
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
                 'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
                 'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
-                'tìm kiếm' => 'search', 'search' => 'search', 'lấy' => 'get', 'get' => 'get',
+                'tìm kiếm' => 'get', 'search' => 'get', 'lấy' => 'get', 'get' => 'get',
             ];
 
             $resource = '';
@@ -256,7 +422,69 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    
+
+    /**
+     * @OA\Patch(
+     *     path="/api/updatePermission/{name}",
+     *     summary="Update an existing permission",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Name of the permission to update",
+     *         required=true,
+     *         @OA\Schema(type="string", example="phân quyền người dùng")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="permission_name", type="string", example="phân quyền người dùng mới", description="New name of the permission"),
+     *             @OA\Property(property="type", type="string", example="user", description="New type of the permission")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Permission updated successfully.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Permission not found.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="object", example={"permission_name": {"The permission name field is required."}})
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not update permission. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function updatePermission(Request $request, $name)
     {
         try {
@@ -313,6 +541,62 @@ class PermissionController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/deletePermission",
+     *     summary="Delete a permission",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng", description="Name of the permission to delete")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Permission deleted successfully."),
+     *             @OA\Property(property="permissions", type="string", example="phân quyền người dùng")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="permissions_name is required.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Permission not found.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not delete permission. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function deletePermission(Request $request)
     {
         try {
@@ -387,7 +671,53 @@ class PermissionController extends Controller
         }
     }
 
-    
+    /**
+     * @OA\Get(
+     *     path="/api/getUserCreatePermissions",
+     *     summary="Retrieve permissions created by a user",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="username",
+     *         in="query",
+     *         description="Username of the creator (defaults to authenticated user)",
+     *         required=false,
+     *         @OA\Schema(type="string", example="admin")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permissions", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permissions. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getUserCreatePermissions(Request $request)
     {
         try {
@@ -426,6 +756,54 @@ class PermissionController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/getPermissionsByType",
+     *     summary="Retrieve permissions by type (partial match)",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="Type to search for (partial match)",
+     *         required=true,
+     *         @OA\Schema(type="string", example="user")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permissions", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permissions. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getPermissionsByType(Request $request)
     {
         try {
@@ -433,9 +811,9 @@ class PermissionController extends Controller
                 return response()->json(['message' => 'Please login to use this function'], 401);
             }
 
-            $type = $request->query('type' );
+            $type = $request->query('type');
 
-            $permissions = DB::table('permissions')->where('type', 'like', '%' . $type .'%')->get();
+            $permissions = DB::table('permissions')->where('type', 'like', '%' . $type . '%')->get();
 
             return response()->json([
                 'status' => 'success',
@@ -463,41 +841,61 @@ class PermissionController extends Controller
             ], 500);
         }
     }
-    // public function getPermissionsByName($name)
-    // {
-    //     try {
-    //         if (!$user = JWTAuth::parseToken()->authenticate()) {
-    //             return response()->json(['message' => 'Please login to use this function'], 401);
-    //         }
 
-    //         $permissions = DB::table('permissions')->where('permission_name', 'like', '%' . $name . '%')->get();
-
-    //         return response()->json([
-    //             'status' => 'success',
-    //             'permissions' => $permissions,
-    //         ]);
-    //     } catch (TokenExpiredException $e) {
-    //         return response()->json([
-    //             'status' => 'error',
-    //             'message' => 'Token has expired.'
-    //         ], 401);
-    //     } catch (TokenInvalidException $e) {
-    //         return response()->json([
-    //             'status' => 'error',
-    //             'message' => 'Token is invalid.'
-    //         ], 401);
-    //     } catch (JWTException $e) {
-    //         return response()->json([
-    //             'status' => 'error',
-    //             'message' => 'Token is absent or could not be parsed.'
-    //         ], 401);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'status' => 'error',
-    //             'message' => 'Could not retrieve permissions. ' . $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
+    /**
+     * @OA\Get(
+     *     path="/api/getPermissionsByUserAndType/{username}/{type}",
+     *     summary="Retrieve permissions by user and type",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="username",
+     *         in="path",
+     *         description="Username of the creator",
+     *         required=true,
+     *         @OA\Schema(type="string", example="admin")
+     *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="path",
+     *         description="Type of the permission",
+     *         required=true,
+     *         @OA\Schema(type="string", example="user")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permissions", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permissions. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getPermissionsByUserAndType($username, $type)
     {
         try {
@@ -536,6 +934,61 @@ class PermissionController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/getPermissionsByUserAndName/{username}/{name}",
+     *     summary="Retrieve permissions by user and name (partial match)",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="username",
+     *         in="path",
+     *         description="Username of the creator",
+     *         required=true,
+     *         @OA\Schema(type="string", example="admin")
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Name to search for (partial match)",
+     *         required=true,
+     *         @OA\Schema(type="string", example="phân quyền")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permissions", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permissions. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getPermissionsByUserAndName($username, $name)
     {
         try {
@@ -574,6 +1027,61 @@ class PermissionController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/getPermissionsByTypeAndName/{type}/{name}",
+     *     summary="Retrieve permissions by type and name (partial match)",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="path",
+     *         description="Type of the permission",
+     *         required=true,
+     *         @OA\Schema(type="string", example="user")
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Name to search for (partial match)",
+     *         required=true,
+     *         @OA\Schema(type="string", example="phân quyền")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permissions", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permissions. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getPermissionsByTypeAndName($type, $name)
     {
         try {
@@ -612,6 +1120,68 @@ class PermissionController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/getPermissionsByUserTypeAndName/{username}/{type}/{name}",
+     *     summary="Retrieve permissions by user, type, and name (partial match)",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="username",
+     *         in="path",
+     *         description="Username of the creator",
+     *         required=true,
+     *         @OA\Schema(type="string", example="admin")
+     *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="path",
+     *         description="Type of the permission",
+     *         required=true,
+     *         @OA\Schema(type="string", example="user")
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="path",
+     *         description="Name to search for (partial match)",
+     *         required=true,
+     *         @OA\Schema(type="string", example="phân quyền")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permissions", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permissions. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getPermissionsByUserTypeAndName($username, $type, $name)
     {
         try {
@@ -652,7 +1222,75 @@ class PermissionController extends Controller
         }
     }
 
-
+    /**
+     * @OA\Get(
+     *     path="/api/getPermisionByTime",
+     *     summary="Retrieve permissions by date or date range",
+     *     tags={"Permissions"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="date",
+     *         in="query",
+     *         description="Specific date to filter (format: dd/mm/yyyy)",
+     *         required=false,
+     *         @OA\Schema(type="string", example="01/06/2025")
+     *     ),
+     *     @OA\Parameter(
+     *         name="from",
+     *         in="query",
+     *         description="Start date of range (format: dd/mm/yyyy)",
+     *         required=false,
+     *         @OA\Schema(type="string", example="01/06/2025")
+     *     ),
+     *     @OA\Parameter(
+     *         name="to",
+     *         in="query",
+     *         description="End date of range (format: dd/mm/yyyy)",
+     *         required=false,
+     *         @OA\Schema(type="string", example="05/06/2025")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="permissions", type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(property="permissions_name", type="string", example="phân quyền người dùng"),
+     *                     @OA\Property(property="type", type="string", example="user"),
+     *                     @OA\Property(property="user_creately", type="string", example="admin"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-06-04 10:24:00"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-06-04 10:24:00")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Bạn phải nhập ngày (date) hoặc khoảng ngày (from, to) theo định dạng ngày/tháng/năm.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Token has expired.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="message", type="string", example="Could not retrieve permissions. {error_message}")
+     *         )
+     *     )
+     * )
+     */
     public function getPermisionByTime(Request $request)
     {
         try {
