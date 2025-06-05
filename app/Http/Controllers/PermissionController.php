@@ -337,7 +337,7 @@ class PermissionController extends Controller
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
                 'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
                 'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
-                'tìm kiếm' => 'search', 'search' => 'search', 'lấy' => 'get', 'get' => 'get',
+                'tìm kiếm' => 'get', 'search' => 'get', 'lấy' => 'get', 'get' => 'get',
             ];
 
             $resource = '';
