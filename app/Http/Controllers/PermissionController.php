@@ -338,6 +338,7 @@ class PermissionController extends Controller
                 'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
                 'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
                 'tìm kiếm' => 'get', 'search' => 'get', 'lấy' => 'get', 'get' => 'get',
+
             ];
 
             $resource = '';
@@ -718,6 +719,7 @@ class PermissionController extends Controller
      *     )
      * )
      */
+
     public function getUserCreatePermissions(Request $request)
     {
         try {
