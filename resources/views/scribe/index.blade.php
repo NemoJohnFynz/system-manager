@@ -71,45 +71,118 @@
                 <li class="tocify-item level-1" data-unique="authenticating-requests">
                     <a href="#authenticating-requests">Authenticating requests</a>
                 </li>
-            </ul>
-            <ul id="tocify-header-endpoints" class="tocify-header">
+                            </ul>
+                    <ul id="tocify-header-authentication" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="authentication">
+                    <a href="#authentication">Authentication</a>
+                </li>
+                                    <ul id="tocify-subheader-authentication" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="authentication-POSTapi-login">
+                                <a href="#authentication-POSTapi-login">Log in a user.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-GETapi-getuser">
+                                <a href="#authentication-GETapi-getuser">Get the authenticated user.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-PATCHapi-updateuser">
+                                <a href="#authentication-PATCHapi-updateuser">Update the authenticated user's details.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-PATCHapi-changepassword">
+                                <a href="#authentication-PATCHapi-changepassword">Change the authenticated user's password.</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-endpoints" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="endpoints">
                     <a href="#endpoints">Endpoints</a>
                 </li>
-                <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-documentation">
-                        <a href="#endpoints-GETapi-documentation">Handles the API request and renders the Swagger documentation view.</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-oauth2-callback">
-                        <a href="#endpoints-GETapi-oauth2-callback">Handles the OAuth2 callback and retrieves the required file for the redirect.</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createUser">
-                        <a href="#endpoints-POSTapi-createUser">POST api/createUser</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-login">
-                        <a href="#endpoints-POSTapi-login">POST api/login</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-getuser">
-                        <a href="#endpoints-GETapi-getuser">GET api/getuser</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-updateuser">
-                        <a href="#endpoints-PATCHapi-updateuser">PATCH api/updateuser</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-changepassword">
-                        <a href="#endpoints-PATCHapi-changepassword">PATCH api/changepassword</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-getuserbyid--id-">
-                        <a href="#endpoints-GETapi-getuserbyid--id-">GET api/getuserbyid/{id}</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-getallusers">
-                        <a href="#endpoints-GETapi-getallusers">GET api/getallusers</a>
-                    </li>
-                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createPermission">
-                        <a href="#endpoints-POSTapi-createPermission">POST api/createPermission</a>
-                    </li>
-                </ul>
-            </ul>
-        </div>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-documentation">
+                                <a href="#endpoints-GETapi-documentation">Handles the API request and renders the Swagger documentation view.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-oauth2-callback">
+                                <a href="#endpoints-GETapi-oauth2-callback">Handles the OAuth2 callback and retrieves the required file for the redirect.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createUser">
+                                <a href="#endpoints-POSTapi-createUser">Create a new user.</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getuserbyid--id-">
+                                <a href="#endpoints-GETapi-getuserbyid--id-">GET api/getuserbyid/{id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getallusers">
+                                <a href="#endpoints-GETapi-getallusers">GET api/getallusers</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createPermission">
+                                <a href="#endpoints-POSTapi-createPermission">POST api/createPermission</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getAllPermission">
+                                <a href="#endpoints-GETapi-getAllPermission">GET api/getAllPermission</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByName">
+                                <a href="#endpoints-GETapi-getPermissionByName">GET api/getPermissionByName</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-updatePermission">
+                                <a href="#endpoints-PATCHapi-updatePermission">PATCH api/updatePermission</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-deletePermission">
+                                <a href="#endpoints-DELETEapi-deletePermission">DELETE api/deletePermission</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getAllPermissionsByUser">
+                                <a href="#endpoints-GETapi-getAllPermissionsByUser">GET api/getAllPermissionsByUser</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionsByType">
+                                <a href="#endpoints-GETapi-getPermissionsByType">GET api/getPermissionsByType</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByUserAndType">
+                                <a href="#endpoints-GETapi-getPermissionByUserAndType">GET api/getPermissionByUserAndType</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByUserAndName">
+                                <a href="#endpoints-GETapi-getPermissionByUserAndName">GET api/getPermissionByUserAndName</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByTypeAndName">
+                                <a href="#endpoints-GETapi-getPermissionByTypeAndName">GET api/getPermissionByTypeAndName</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByUserTypeAndName">
+                                <a href="#endpoints-GETapi-getPermissionByUserTypeAndName">GET api/getPermissionByUserTypeAndName</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getPermissionByTime">
+                                <a href="#endpoints-GETapi-getPermissionByTime">GET api/getPermissionByTime</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createRole">
+                                <a href="#endpoints-POSTapi-createRole">POST api/createRole</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-deleteRole">
+                                <a href="#endpoints-DELETEapi-deleteRole">DELETE api/deleteRole</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-updateRole">
+                                <a href="#endpoints-PATCHapi-updateRole">PATCH api/updateRole</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getRoleByName">
+                                <a href="#endpoints-GETapi-getRoleByName">GET api/getRoleByName</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getAllRoles">
+                                <a href="#endpoints-GETapi-getAllRoles">GET api/getAllRoles</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getRolesByUser">
+                                <a href="#endpoints-GETapi-getRolesByUser">GET api/getRolesByUser</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-createRolePermission">
+                                <a href="#endpoints-POSTapi-createRolePermission">POST api/createRolePermission</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-updateRolePermission">
+                                <a href="#endpoints-PATCHapi-updateRolePermission">PATCH api/updateRolePermission</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-deleteRolePermission">
+                                <a href="#endpoints-DELETEapi-deleteRolePermission">DELETE api/deleteRolePermission</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getAllrolePermission">
+                                <a href="#endpoints-GETapi-getAllrolePermission">GET api/getAllrolePermission</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getRolePermissionByName">
+                                <a href="#endpoints-GETapi-getRolePermissionByName">GET api/getRolePermissionByName</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+            </div>
 
         <ul class="toc-footer" id="toc-footer">
             <li style="padding-bottom: 5px;"><a href="{{ route("scribe.postman") }}">View Postman collection</a></li>
