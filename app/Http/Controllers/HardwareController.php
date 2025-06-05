@@ -38,6 +38,7 @@ class HardwareController extends Controller
             return response()->json(['message' => 'Failed to create hardware'], 500);
         }
     }
+
     public function getHardware()
     {
         $hardware = hardwareModel::all();
@@ -76,4 +77,5 @@ class HardwareController extends Controller
         $hardware->delete();
         return response()->json(['message' => 'Hardware deleted successfully']);
     }
+
 }
