@@ -254,6 +254,4 @@ class role_permissionController extends Controller
             ], 500);
         }
     }
-
-
 }
