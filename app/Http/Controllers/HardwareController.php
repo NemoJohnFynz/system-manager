@@ -38,4 +38,42 @@ class HardwareController extends Controller
             return response()->json(['message' => 'Failed to create hardware'], 500);
         }
     }
+    public function getHardware()
+    {
+        $hardware = hardwareModel::all();
+        return response()->json($hardware);
+        if ($hardware->isEmpty()) {
+            return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
+        }
+    }
+    public function getHardwareById(Request $request)
+    {
+        $hardware = hardwareModel::find($request->id);
+        return response()->json($hardware);
+        if (!$hardware) {
+            return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
+        }
+    }
+    //update hardware
+    public function updateHardware(Request $request)
+    {
+        $hardware = hardwareModel::find($request->id);
+        $hardware->name = $request->input('name');
+        $hardware->type = $request->input('type');
+        $hardware->serial_number = $request->input('serial_number');
+        $hardware->location = $request->input('location');
+        $hardware->status = $request->input('status');
+        $hardware->save();
+        return response()->json(['message' => 'Hardware updated successfully', 'data' => $hardware]);
+        if (!$hardware) {
+            return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
+        }
+    }
+    //delete hardware
+    public function deleteHardware(Request $request)
+    {
+        $hardware = hardwareModel::find($request->id);
+        $hardware->delete();
+        return response()->json(['message' => 'Hardware deleted successfully']);
+    }
 }
