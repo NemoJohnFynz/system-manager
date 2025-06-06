@@ -1,49 +1,22 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-
-Route::get('/login', function () {
-    return view('pages/login');
-});
-
-Route::get('/apis', function () {
-    return view('scribe/index');
-});
-
+Route::get('/login', fn() => view('pages/login'));
+Route::get('/apis', fn() => view('scribe/index'));
 Route::middleware(['check.login'])->group(function () {
-
-    Route::get('/', function (Request $request) {
-        $user = $request->attributes->get('user');
-        $permissions = $request->attributes->get('permissions');
-        $permissionMap = [
-            "lấy danh sách người dùng" => "user.detail",
-        ];
-        return view('pages/hardware_detail', [
-            'user' => $user,
-            'permissions' => $permissions,
-            'permissionMap' =>  $permissionMap,
-        ]);
+    $getCommonData = fn(Request $request) => [
+        'user' => $request->attributes->get('user'),
+        'permissions' => $request->attributes->get('permissions'),
+    ];
+    Route::get('/', function (Request $request) use ($getCommonData) {
+        return view('pages/hardware_detail', $getCommonData($request));
     });
-
-    Route::get('/{page}', function ($page, Request $request) {
+    Route::get('/{page}', function ($page, Request $request) use ($getCommonData) {
         $view = 'pages.' . str_replace('/', '.', $page);
-
         if (View::exists($view)) {
-            $user = $request->attributes->get('user');
-            $permissions = $request->attributes->get('permissions');
-            $permissionMap = [
-                "lấy danh sách người dùng" => "user.detail",
-            ];
-            return view($view, [
-                'page' => $page,
-                'user' => $user,
-                'permissions' => $permissions,
-                'permissionMap' =>  $permissionMap,
-            ]);
-        } else {
-            return view('pages_not_found');
+            return view($view, array_merge(['page' => $page], $getCommonData($request)));
         }
+        return view('pages_not_found');
     })->where('page', '.*');
 });

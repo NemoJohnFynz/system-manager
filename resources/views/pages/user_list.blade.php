@@ -1,19 +1,7 @@
  @extends('layouts.app')
  @section('content')
- <div>
-     @php
-     $userPermissionCodes = [];
-
-     if (!empty($permissions) && !empty($permissionMap)) {
-     foreach ($permissions as $permName) {
-     if (isset($permissionMap[$permName])) {
-     $userPermissionCodes[] = $permissionMap[$permName];
-     }
-     }
-     }
-     @endphp
+ <div> 
      @if(in_array('user.detail', $userPermissionCodes))
-     <!-- start page title -->
      <div class="row">
          <div class="col-12">
              <div class="page-title-box d-flex align-items-center justify-content-between">
@@ -21,7 +9,7 @@
              </div>
          </div>
      </div>
-     @endif
+
      <div class="row">
          <div class="col-lg-12">
              <div class="card">
@@ -113,4 +101,5 @@
          </div>
      </div>
  </div> <!-- container-fluid -->
+ @endif
  @endsection

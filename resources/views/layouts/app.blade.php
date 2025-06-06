@@ -35,7 +35,7 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
 @endphp
 @if($scriptPath && file_exists(public_path($scriptPath)))
 <script src="{{ asset($scriptPath) }}"></script>
-@endif
+@endif 
 <script src="js\style\app.js"></script>
 <script src="assets\libs\jquery\jquery.min.js"></script>
 <script src="assets\libs\bootstrap\js\bootstrap.bundle.min.js"></script>
