@@ -117,7 +117,7 @@
     <div class="dropdown">
       <div type="button" class="" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img class="rounded-circle header-profile-user" src="images/profile.jpg" alt="Header Avatar">
-        <span class="d-none d-xl-inline-block ml-1">{{ $user->username }}</span>
+        <span class="d-none d-xl-inline-block ml-1">{{$user->username }}</span>
         <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
       </div>
       <div class="dropdown-menu dropdown-menu-right">

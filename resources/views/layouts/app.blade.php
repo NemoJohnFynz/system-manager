@@ -44,5 +44,8 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
 @yield('scripts')
 
 <script src="/js/app.js"></script>
+<script>
+    console.log("Permissions:", @json($permissions));
+</script>
 
 </html>
