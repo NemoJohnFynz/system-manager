@@ -24,6 +24,7 @@ class HardwareController extends Controller
         }
             // Validate the request data
             $request->validate([
+                'ip' => 'required|string|max:25',
                 'dbname' => 'required|string|max:100',
                 'dbversion' => 'required|string|max:100',
                 'isVirtualServer' => 'required|boolean',
@@ -35,6 +36,7 @@ class HardwareController extends Controller
 
             // Create a new hardware record
             $hardware = new hardwareModel();
+            $hardware->ip = $request->input('ip');
             $hardware->dbname = $request->input('dbname');
             $hardware->dbversion = $request->input('dbversion');
             $hardware->isVirtualServer = $request->input('isVirtualServer');
@@ -47,8 +49,8 @@ class HardwareController extends Controller
             if ($hardware->save()) {
                 LogController::createLogAuto([
                     'username' => $user->username,
-                    'hardware_id' => $hardware->id,
-                    'message' => " user {$user->username} created hardware '{$hardware->name}'.",
+                    'hardware_ip' => $hardware->ip,
+                    'message' => " user {$user->username} created hardware '{$hardware->ip}'.",
                     'is_delete' => false
                 ]);
                 return response()->json(['message' => 'Hardware created successfully', 'data' => $hardware], 201);
