@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\hardwareModel;
+use App\Policies\HardwarePolicy;
+
 
 
 class HardwareController extends Controller
@@ -114,15 +117,33 @@ class HardwareController extends Controller
     }
     public function getHardwareById(Request $request)
     {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['message' => 'Please login to use this function'], 401);
+            }
         $hardware = hardwareModel::find($request->id);
         return response()->json($hardware);
         if (!$hardware) {
             return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
         }
+        } catch (TokenExpiredException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token has expired.'], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token is invalid.'], 401);
+        } catch (JWTException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token is absent or could not be parsed.'], 401);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Could not retrieve hardware. ' . $e->getMessage()], 500);
+        }
     }
     //update hardware
-    public function updateHardware(Request $request)
-    {
+    public function updateHardware(Request $request )
+    {   
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['message' => 'Please login to use this function'], 401);
+            }
+
         $hardware = hardwareModel::find($request->id);
         $hardware->name = $request->input('name');
         $hardware->type = $request->input('type');
@@ -134,12 +155,34 @@ class HardwareController extends Controller
         if (!$hardware) {
             return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
         }
+        } catch (TokenExpiredException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token has expired.'], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token is invalid.'], 401);
+        } catch (JWTException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token is absent or could not be parsed.'], 401);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Could not update hardware. ' . $e->getMessage()], 500);
+        }
     }
     //delete hardware
     public function deleteHardware(Request $request)
-    {
+    {   
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['message' => 'Please login to use this function'], 401);
+            }
         $hardware = hardwareModel::find($request->id);
         $hardware->delete();
         return response()->json(['message' => 'Hardware deleted successfully']);
+        } catch (TokenExpiredException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token has expired.'], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token is invalid.'], 401);
+        } catch (JWTException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Token is absent or could not be parsed.'], 401);
+        }
     }
+
 }
+

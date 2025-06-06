@@ -718,6 +718,7 @@ class PermissionController extends Controller
      *     )
      * )
      */
+
     public function getUserCreatePermissions(Request $request)
     {
         try {

@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
 
 
-Route::post('/createUser', [AuthController::class, 'CreateUser'])->middleware('check.permission')->name('user.create');
+Route::post('/createUser', [AuthController::class, 'CreateUser'])
+    ->middleware('check.permission')
+    ->name('user.create');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/getuser',[AuthController::class, 'getAuthenticatedUser']);
 Route::patch('/updateuser', [AuthController::class, 'updateUser']);
