@@ -29,7 +29,6 @@ class HardwareController extends Controller
                 'isVirtualServer' => 'required|boolean',
                 'HDD' => 'nullable|string|max:50',
                 'RAM' => 'nullable|string|max:50',
-                'is_delete' => 'required|boolean',
                 'services' => 'nullable|string|max:100',
                 'user_createby' => $user->username,
             ]);
@@ -41,7 +40,6 @@ class HardwareController extends Controller
             $hardware->isVirtualServer = $request->input('isVirtualServer');
             $hardware->HDD = $request->input('HDD');
             $hardware->RAM = $request->input('RAM');
-            $hardware->is_delete = $request->input('is_delete');
             $hardware->services = $request->input('services');
             $hardware->user_createby = $user->username;
             $hardware->created_at = now();
