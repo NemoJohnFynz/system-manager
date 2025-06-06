@@ -80,12 +80,36 @@ class HardwareController extends Controller
         }
 
     }
-    public function getHardware()
+    public function getAllHardware()
     {
-        $hardware = hardwareModel::all();
-        return response()->json($hardware);
-        if ($hardware->isEmpty()) {
-            return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['message' => 'Please login to use this function'], 401);
+            }
+            $hardware = hardwareModel::all();
+            return response()->json([
+                'message' => 'All hardware',
+                'data' => $hardware
+            ]);
+            if ($hardware->isEmpty()) {
+                return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
+            }
+        } catch (TokenExpiredException $e) {
+            return response()->json([
+                'message' => 'Token expired'
+            ], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json([
+                'message' => 'Token invalid'
+            ], 401);
+        } catch (JWTException $e) {
+            return response()->json([
+                'message' => 'Token absent or could not be parsed'
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Could not get all hardware'
+            ], 500);
         }
     }
     public function getHardwareById(Request $request)
