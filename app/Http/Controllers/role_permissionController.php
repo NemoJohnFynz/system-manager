@@ -37,6 +37,13 @@ class role_permissionController extends Controller
                 'updated_at' => now()
             ]);
             if ($rolePermission) {
+                LogController::createLogAuto([
+                    'username' => $user->username,
+                    'role_name' => $request->input('role_name'),
+                    'permission_name' => $request->input('permission_name'),
+                    'message' => "User {$user->username} created role permission '{$request->input('role_name')}' with permission '{$request->input('permission_name')}'.",
+                    'is_delete' => false
+                ]);
                 return response()->json(['message' => 'Role permission created successfully'], 201);
             } else {
                 return response()->json(['message' => 'Failed to create role permission'], 500);
@@ -79,38 +86,69 @@ class role_permissionController extends Controller
                     'message' => 'Validation failed', 'errors' => $validator->errors()
                 ], 422);
             }
-            $rolePermission = DB::table('role_permissions')
+
+            // Lấy thông tin cũ
+            $old = DB::table('role_permissions')
+                ->where('role_name', $request->input('role_name'))
+                ->first();
+
+            if (!$old) {
+                return response()->json(['message' => 'Role permission not found'], 404);
+            }
+
+            $oldPermission = $old->permission_name;
+            $newPermission = $request->input('permission_name');
+
+            // Cập nhật
+            $updated = DB::table('role_permissions')
                 ->where('role_name', $request->input('role_name'))
                 ->update([
-                    'permission_name' => $request->input('permission_name'),
+                    'permission_name' => $newPermission,
                     'updated_at' => now()
                 ]);
-            if ($rolePermission) {
+
+            // So sánh thay đổi
+            $changes = [];
+            if ($oldPermission != $newPermission) {
+                $changes[] = "permission_name: '$oldPermission' => '$newPermission'";
+            }
+            $changeString = $changes ? implode(', ', $changes) : 'No changes';
+
+            // Log lại
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'role_name' => $request->input('role_name'),
+                'permission_name' => $newPermission,
+                'message' => "User {$user->username} updated role permission '{$request->input('role_name')}': $changeString",
+                'is_delete' => false
+            ]);
+
+            if ($updated) {
                 return response()->json(['message' => 'Role permission updated successfully'], 200);
             } else {
                 return response()->json(['message' => 'Failed to update role permission'], 500);
             }
-        } catch (TokenExpiredException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token has expired.'
-            ], 401);
-        } catch (TokenInvalidException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token is invalid.'
-            ], 401);
-        } catch (JWTException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Token is absent or could not be parsed.'
-            ], 401);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Could not update permission. ' . $e->getMessage()
-            ], 500);
-        }
+            } catch (TokenExpiredException $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Token has expired.'
+                ], 401);
+            } catch (TokenInvalidException $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Token is invalid.'
+                ], 401);
+            } catch (JWTException $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Token is absent or could not be parsed.'
+                ], 401);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Could not update permission. ' . $e->getMessage()
+                ], 500);
+            }
     }
 
     public function deleteRolePermission(Request $request)
@@ -133,6 +171,13 @@ class role_permissionController extends Controller
                 ->where('permission_name', $request->input('permission_name'))
                 ->delete();
             if ($rolePermission) {
+                LogController::createLogAuto([
+                    'username' => $user->username,
+                    'role_name' => $request->input('role_name'),
+                    'permission_name' => $request->input('permission_name'),
+                    'message' => "User {$user->username} deleted role permission '{$request->input('role_name')}' with permission '{$request->input('permission_name')}'.",
+                    'is_delete' => true
+                ]);
                 return response()->json(['message' => 'Role permission deleted successfully'], 200);
             } else {
                 return response()->json(['message' => 'Failed to delete role permission'], 500);

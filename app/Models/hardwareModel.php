@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class hardwareModel extends Model
 {
+    protected $table = "hardware";
+    protected $primaryKey = 'ip';
+    protected $keyType = 'string';
+    public $incrementing = false;
+    
     protected $fillable = [
         'ip',
         'dbname',

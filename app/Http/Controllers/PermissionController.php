@@ -12,6 +12,8 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+
+
 /**
  * @OA\Info(
  *     title="Permission API",
@@ -333,7 +335,7 @@ class PermissionController extends Controller
 
             $actionMap = [
                 'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create',
-                'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit',
+                'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit', 'sửa thông tin' => 'edit', 'update thông tin' => 'edit',
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
                 'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
                 'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
@@ -386,6 +388,11 @@ class PermissionController extends Controller
                 'permissions_name' => $defaultPermission,
                 'created_at' => $now,
                 'updated_at' => $now,
+            ]);
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'permission_name' => $defaultPermission,
+                'message' => "user $user->username has been create new permission: ' . $defaultPermission",
             ]);
 
             return response()->json([
@@ -513,7 +520,18 @@ class PermissionController extends Controller
                 ], 404);
             }
 
+            $oldName = $permission->permissions_name;
+            $newName = $request->input('permission_name', $oldName);
+
             DB::table('permissions')->where('permissions_name', $name)->update(array_filter($request->only(['permission_name', 'type'])));
+
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'permission_name' => $name,
+                'message' => "User $user->username updated permission from '{$oldName}' => '{$newName}'",
+            ]);
+
+
 
             return response()->json([
                 'status' => 'success',
@@ -629,7 +647,7 @@ class PermissionController extends Controller
 
             // Kiểm tra tồn tại trong permissions
             $permission = DB::table('permissions')->where('permissions_name', $permissionName)->first();
-
+            
             if (!$permission) {
                 return response()->json([
                     'status' => 'error',
@@ -642,6 +660,12 @@ class PermissionController extends Controller
 
             // Xóa trong permissions
             DB::table('permissions')->where('permissions_name', $permissionName)->delete();
+
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'permission_name' => $permissionName,
+                'message' => "User $user->username deleted permission: {$permissionName}",
+            ]);
 
             return response()->json([
                 'status' => 'success',

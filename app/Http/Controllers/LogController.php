@@ -25,7 +25,11 @@ class LogController extends Controller
             'rule_id',
             'message',
             'software_file_id',
-            'is_delete'
+            'link_domain',
+            'sw_permission_user',
+            'hw_permission_user',
+            'permission_name',
+
         ];
          $logData = array_intersect_key($data, array_flip($fields));
 
@@ -51,12 +55,16 @@ class LogController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
-            'software_id' => 'required|integer',
-            'hardware_ip' => 'required|string|max:255',
-            'rule_id' => 'required|integer',
-            'message' => 'required|string|max:1000',
+            'username' => 'nullable|string|max:255',
+            'software_id' => 'nullable|integer',
+            'hardware_ip' => 'nullable|string|max:255',
+            'rule_id' => 'nullable|integer',
+            'message' => 'nullable|string|max:1000',
             'software_file_id' => 'nullable|integer',
+            'link_domain' => 'nullable|string|max:255',
+            'sw_permission_user' => 'nullable|string|max:255',
+            'hw_permission_user' => 'nullable|string|max:255',
+            'permissions_name' => 'nullable|string|max:255',
             'is_delete' => 'boolean'
         ]);
 

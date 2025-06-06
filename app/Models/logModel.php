@@ -18,7 +18,7 @@ class logModel extends Model
         'link_domain',
         'sw_permission_user',
         'hw_permission_user',
-        'permissions_name',
+        'permission_name',
         'is_delete',
     ];
     public function software()
@@ -55,7 +55,7 @@ class logModel extends Model
     }
     public function permission()
     {
-        return $this->belongsTo('App\Models\permissionModel', 'permissions_name', 'permissions_name');
+        return $this->belongsTo('App\Models\permissionModel', 'permission_name', 'permissions_name');
     }
     public function user()
     {
