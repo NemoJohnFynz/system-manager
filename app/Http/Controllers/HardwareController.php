@@ -61,6 +61,7 @@ class HardwareController extends Controller
         }
 
     }
+
     public function getHardware()
     {   
         try {
