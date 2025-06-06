@@ -1,15 +1,16 @@
  @extends('layouts.app')
  @section('content')
- <div> 
-     @if(in_array('user.detail', $userPermissionCodes))
+ <div>
+     @if(in_array('user.list', $userPermissionCodes))
      <div class="row">
-         <div class="col-12">
-             <div class="page-title-box d-flex align-items-center justify-content-between">
-                 <h4 class="mb-0 font-size-18">Users List</h4>
-             </div>
+         <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+             <h4 class="mb-0 font-size-18">Danh sách người dùng</h4>
+             @if(in_array('user.create', $userPermissionCodes))
+             <a href="/users/create" class="btn btn-primary">Thêm người dùng</a>
+             @endif
          </div>
-     </div>
 
+     </div>
      <div class="row">
          <div class="col-lg-12">
              <div class="card">
@@ -53,9 +54,11 @@
                                          </td>
                                          <td>
                                              <ul class="list-inline font-size-20 contact-links mb-0">
+                                                 @if(in_array('user.list', $userPermissionCodes))
                                                  <li class="list-inline-item px-2">
                                                      <a href="" data-toggle="tooltip" data-placement="top" title="Message"><i class="bx bx-trash"></i></a>
                                                  </li>
+                                                 @endif
                                                  <li class="list-inline-item px-2">
                                                      <a href="" data-toggle="tooltip" data-placement="top" title="Profile"><i class="bx bx-wrench"></i></a>
                                                  </li>

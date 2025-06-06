@@ -24,7 +24,9 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $permissions = $view->getData()['permissions'] ?? [];
             $permissionMap = [
-                "lấy danh sách người dùng" => "user.detail",
+                "lấy danh sách người dùng" => "user.list",
+                "xoá người dùng" => "user.delete",
+                "thêm người dùng" => "user.create",
             ];
             $userPermissionCodes = [];
             if (!empty($permissions) && !empty($permissionMap)) {
