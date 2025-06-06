@@ -12,6 +12,7 @@
     <link href="assets/css/materialdesignicons.min.css" rel="stylesheet">
     @php
     $routeName = Route::currentRouteName();
+
     @endphp
     @php
     $cssPath = isset($page) ? 'css/' . $page . '.css' : null;
@@ -21,24 +22,27 @@
     <link href="{{ asset($cssPath) }}" rel="stylesheet" />
     @endif
 </head>
-    @include('layouts.navbar')
-    <main class="main-content" id="layout-main-content">
-        @yield('content')
-    </main>
-    @yield('scripts')
-    @php
-    $routeName = Route::currentRouteName();
-    @endphp
-    @php
-    $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
-    @endphp
-    @if($scriptPath && file_exists(public_path($scriptPath)))
-    <script src="{{ asset($scriptPath) }}"></script>
-    @endif 
-    <script src="js\style\app.js"></script>
-    <script src="assets\libs\jquery\jquery.min.js"></script>
-    <script src="assets\libs\bootstrap\js\bootstrap.bundle.min.js"></script>
-    <script src="assets\libs\metismenu\metisMenu.min.js"></script>
+@include('layouts.navbar')
+<main class="main-content" id="layout-main-content">
+    @yield('content')
+</main>
+@yield('scripts')
+@php
+$routeName = Route::currentRouteName();
+@endphp
+@php
+$scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
+@endphp
+@if($scriptPath && file_exists(public_path($scriptPath)))
+<script src="{{ asset($scriptPath) }}"></script>
+@endif
+<script src="js\style\app.js"></script>
+<script src="assets\libs\jquery\jquery.min.js"></script>
+<script src="assets\libs\bootstrap\js\bootstrap.bundle.min.js"></script>
+<script src="assets\libs\metismenu\metisMenu.min.js"></script>
 </body>
+@yield('scripts')
+
+<script src="/js/app.js"></script>
 
 </html>

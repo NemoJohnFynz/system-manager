@@ -66,7 +66,6 @@ class CheckPermission
                     ->unique() // Đảm bảo các quyền là duy nhất
                     ->all();
             });
-
             // Bước 4: Lấy tên route hiện tại
             $routeName = Route::currentRouteName();
                 if (!$routeName) {
