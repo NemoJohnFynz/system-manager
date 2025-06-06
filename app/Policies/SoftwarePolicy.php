@@ -33,7 +33,7 @@ class SoftwarePolicy
             return $user->hasPermissionTo($permissionName); // Fallback về quyền chung
         }
 
-        // 3. Kiểm tra xem có quy tắc cụ thể trong bảng hardware_permissions
+        // 3. Kiểm tra xem có quy tắc cụ thể trong bảng software_permissions
         // với route_name thay vì permissions_name
         $hasSpecificRules = DB::table('software_permissions')
             ->where('user_name', $user->username)

@@ -24,5 +24,10 @@ class role_permissionModel extends Model
         ];
     }
 
+    public function permissions()
+    {
+        return $this->belongsTo('App\Models\permissionModel', 'permission_name', 'permissions_name');
+    }
+
     
 }

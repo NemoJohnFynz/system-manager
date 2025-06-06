@@ -46,6 +46,13 @@ class userRoleController extends Controller
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
+
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'message' => "User {$user->username} created a new user role: {$request->input('role_name')}.",
+                'is_delete' => false
+            ]);
+
             if ($user_role) {
                 return response()->json([
                     'status' => 'success',

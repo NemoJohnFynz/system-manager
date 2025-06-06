@@ -40,6 +40,13 @@ class rolesController extends Controller
                 'assigned_at' => now(),
             ]);
 
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'role_name' => $request->role_name,
+                'message' => " user {$user->username} created role '{$request->role_name}'.",
+                'is_delete' => false
+            ]);
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Permission created successfully.',
@@ -95,6 +102,14 @@ class rolesController extends Controller
             }
 
             DB::table('roles')->where('role_name', $request->role_name)->delete();
+            
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'role_name' => $request->role_name,
+                'message' => " user {$user->username} deleted role '{$request->role_name}'.",
+                'is_delete' => false
+            ]);
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Role deleted successfully.'
