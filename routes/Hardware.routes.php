@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HardwareController;
+use App\Http\Controllers\HardwarePermissionController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use app\Http\Middleware\CheckPermission;
@@ -13,3 +14,9 @@ Route::get('/getallhardware', [HardwareController::class, 'getAllHardware'])
     ->name('hardware.getAll');
 Route::patch('/updatehardware', [HardwareController::class, 'updateHardware']);
 Route::delete('/deletehardware', [HardwareController::class, 'deleteHardware']);
+
+// harware perrmision controller
+
+Route::post('/createharwarepermission', [HardwarePermissionController::class, 'createHardwarePermission'])
+    ->middleware('check.permission')
+    ->name('hardwarepermission.create');

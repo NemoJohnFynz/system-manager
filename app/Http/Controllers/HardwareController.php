@@ -13,7 +13,7 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\hardwareModel;
-use App\Policies\HardwarePolicy;
+
 
 
 
@@ -98,7 +98,7 @@ class HardwareController extends Controller
     }
     //update hardware
     public function updateHardware(Request $request)
-{
+    {
     try {
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['message' => 'Please login to use this function'], 401);
@@ -113,6 +113,10 @@ class HardwareController extends Controller
         $hardware = hardwareModel::where('ip', $ip)->first();
         if (!$hardware) {
             return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
+        }
+
+        if ($user->cannot('update', $hardware)) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have permission to update this hardware.'], 403);
         }
 
         $oldData = $hardware->only(['dbname', 'dbversion', 'isVirtualServer', 'hdd', 'ram', 'services', 'location', 'status', 'serial_number', 'name', 'type']);
@@ -164,7 +168,7 @@ class HardwareController extends Controller
     }
     //delete hardware
     public function deleteHardware(Request $request)
-{   
+    {   
     try {
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['message' => 'Please login to use this function'], 401);
@@ -181,11 +185,8 @@ class HardwareController extends Controller
             return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
         }
 
-        // Kiểm tra quyền xóa bằng policy
-        if ($user instanceof \App\Models\UserModel) {
-            if ($user->cannot('delete', $hardware)) {
-                return response()->json(['status' => 'error', 'message' => 'You do not have permission to delete this hardware.'], 403);
-            }
+        if ($user->cannot('delete', $hardware)) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have permission to delete this hardware.'], 403);
         }
 
         $hardware->delete();
@@ -226,15 +227,15 @@ class HardwareController extends Controller
             }
 
             return response()->json($hardware);
-        } catch (TokenExpiredException $e) {
-            return response()->json(['status' => 'error', 'message' => 'Token has expired.'], 401);
-        } catch (TokenInvalidException $e) {
-            return response()->json(['status' => 'error', 'message' => 'Token is invalid.'], 401);
-        } catch (JWTException $e) {
-            return response()->json(['status' => 'error', 'message' => 'Token is absent or could not be parsed.'], 401);
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'Could not retrieve hardware. ' . $e->getMessage()], 500);
-        }
+            } catch (TokenExpiredException $e) {
+                return response()->json(['status' => 'error', 'message' => 'Token has expired.'], 401);
+            } catch (TokenInvalidException $e) {
+                return response()->json(['status' => 'error', 'message' => 'Token is invalid.'], 401);
+            } catch (JWTException $e) {
+                return response()->json(['status' => 'error', 'message' => 'Token is absent or could not be parsed.'], 401);
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'error', 'message' => 'Could not retrieve hardware. ' . $e->getMessage()], 500);
+            }
     }
 
 }
