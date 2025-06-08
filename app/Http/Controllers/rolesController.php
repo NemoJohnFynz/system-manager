@@ -356,4 +356,59 @@ class rolesController extends Controller
             ], 500);
         }
     }
+
+    public function getAllUsersFromRole(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['message' => 'Please login to use this function'], 401);
+            }
+
+            $role_name = $request->query('roleName');
+            if (!$role_name) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'role_name is required.'
+                ], 400);
+            }
+
+            $users = DB::table('users')
+                ->join('user_role', 'users.username', '=', 'user_role.username')
+                ->where('user_role.role_name', $role_name)
+                ->select('users.username')
+                ->get();
+
+            if ($users->isEmpty()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'No users found for this role.'
+                ], 404);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $users
+            ]);
+        } catch (TokenExpiredException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token has expired.'
+            ], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid.'
+            ], 401);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is absent or could not be parsed.'
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not retrieve users from role. ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }
