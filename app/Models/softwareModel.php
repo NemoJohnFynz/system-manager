@@ -15,6 +15,7 @@ class softwareModel extends Model
         'createdAt',
         'updatedAt',
         'is_delete',
+        'is_active',
         'description',
     ];
     protected function casts(): array
@@ -23,6 +24,7 @@ class softwareModel extends Model
             'createdAt' => 'datetime',
             'updatedAt' => 'datetime',
             'is_delete' => 'boolean',
+            'is_active' => 'boolean',
             'assigned_at' => 'datetime',
         ];
     }
