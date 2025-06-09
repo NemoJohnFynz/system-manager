@@ -138,7 +138,7 @@ class HardwareController extends Controller
     }
     //update hardware
     public function updateHardware(Request $request )
-    {   
+    {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);
@@ -167,7 +167,7 @@ class HardwareController extends Controller
     }
     //delete hardware
     public function deleteHardware(Request $request)
-    {   
+    {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);

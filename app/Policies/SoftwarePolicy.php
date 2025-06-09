@@ -18,11 +18,11 @@ class SoftwarePolicy
         // 1. Tìm route_name tương ứng với permissions_name từ bảng route_permission
         // Sử dụng cache để tối ưu hóa truy vấn
         $cacheKey = "route_permission_{$permissionName}";
-        $routeName = Cache::remember($cacheKey, now()->addHours(1), function () use ($permissionName) {
-            return DB::table('route_permission')
+        $routeName = Cache::remember($cacheKey, now()->addHours(1), fn() =>
+            DB::table('route_permission')
                 ->where('permissions_name', $permissionName)
-                ->value('route_name');
-        });
+                ->value('route_name')
+        );
 
         // 2. Nếu không tìm thấy route_name, ghi log và fallback
         if (!$routeName) {
