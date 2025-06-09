@@ -12,6 +12,8 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+
+
 /**
  * @OA\Info(
  *     title="Permission API",
@@ -321,19 +323,19 @@ class PermissionController extends Controller
                 'category' => 'category',
                 'phân quyền' => 'role',
                 'role' => 'role',
-                'phân quyền phần cứng' => 'hardware_role',
-                'hardware_role' => 'hardware_role',
-                'phân quyền phần mềm' => 'software_role',
-                'software_role' => 'software_role',
-                'phân quyền người dùng' => 'user_role',
-                'user_role' => 'user_role',
-                'phân quyền hệ thống' => 'system_role',
-                'system_role' => 'system_role',
+                'quyền phần cứng' => 'hardwarepermission',
+                'hardware Permission' => 'hardwarepermission',
+                'quyền phần mềm' => 'softwarepermission',
+                'software permisison' => 'softwarepermission',
+                'quyền người dùng' => 'userrole',
+                'user role' => 'userrole',
+                'quyền hệ thống' => 'systempermission',
+                'system permission' => 'systempermission',
             ];
 
             $actionMap = [
-                'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create',
-                'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit',
+                'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create', 'cấp' => 'create',
+                'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit', 'sửa thông tin' => 'edit', 'update thông tin' => 'edit',
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
                 'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
                 'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
@@ -363,6 +365,8 @@ class PermissionController extends Controller
 
             $permissions_name = $resource . '.' . $action;
 
+            $type = $resource;
+
             // Kiểm tra route_permission đã tồn tại chưa
             $routeExists = DB::table('route_permission')->where('route_name', $permissions_name)->exists();
             if ($routeExists) {
@@ -376,7 +380,7 @@ class PermissionController extends Controller
             DB::table('permissions')->insert([
                 'user_creately' => $user->username,
                 'permissions_name' => $defaultPermission,
-                'type' => $request->type,
+                'type' => $type,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -387,13 +391,18 @@ class PermissionController extends Controller
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'permission_name' => $defaultPermission,
+                'message' => "user $user->username has been create new permission: ' . $defaultPermission",
+            ]);
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Permission và route_permission đã được tạo thành công.',
                 'permission' => [
                     'permissions_name' => $defaultPermission,
-                    'type' => $request->type,
+                    'type' => $type,
                     'user_creately' => $user->username,
                     'route_permission' => $permissions_name,
                     'created_at' => $now,
@@ -494,7 +503,7 @@ class PermissionController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'permission_name' => 'sometimes|required|string|max:255',
-                'type' => 'sometimes|required|string|max:50',
+                // 'type' => 'sometimes|required|string|max:50',
             ]);
 
             if ($validator->fails()) {
@@ -513,7 +522,18 @@ class PermissionController extends Controller
                 ], 404);
             }
 
+            $oldName = $permission->permissions_name;
+            $newName = $request->input('permission_name', $oldName);
+
             DB::table('permissions')->where('permissions_name', $name)->update(array_filter($request->only(['permission_name', 'type'])));
+
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'permission_name' => $name,
+                'message' => "User $user->username updated permission from '{$oldName}' => '{$newName}'",
+            ]);
+
+
 
             return response()->json([
                 'status' => 'success',
@@ -629,7 +649,7 @@ class PermissionController extends Controller
 
             // Kiểm tra tồn tại trong permissions
             $permission = DB::table('permissions')->where('permissions_name', $permissionName)->first();
-
+            
             if (!$permission) {
                 return response()->json([
                     'status' => 'error',
@@ -642,6 +662,12 @@ class PermissionController extends Controller
 
             // Xóa trong permissions
             DB::table('permissions')->where('permissions_name', $permissionName)->delete();
+
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'permission_name' => $permissionName,
+                'message' => "User $user->username deleted permission: {$permissionName}",
+            ]);
 
             return response()->json([
                 'status' => 'success',
@@ -999,7 +1025,7 @@ class PermissionController extends Controller
 
             $permissions = DB::table('permissions')
                 ->where('user_creately', $username)
-                ->where('permission_name', 'like', '%' . $name . '%')
+                ->where('permissions_name', 'like', '%' . $name . '%')
                 ->get();
 
             return response()->json([
@@ -1358,6 +1384,42 @@ class PermissionController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Could not retrieve permissions. ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getAllTypePermission(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['message' => 'Please login to use this function'], 401);
+            }
+
+            $types = DB::table('permissions')->distinct()->pluck('type');
+
+            return response()->json([
+                'status' => 'success',
+                'types' => $types,
+            ]);
+        } catch (TokenExpiredException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token has expired.'
+            ], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid.'
+            ], 401);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is absent or could not be parsed.'
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not retrieve types. ' . $e->getMessage()
             ], 500);
         }
     }
