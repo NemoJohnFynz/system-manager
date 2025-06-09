@@ -82,10 +82,18 @@ class HardwareController extends Controller
             }
 
         $hardware = hardwareModel::all();
-        return response()->json($hardware);
+        $total = $hardware->count();
+
         if ($hardware->isEmpty()) {
-            return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
+            return response()->json(['status' => 'error', 'message' => 'No hardware found', 'total' => 0], 404);
         }
+
+        return response()->json([
+            'status' => 'success',
+            'total' => $total,
+            'data' => $hardware
+        ]);
+        
         } catch (TokenExpiredException $e) {
             return response()->json(['status' => 'error', 'message' => 'Token has expired.'], 401);
         } catch (TokenInvalidException $e) {
