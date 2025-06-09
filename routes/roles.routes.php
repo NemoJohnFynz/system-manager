@@ -36,3 +36,4 @@ route::get('/getrolebyuserandname', [rolesController::class, 'getRoleByUserAndNa
 route::get('/getalluserformrole', [rolesController::class, 'getAllUsersFromRole'])
     ->middleware('check.permission')
     ->name('role.list');
+
