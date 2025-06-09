@@ -323,18 +323,18 @@ class PermissionController extends Controller
                 'category' => 'category',
                 'phân quyền' => 'role',
                 'role' => 'role',
-                'phân quyền phần cứng' => 'hardware_role',
-                'hardware_role' => 'hardware_role',
-                'phân quyền phần mềm' => 'software_role',
-                'software_role' => 'software_role',
-                'phân quyền người dùng' => 'user_role',
-                'user_role' => 'user_role',
-                'phân quyền hệ thống' => 'system_role',
-                'system_role' => 'system_role',
+                'quyền phần cứng' => 'hardwarepermission',
+                'hardware Permission' => 'hardwarepermission',
+                'quyền phần mềm' => 'softwarepermission',
+                'software permisison' => 'softwarepermission',
+                'quyền người dùng' => 'userrole',
+                'user role' => 'userrole',
+                'quyền hệ thống' => 'systempermission',
+                'system permission' => 'systempermission',
             ];
 
             $actionMap = [
-                'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create',
+                'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create', 'cấp' => 'create',
                 'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit', 'sửa thông tin' => 'edit', 'update thông tin' => 'edit',
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
                 'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
@@ -365,6 +365,8 @@ class PermissionController extends Controller
 
             $permissions_name = $resource . '.' . $action;
 
+            $type = $resource;
+
             // Kiểm tra route_permission đã tồn tại chưa
             $routeExists = DB::table('route_permission')->where('route_name', $permissions_name)->exists();
             if ($routeExists) {
@@ -378,7 +380,7 @@ class PermissionController extends Controller
             DB::table('permissions')->insert([
                 'user_creately' => $user->username,
                 'permissions_name' => $defaultPermission,
-                'type' => $request->type,
+                'type' => $type,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -400,7 +402,7 @@ class PermissionController extends Controller
                 'message' => 'Permission và route_permission đã được tạo thành công.',
                 'permission' => [
                     'permissions_name' => $defaultPermission,
-                    'type' => $request->type,
+                    'type' => $type,
                     'user_creately' => $user->username,
                     'route_permission' => $permissions_name,
                     'created_at' => $now,
@@ -501,7 +503,7 @@ class PermissionController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'permission_name' => 'sometimes|required|string|max:255',
-                'type' => 'sometimes|required|string|max:50',
+                // 'type' => 'sometimes|required|string|max:50',
             ]);
 
             if ($validator->fails()) {
@@ -1023,7 +1025,7 @@ class PermissionController extends Controller
 
             $permissions = DB::table('permissions')
                 ->where('user_creately', $username)
-                ->where('permission_name', 'like', '%' . $name . '%')
+                ->where('permissions_name', 'like', '%' . $name . '%')
                 ->get();
 
             return response()->json([
@@ -1382,6 +1384,42 @@ class PermissionController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Could not retrieve permissions. ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getAllTypePermission(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['message' => 'Please login to use this function'], 401);
+            }
+
+            $types = DB::table('permissions')->distinct()->pluck('type');
+
+            return response()->json([
+                'status' => 'success',
+                'types' => $types,
+            ]);
+        } catch (TokenExpiredException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token has expired.'
+            ], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid.'
+            ], 401);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is absent or could not be parsed.'
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not retrieve types. ' . $e->getMessage()
             ], 500);
         }
     }
