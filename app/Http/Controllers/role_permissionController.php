@@ -29,6 +29,53 @@ class role_permissionController extends Controller
                     'message' => 'Validation failed', 'errors' => $validator->errors()
                 ], 422);
             }
+
+            // Lấy type của permission
+            $permission = DB::table('permissions')->where('permissions_name', $request->input('permission_name'))->first();
+            if (!$permission) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Permission not found.'
+                ], 404);
+            }
+            $permissionType = $permission->type;
+
+            // Kiểm tra role có phù hợp với permission type không
+            $roleName = mb_strtolower($request->input('role_name'), 'UTF-8');
+            $roleType = null;
+            if (str_contains($roleName, 'phần cứng') || str_contains($roleName, 'hardware')) {
+                $roleType = 'hardware';
+            } elseif (str_contains($roleName, 'phần mềm') || str_contains($roleName, 'software')) {
+                $roleType = 'software';
+            } elseif (str_contains($roleName, 'người dùng') || str_contains($roleName, 'user')) {
+                $roleType = 'user';
+            } elseif (str_contains($roleName, 'hệ thống') || str_contains($roleName, 'system')) {
+                $roleType = 'system';
+            }  elseif (str_contains($roleName, 'quản trị') || str_contains($roleName, 'admin')) {
+                $roleType = 'admin';
+            }
+            
+
+            // Nếu xác định được roleType và nó khác permissionType thì báo lỗi
+            if ($roleType && $roleType !== $permissionType) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => "Role '{$request->input('role_name')}' is not allowed to add permission of type '{$permissionType}'."
+                ], 422);
+            }
+
+            // Kiểm tra trùng lặp
+            $exists = DB::table('role_permissions')
+                ->where('role_name', $request->input('role_name'))
+                ->where('permission_name', $request->input('permission_name'))
+                ->exists();
+            if ($exists) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'This permission is already assigned to the role.'
+                ], 409);
+            }
+
             $rolePermission = DB::table('role_permissions')->insert([
                 'role_name' => $request->input('role_name'),
                 'permission_name' => $request->input('permission_name'),
