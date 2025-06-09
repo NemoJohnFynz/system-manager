@@ -32,6 +32,8 @@ class HardwareController extends Controller
             'dbname' => 'required|string|max:100',
             'dbversion' => 'required|string|max:100|unique:hardware,serial_number',
             'isVirtualServer' => 'nullable|string|max:255',
+            'OS' => 'required|string|max:100',
+            'OSver' => 'required|string|max:100',
             'hdd' => 'required|in:active,inactive,maintenance',
             'ram'=> 'required|in:active,inactive,maintenance',
             'services' => 'string|max:255',
@@ -44,11 +46,12 @@ class HardwareController extends Controller
         $hardware->dbname = $request->input('dbname');
         $hardware->dbversion = $request->input('dbversion');
         $hardware->isVirtualServer = $request->input('isVirtualServer');
+        $hardware->OS = $request->input('OS');
+        $hardware->OSver = $request->input('OSver');
         $hardware->hdd = $request->input('hdd');
         $hardware->ram = $request->input('ram');
         $hardware->services = $request->input('services');
         $hardware->created_by = $user->username;
-        
         // Save the hardware record
         if ($hardware->save()) {
             LogController::createLogAuto([
@@ -128,24 +131,22 @@ class HardwareController extends Controller
             return response()->json(['status' => 'error', 'message' => 'You do not have permission to update this hardware.'], 403);
         }
 
-        $oldData = $hardware->only(['dbname', 'dbversion', 'isVirtualServer', 'hdd', 'ram', 'services', 'location', 'status', 'serial_number', 'name', 'type']);
+        $oldData = $hardware->only(['ip','dbname', 'dbversion', 'isVirtualServer', 'OS', 'OSver', 'hdd', 'ram', 'services']);
 
         // Cập nhật các trường nếu có truyền lên
-        $hardware->name = $request->input('name', $hardware->name);
-        $hardware->type = $request->input('type', $hardware->type);
-        $hardware->serial_number = $request->input('serial_number', $hardware->serial_number);
-        $hardware->location = $request->input('location', $hardware->location);
-        $hardware->status = $request->input('status', $hardware->status);
+        $hardware->ip = $request->input('ip', $hardware->ip);
         $hardware->dbname = $request->input('dbname', $hardware->dbname);
         $hardware->dbversion = $request->input('dbversion', $hardware->dbversion);
         $hardware->isVirtualServer = $request->input('isVirtualServer', $hardware->isVirtualServer);
+        $hardware->OS = $request->input('OS', $hardware->OS);
+        $hardware->OSver = $request->input('OSver', $hardware->OSver);
         $hardware->hdd = $request->input('hdd', $hardware->hdd);
         $hardware->ram = $request->input('ram', $hardware->ram);
         $hardware->services = $request->input('services', $hardware->services);
 
         $hardware->save();
 
-        $newData = $hardware->only(['dbname', 'dbversion', 'isVirtualServer', 'hdd', 'ram', 'services', 'location', 'status', 'serial_number', 'name', 'type']);
+        $newData = $hardware->only(['ip','dbname', 'dbversion', 'isVirtualServer', 'OS', 'OSver', 'hdd', 'ram', 'services']);
 
         // So sánh và tạo chuỗi thay đổi
         $changes = [];
@@ -177,7 +178,7 @@ class HardwareController extends Controller
     }
     //delete hardware
     public function deleteHardware(Request $request)
-    {   
+    {
     try {
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['message' => 'Please login to use this function'], 401);

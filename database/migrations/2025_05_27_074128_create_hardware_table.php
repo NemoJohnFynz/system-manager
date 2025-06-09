@@ -16,10 +16,13 @@ return new class extends Migration
             $table->string('dbname',100);
             $table->string('dbversion', 100);
             $table->boolean('isVirtualServer')->default(false); //0 ao, 1 thuc
+            $table->string('OS', 100);
+            $table->string('OSver', 100);
             $table->string('hdd', 50);
             $table->string('ram', 50);
             $table->boolean('is_delete')->default(false);
             $table->text('services');
+            $table->boolean('is_active')->default(true);
             $table->string('created_by', 100);
             $table->foreign('created_by')->references('username')->on('users')->onDelete('cascade');
             $table->timestamps();
