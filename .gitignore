@@ -22,3 +22,6 @@ yarn-error.log
 /.vscode
 /.zed
 ca.pem
+cacert.pem
+/config/credentials.json
+client.json

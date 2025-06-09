@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\User;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -19,3 +20,4 @@ route::get('/getallusers', [UserController::class, 'getAllUsers'])->middleware('
 route::get('/getuserbyname', [UserController::class, 'getUserByName']);
 route::get('/getuserbyusername', [UserController::class,'getUserByUsername']);
 
+route::get('/sendmail', [MailController::class, 'sendEmail'])->name('mail.send');
