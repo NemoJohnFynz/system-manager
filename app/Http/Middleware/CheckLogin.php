@@ -31,7 +31,7 @@ class CheckLogin
 
             // Lấy tất cả permission_name từ username
             $username = $user->username;
-
+            //sửa lại đoạn sau thành gọi controller
             $permissions = DB::table('user_role')
                 ->join('roles', 'user_role.role_name', '=', 'roles.role_name')
                 ->join('role_permissions', 'roles.role_name', '=', 'role_permissions.role_name')
@@ -41,8 +41,13 @@ class CheckLogin
                 ->unique()
                 ->values()
                 ->toArray();
-            
+            //sửa lại đoạn sau thành gọi controller
+            $permissionsRoute = DB::table('route_permission')
+                ->pluck('route_name', 'permissions_name')
+                ->toArray();
+            $request->attributes->set('token', $token);
             // Gán permissions vào request
+            $request->attributes->set('permissionsRoute', $permissionsRoute);
             $request->attributes->set('permissions', $permissions);
             // Gắn user vào request
             $request->attributes->set('user', $user);

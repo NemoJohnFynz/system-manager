@@ -1,13 +1,20 @@
-<?php
+<?php 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+
 Route::get('/login', fn() => view('pages/login'));
 Route::get('/apis', fn() => view('scribe/index'));
+Route::get('/modal/{modal}', function ($modal, Request $request) {
+    $view = 'modals.' . str_replace('/', '.', $modal);
+    return View::exists($view) ? view($view) : view('modal_not_found');
+})->where('modal', '.*');
+
 Route::middleware(['check.login'])->group(function () {
-    $getCommonData = fn(Request $request) => [
+    $getCommonData = fn(Request $request) => [ 
         'user' => $request->attributes->get('user'),
         'permissions' => $request->attributes->get('permissions'),
+        'permissionsRoute' => $request->attributes->get('permissionsRoute'),
     ];
     Route::get('/', function (Request $request) use ($getCommonData) {
         return view('pages/hardware_detail', $getCommonData($request));

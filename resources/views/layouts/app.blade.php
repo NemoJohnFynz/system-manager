@@ -10,22 +10,25 @@
     <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
     <link href="assets\css\boxicons.min.css" rel="stylesheet" type="text/css">
     <link href="assets/css/materialdesignicons.min.css" rel="stylesheet">
+    <!-- css style -->
     @php
     $routeName = Route::currentRouteName();
-
     @endphp
     @php
     $cssPath = isset($page) ? 'css/' . $page . '.css' : null;
     @endphp
-
     @if($cssPath && file_exists(public_path($cssPath)))
     <link href="{{ asset($cssPath) }}" rel="stylesheet" />
     @endif
+
 </head>
+<!-- content -->
 @include('layouts.navbar')
 <main class="main-content" id="layout-main-content">
+    @include('layouts.main_modal')
     @yield('content')
 </main>
+<!-- scripts java file -->
 @yield('scripts')
 @php
 $routeName = Route::currentRouteName();
@@ -33,19 +36,39 @@ $routeName = Route::currentRouteName();
 @php
 $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
 @endphp
+
 @if($scriptPath && file_exists(public_path($scriptPath)))
 <script src="{{ asset($scriptPath) }}"></script>
-@endif 
+@endif
+
+
+
 <script src="js\style\app.js"></script>
 <script src="assets\libs\jquery\jquery.min.js"></script>
 <script src="assets\libs\bootstrap\js\bootstrap.bundle.min.js"></script>
 <script src="assets\libs\metismenu\metisMenu.min.js"></script>
 </body>
+<!-- scripts -->
 @yield('scripts')
-
-<script src="/js/app.js"></script>
 <script>
-    console.log("Permissions:", @json($permissions));
+    window.permissionsRoute = @json($permissionsRoute);
+    window.userPermissionCodes = @json($userPermissionCodes);
+</script>
+<script src="/js/app.js"></script>
+<script> 
+    console.log("user:", @json($user));
+</script>
+
+
+<script>
+    function loadModal(modalName) {
+        fetch('/modal/' + modalName)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('modalContent').innerHTML = html;
+                new bootstrap.Modal(document.getElementById('modalContainer')).show();
+            });
+    }
 </script>
 
 </html>

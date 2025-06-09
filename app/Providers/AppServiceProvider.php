@@ -4,40 +4,62 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+    public function register(): void {}
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        // truyền vào dữ liệu mảng permission đã xắp xếp , code dựa trên logic cứng, api --> logic có sẵn
         View::composer('*', function ($view) {
             $permissions = $view->getData()['permissions'] ?? [];
+            $permissionsRoute = $view->getData()['permissionsRoute'] ?? [];
             $permissionMap = [
-                "lấy danh sách người dùng" => "user.list",
-                "xoá người dùng" => "user.delete",
-                "thêm người dùng" => "user.create",
+                // ánh xạ cụ thể
+                "user.edit" => "user.update",
+                "software.edit" => "software.update",
+            ];
+            $permissionMapEnd = [
+                // ánh xạ theo hậu tố
+                "edit" => "update",
+                "remove" => "delete",
             ];
             $userPermissionCodes = [];
-            if (!empty($permissions) && !empty($permissionMap)) {
+            $userPermissionSource = $permissionsRoute;
+            $normalizePermission = function ($code) use ($permissionMap, $permissionMapEnd) {
+                // Ưu tiên ánh xạ cụ thể
+                if (isset($permissionMap[$code])) {
+                    return $permissionMap[$code];
+                }
+                // Nếu không có ánh xạ cụ thể, kiểm tra theo hậu tố
+                foreach ($permissionMapEnd as $suffix => $replaceWith) {
+                    if (str_ends_with($code, '.' . $suffix)) {
+                        return preg_replace('/\.' . preg_quote($suffix, '/') . '$/', '.' . $replaceWith, $code);
+                    }
+                }
+                return $code; // Không thay đổi gì nếu không match
+            };
+            // Áp dụng ánh xạ cho các quyền người dùng
+            if (!empty($permissions) && !empty($permissionsRoute)) {
                 foreach ($permissions as $permName) {
-                    if (isset($permissionMap[$permName])) {
-                        $userPermissionCodes[] = $permissionMap[$permName];
+                    if (isset($permissionsRoute[$permName])) {
+                        $routeCodeFromDB = $permissionsRoute[$permName];
+                        $standardCode = $normalizePermission($routeCodeFromDB);
+                        $userPermissionCodes[] = $standardCode;
                     }
                 }
             }
-
+            // Gửi dữ liệu sang view
             $view->with('userPermissionCodes', $userPermissionCodes);
+            $view->with('userPermissionSource', $userPermissionSource);
+            $view->with('permissionsRoute', $permissionsRoute);
+            // Dùng được trong Blade directive
+            app()->instance('userPermissionCodes', $userPermissionCodes);
         });
+        Blade::if('hasPermission', function ($code) {
+            $userPermissionCodes = app()->bound('userPermissionCodes') ? app('userPermissionCodes') : [];
+            return in_array($code, $userPermissionCodes);
+        }); 
     }
 }
