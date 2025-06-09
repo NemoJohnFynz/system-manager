@@ -33,6 +33,8 @@ class HardwareController extends Controller
             'dbname' => 'required|string|max:100',
             'dbversion' => 'required|string|max:100|unique:hardware,serial_number',
             'isVirtualServer' => 'nullable|string|max:255',
+            'OS' => 'required|string|max:100',
+            'OSver' => 'required|string|max:100',
             'hdd' => 'required|in:active,inactive,maintenance',
             'ram'=> 'required|in:active,inactive,maintenance',
             'services' => 'string|max:255',
@@ -45,6 +47,8 @@ class HardwareController extends Controller
         $hardware->dbname = $request->input('dbname');
         $hardware->dbversion = $request->input('dbversion');
         $hardware->isVirtualServer = $request->input('isVirtualServer');
+        $hardware->OS = $request->input('OS');
+        $hardware->OSver = $request->input('OSver');
         $hardware->hdd = $request->input('hdd');
         $hardware->ram = $request->input('ram');
         $hardware->services = $request->input('services');
@@ -55,7 +59,7 @@ class HardwareController extends Controller
             LogController::createLogAuto([
                 'username' => $user->username,
                 'hardware_ip' => $hardware->ip,
-                'message' => "User {$user->username} Created new hardware",
+                'message' => "User {$user->username} Created new hardware with IP {$hardware->ip}",
             ]);
             return response()->json(['message' => 'Hardware created successfully', 'data' => $hardware], 201);
         } else {
@@ -93,7 +97,7 @@ class HardwareController extends Controller
             'total' => $total,
             'data' => $hardware
         ]);
-        
+
         } catch (TokenExpiredException $e) {
             return response()->json(['status' => 'error', 'message' => 'Token has expired.'], 401);
         } catch (TokenInvalidException $e) {
@@ -127,14 +131,22 @@ class HardwareController extends Controller
             return response()->json(['status' => 'error', 'message' => 'You do not have permission to update this hardware.'], 403);
         }
 
-        $oldData = $hardware->only(['dbname', 'dbversion', 'isVirtualServer', 'hdd', 'ram', 'services', 'location', 'status', 'serial_number', 'name', 'type']);
+        $oldData = $hardware->only([
+        'ip',
+        'dbname',
+        'dbversion',
+        'isVirtualServer',
+        'OS',
+        'OSver',
+        'hdd',
+        'ram',
+        'services',
+    ]);
 
         // Cập nhật các trường nếu có truyền lên
-        $hardware->name = $request->input('name', $hardware->name);
-        $hardware->type = $request->input('type', $hardware->type);
-        $hardware->serial_number = $request->input('serial_number', $hardware->serial_number);
-        $hardware->location = $request->input('location', $hardware->location);
-        $hardware->status = $request->input('status', $hardware->status);
+        $hardware->ip = $request->input('ip', $hardware->ip);
+        $hardware->OS = $request->input('OS', $hardware->OS);
+        $hardware->OSver = $request->input('OSver', $hardware->OSver);
         $hardware->dbname = $request->input('dbname', $hardware->dbname);
         $hardware->dbversion = $request->input('dbversion', $hardware->dbversion);
         $hardware->isVirtualServer = $request->input('isVirtualServer', $hardware->isVirtualServer);
@@ -144,7 +156,17 @@ class HardwareController extends Controller
 
         $hardware->save();
 
-        $newData = $hardware->only(['dbname', 'dbversion', 'isVirtualServer', 'hdd', 'ram', 'services', 'location', 'status', 'serial_number', 'name', 'type']);
+        $newData = $hardware->only([
+            'ip',
+            'dbname',
+            'dbversion',
+            'isVirtualServer',
+            'OS',
+            'OSver',
+            'hdd',
+            'ram',
+            'services',
+        ]);
 
         // So sánh và tạo chuỗi thay đổi
         $changes = [];
