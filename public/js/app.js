@@ -8,3 +8,13 @@ if (token) {
         return originalFetch(url, options);
     };
 }
+function loadModal(modalName) {
+    fetch("/modal/" + modalName)
+        .then((res) => res.text())
+        .then((html) => {
+            document.getElementById("modalContent").innerHTML = html;
+            new bootstrap.Modal(
+                document.getElementById("modalContainer")
+            ).show();
+        });
+}

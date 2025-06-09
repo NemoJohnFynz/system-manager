@@ -9,8 +9,7 @@
     <link href="assets\css\app.min.css" id="app-style" rel="stylesheet" type="text/css">
     <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
     <link href="assets\css\boxicons.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/materialdesignicons.min.css" rel="stylesheet">
-    <!-- css style -->
+    <link href="assets/css/materialdesignicons.min.css" rel="stylesheet"> 
     @php
     $routeName = Route::currentRouteName();
     @endphp
@@ -20,7 +19,6 @@
     @if($cssPath && file_exists(public_path($cssPath)))
     <link href="{{ asset($cssPath) }}" rel="stylesheet" />
     @endif
-
 </head>
 <!-- content -->
 @include('layouts.navbar')
@@ -41,8 +39,6 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
 <script src="{{ asset($scriptPath) }}"></script>
 @endif
 
-
-
 <script src="js\style\app.js"></script>
 <script src="assets\libs\jquery\jquery.min.js"></script>
 <script src="assets\libs\bootstrap\js\bootstrap.bundle.min.js"></script>
@@ -53,22 +49,7 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
 <script>
     window.permissionsRoute = @json($permissionsRoute);
     window.userPermissionCodes = @json($userPermissionCodes);
+    console.log("token:", @json($token));
 </script>
-<script src="/js/app.js"></script>
-<script> 
-    console.log("user:", @json($user));
-</script>
-
-
-<script>
-    function loadModal(modalName) {
-        fetch('/modal/' + modalName)
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('modalContent').innerHTML = html;
-                new bootstrap.Modal(document.getElementById('modalContainer')).show();
-            });
-    }
-</script>
-
+<script src="/js/app.js"></script> 
 </html>
