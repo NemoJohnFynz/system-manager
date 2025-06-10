@@ -50,6 +50,32 @@ class DatabaseSeeder extends Seeder
             'user_creately' => 'uchihanemo',
         ]);
 
+        permissionModel::factory()->create([
+            'permissions_name' => 'cấp quyền người dùng',
+            'type' => 'userrole',
+            'user_creately' => 'uchihanemo',
+        ]);
+
+        permissionModel::factory()->create([
+            'permissions_name' => 'sửa quyền người dùng',
+            'type' => 'userrole',
+            'user_creately' => 'uchihanemo',
+        ]);
+
+        permissionModel::factory()->create([
+            'permissions_name' => 'xoá quyền người dùng',
+            'type' => 'userrole',
+            'user_creately' => 'uchihanemo',
+        ]);
+
+        permissionModel::factory()->create([
+            'permissions_name' => 'danh sách quyền người dùng',
+            'type' => 'userrole',
+            'user_creately' => 'uchihanemo',
+        ]);
+
+
+
         routePermissionModel::factory()->create([
             'id' => 1,
             'permissions_name' => 'thêm quyền hạn',
@@ -75,6 +101,34 @@ class DatabaseSeeder extends Seeder
             'id' => 4,
             'permissions_name' => 'danh sách quyền hạn',
             'route_name' => 'permission.list',
+            
+        ]);
+
+        routePermissionModel::factory()->create([
+            'id' => 5,
+            'permissions_name' => 'cấp quyền người dùng',
+            'route_name' => 'userrole.create',
+            
+        ]);
+
+        routePermissionModel::factory()->create([
+            'id' => 6,
+            'permissions_name' => 'sửa quyền người dùng',
+            'route_name' => 'userrole.edit',
+            
+        ]);
+
+        routePermissionModel::factory()->create([
+            'id' => 7,
+            'permissions_name' => 'xoá quyền người dùng',
+            'route_name' => 'userrole.delete',
+            
+        ]);
+
+        routePermissionModel::factory()->create([
+            'id' => 8,
+            'permissions_name' => 'danh sách quyền người dùng',
+            'route_name' => 'userrole.list',
             
         ]);
 
