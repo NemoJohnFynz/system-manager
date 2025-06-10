@@ -47,12 +47,23 @@ class role_permissionController extends Controller
                 $roleType = 'hardware';
             } elseif (str_contains($roleName, 'phần mềm') || str_contains($roleName, 'software')) {
                 $roleType = 'software';
-            } elseif (str_contains($roleName, 'người dùng') || str_contains($roleName, 'user')) {
-                $roleType = 'user';
+
             } elseif (str_contains($roleName, 'hệ thống') || str_contains($roleName, 'system')) {
                 $roleType = 'system';
-            }  elseif (str_contains($roleName, 'quản trị') || str_contains($roleName, 'admin')) {
-                $roleType = 'admin';
+            }
+            if ($roleType && $roleType !== $permissionType) {
+                // Cho phép admin (quản trị) nhận permission type 'user'
+                if (
+                    ($roleType === 'admin' || $roleType === 'quản trị' || $roleType === 'Quản trị viên' )
+                    && $permissionType === 'user'
+                ) {
+                    // Cho phép, không báo lỗi
+                } else {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => "Role '{$request->input('role_name')}' is not allowed to add permission of type '{$permissionType}'."
+                    ], 422);
+                }
             }
             
 
