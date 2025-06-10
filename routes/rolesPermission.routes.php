@@ -1,12 +1,12 @@
 <?php 
 
-use App\Http\Controllers\role_permissionController;
+use App\Http\Controllers\rolepermissionController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
 
-route::post('/createrolepermission', [role_permissionController::class, 'createRolePermission']);
-route::patch('/updateRolePermission', [role_permissionController::class, 'updateRolePermission']);
-route::delete('/deleteRolePermission', [role_permissionController::class, 'deleteRolePermission']);
-route::get('/getAllrolePermission', [role_permissionController::class, 'getAllRolePermissions']);
-route::get('/getRolePermissionByName', [role_permissionController::class, 'getRolePermissionByName']);
+route::post('/createrolepermission', [rolepermissionController::class, 'createRolePermission']);
+route::patch('/updateRolePermission', [rolepermissionController::class, 'updateRolePermission']);
+route::delete('/deleteRolePermission', [rolepermissionController::class, 'deleteRolePermission']);
+route::get('/getAllrolePermission', [rolepermissionController::class, 'getAllRolePermissions']);
+route::get('/getRolePermissionByName', [rolepermissionController::class, 'getRolePermissionByName']);
