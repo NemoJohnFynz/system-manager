@@ -156,6 +156,41 @@ class DatabaseSeeder extends Seeder
             'assigned_at' => now(),
         ]);
 
+         role_permissionModel::factory()->create([
+            'id' => 4,
+            'permission_name' => 'danh sách quyền hạn',
+            'role_name' => 'Quản trị viên',
+            'assigned_at' => now(),
+        ]);
+
+         role_permissionModel::factory()->create([
+            'id' => 5,
+            'permission_name' => 'cấp quyền người dùng',
+            'role_name' => 'Quản trị viên',
+            'assigned_at' => now(),
+        ]);
+
+         role_permissionModel::factory()->create([
+            'id' => 6,
+            'permission_name' => 'sửa quyền người dùng',
+            'role_name' => 'Quản trị viên',
+            'assigned_at' => now(),
+        ]);
+
+         role_permissionModel::factory()->create([
+            'id' => 7,
+            'permission_name' => 'xoá quyền người dùng',
+            'role_name' => 'Quản trị viên',
+            'assigned_at' => now(),
+        ]);
+        
+        role_permissionModel::factory()->create([
+            'id' => 8,
+            'permission_name' => 'danh sách quyền người dùng',
+            'role_name' => 'Quản trị viên',
+            'assigned_at' => now(),
+        ]);
+
         userRoleModel::factory()->create([
             'username' => 'uchihanemo',
             'role_name' => 'Quản trị viên',
