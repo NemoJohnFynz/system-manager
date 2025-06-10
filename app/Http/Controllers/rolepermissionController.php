@@ -12,7 +12,7 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class role_permissionController extends Controller
+class rolepermissionController extends Controller
 {
     public function createRolePermission(Request $request)
     {
@@ -55,7 +55,7 @@ class role_permissionController extends Controller
                 // Cho phép admin (quản trị) nhận permission type 'user'
                 if (
                     ($roleType === 'admin' || $roleType === 'quản trị' || $roleType === 'Quản trị viên' )
-                    && $permissionType === 'user'
+                    && $permissionType === 'user' && $permissionType === 'role' && $permissionType === 'userrole' 
                 ) {
                     // Cho phép, không báo lỗi
                 } else {

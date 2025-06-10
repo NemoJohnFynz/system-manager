@@ -87,7 +87,7 @@ class domainController extends Controller
     }
 
     public function updateDomain(Request $request)
-{
+    {
     try {
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['message' => 'Please login to use this function'], 401);
@@ -153,4 +153,5 @@ class domainController extends Controller
         }
     }
 
+    
 }
