@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class role_permissionModel extends Model
 {
+    use HasFactory;
+    protected $table = "role_permissions";
     protected $fillable = [
         'role_name',
         'permission_name',
@@ -27,6 +30,11 @@ class role_permissionModel extends Model
     public function permissions()
     {
         return $this->belongsTo('App\Models\permissionModel', 'permission_name', 'permissions_name');
+    }
+
+    public static function newFactory()
+    {
+        return \Database\Factories\role_PermissionModelFactory::new();
     }
 
     

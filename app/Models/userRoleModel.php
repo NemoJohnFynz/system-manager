@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class userRoleModel extends Model
 {
+    use HasFactory;
     protected $table = 'user_role';
     protected $fillable = [
         'username',
@@ -28,5 +30,10 @@ class userRoleModel extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+        public static function newFactory()
+    {
+        return \Database\Factories\userRoleModelFactory::new();
     }
 }
