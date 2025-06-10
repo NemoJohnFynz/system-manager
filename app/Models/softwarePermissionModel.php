@@ -12,6 +12,8 @@ class softwarePermissionModel extends Model
         'user_name',
         'user_createdby',
         'assigned_at',
+        'permissions_name',
+        
     ];
     public function software()
     {

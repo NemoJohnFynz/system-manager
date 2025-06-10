@@ -57,7 +57,7 @@ class HardwareController extends Controller
             LogController::createLogAuto([
                 'username' => $user->username,
                 'hardware_ip' => $hardware->ip,
-                'message' => "User {$user->username} Created new hardware",
+                'message' => "User {$user->username} Created new hardware with IP {$hardware->ip}",
             ]);
             return response()->json(['message' => 'Hardware created successfully', 'data' => $hardware], 201);
         } else {
@@ -82,14 +82,20 @@ class HardwareController extends Controller
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);
             }
-            $hardware = hardwareModel::all();
-            return response()->json([
-                'message' => 'All hardware',
-                'data' => $hardware
-            ]);
-            if ($hardware->isEmpty()) {
-                return response()->json(['status' => 'error', 'message' => 'No hardware found'], 404);
-            }
+
+        $hardware = hardwareModel::all();
+        $total = $hardware->count();
+
+        if ($hardware->isEmpty()) {
+            return response()->json(['status' => 'error', 'message' => 'No hardware found', 'total' => 0], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'total' => $total,
+            'data' => $hardware
+        ]);
+
         } catch (TokenExpiredException $e) {
             return response()->json([
                 'message' => 'Token expired'
@@ -131,10 +137,22 @@ class HardwareController extends Controller
             return response()->json(['status' => 'error', 'message' => 'You do not have permission to update this hardware.'], 403);
         }
 
-        $oldData = $hardware->only(['ip','dbname', 'dbversion', 'isVirtualServer', 'OS', 'OSver', 'hdd', 'ram', 'services']);
+        $oldData = $hardware->only([
+        'ip',
+        'dbname',
+        'dbversion',
+        'isVirtualServer',
+        'OS',
+        'OSver',
+        'hdd',
+        'ram',
+        'services',
+    ]);
 
         // Cập nhật các trường nếu có truyền lên
         $hardware->ip = $request->input('ip', $hardware->ip);
+        $hardware->OS = $request->input('OS', $hardware->OS);
+        $hardware->OSver = $request->input('OSver', $hardware->OSver);
         $hardware->dbname = $request->input('dbname', $hardware->dbname);
         $hardware->dbversion = $request->input('dbversion', $hardware->dbversion);
         $hardware->isVirtualServer = $request->input('isVirtualServer', $hardware->isVirtualServer);
@@ -146,7 +164,17 @@ class HardwareController extends Controller
 
         $hardware->save();
 
-        $newData = $hardware->only(['ip','dbname', 'dbversion', 'isVirtualServer', 'OS', 'OSver', 'hdd', 'ram', 'services']);
+        $newData = $hardware->only([
+            'ip',
+            'dbname',
+            'dbversion',
+            'isVirtualServer',
+            'OS',
+            'OSver',
+            'hdd',
+            'ram',
+            'services',
+        ]);
 
         // So sánh và tạo chuỗi thay đổi
         $changes = [];
@@ -178,7 +206,7 @@ class HardwareController extends Controller
     }
     //delete hardware
     public function deleteHardware(Request $request)
-    {
+    {   
     try {
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['message' => 'Please login to use this function'], 401);

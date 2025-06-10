@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class routePermissionModel extends Model
 {
+    use HasFactory;
     protected $table = "route_permission";
     protected $fillable = [
         'route_name',
@@ -15,4 +17,10 @@ class routePermissionModel extends Model
     {
         return $this->belongsTo('App\Models\permissionModel', 'permissions_name', 'permissions_name');
     }
+
+    public static function newFactory()
+    {
+        return \Database\Factories\routePermissionModelFactory::new();
+    }
+
 }

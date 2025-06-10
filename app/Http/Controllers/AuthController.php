@@ -48,54 +48,62 @@ class AuthController extends Controller
     public function CreateUser(Request $request)
     {
         try {
-        if (!$user = JWTAuth::parseToken()->authenticate()) {
+            // Nếu chưa có user nào thì cho phép tạo user đầu tiên mà không cần token
+            $userCount = UserModel::count();
+            if ($userCount > 0) {
+                if (!$user = JWTAuth::parseToken()->authenticate()) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'User not found.'
+                    ], 404);
+                }
+            }
+
+            $request->validate([
+                'username' => 'required|string|max:255|unique:users',
+                'password' => 'required|string|min:8',
+            ]);
+
+            $usercreate = UserModel::create([
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+            ]);
+
+            // Nếu là user đầu tiên thì không có $user để log
+            if ($userCount > 0) {
+                LogController::createLogAuto([
+                    'username' => $user->username, 
+                    'message' => "{$user->username} đã tạo tài khoản có username là '{$usercreate->username}'",
+                ]);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User created successfully',
+                'user' => $usercreate,
+            ], 201);
+
+        } catch (TokenExpiredException $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'User not found.'
-            ], 404);
+                'message' => 'Token has expired.'
+            ], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid.'
+            ], 401);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is absent or could not be parsed.'
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not create user. ' . $e->getMessage()
+            ], 500);
         }
-        $request->validate([
-            'username' => 'required|string|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-
-        $usercreate = UserModel::create([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-        ]);
-
-        LogController::createLogAuto([
-            'username' => $user->username, 
-            'message' => "{$user->username} đã tạo tài khoản có username là '{$usercreate->username}'",
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $usercreate,
-        ], 201);
-
-    } catch (TokenExpiredException $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Token has expired.'
-        ], 401);
-    } catch (TokenInvalidException $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Token is invalid.'
-        ], 401);
-    } catch (JWTException $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Token is absent or could not be parsed.'
-        ], 401);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Could not create user. ' . $e->getMessage()
-        ], 500);
-    }
     }
 
     /**
@@ -136,6 +144,7 @@ class AuthController extends Controller
                 'message' => 'Could not create token',
             ], 500);
         }
+        //thêm kiểm tra tk bị khoá, xoá
 
         LogController::createLogAuto([
             'username' => $request->username, 
