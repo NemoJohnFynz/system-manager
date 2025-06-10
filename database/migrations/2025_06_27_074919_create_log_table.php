@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('hw_permission_user', 100)->nullable();
             $table->string('permission_name', 100)->nullable();
             $table->unsignedBigInteger('role_id',)->nullable();
-            $table->boolean('is_delete')->default(false);
             // Foreign keys
             $table->foreign('software_id')->references('id')->on('software')->onDelete('cascade');
             $table->foreign('hardware_ip')->references('ip')->on('hardware')->onDelete('cascade');

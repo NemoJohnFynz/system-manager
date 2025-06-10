@@ -34,9 +34,9 @@ class LogController extends Controller
          $logData = array_intersect_key($data, array_flip($fields));
 
     // Thiết lập mặc định cho is_delete nếu chưa có
-    if (!isset($logData['is_delete'])) {
-        $logData['is_delete'] = false;
-    }
+    // if (!isset($logData['is_delete'])) {
+    //     $logData['is_delete'] = false;
+    // }
 
     try {
         logModel::create($logData);
@@ -65,7 +65,6 @@ class LogController extends Controller
             'sw_permission_user' => 'nullable|string|max:255',
             'hw_permission_user' => 'nullable|string|max:255',
             'permissions_name' => 'nullable|string|max:255',
-            'is_delete' => 'boolean'
         ]);
 
         if ($validator->fails()) {
@@ -73,8 +72,6 @@ class LogController extends Controller
         }
 
         $logData = $validator->validated();
-        $logData['is_delete'] = $logData['is_delete'] ?? false;
-
         try {
             logModel::create($logData);
             return response()->json(['message' => 'Log created successfully'], 201);
@@ -100,7 +97,7 @@ class LogController extends Controller
             return response()->json(['message' => 'Please login to use this function'], 404);
         }
 
-        $logs = logModel::where('is_delete', false)->get();
+        $logs = logModel::all();
         return response()->json($logs);
 
         } catch (TokenExpiredException $e) {
@@ -120,8 +117,8 @@ class LogController extends Controller
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['message' => 'Please login to use this function'], 404);
         }
-    
-    $query = logModel::where('is_delete', false);
+
+    $query = logModel::query();
 
     if ($request->has('hardware')) {
         $query->whereNotNull('hardware_ip');
@@ -157,16 +154,16 @@ class LogController extends Controller
 
     public function getAllLog()
     {
-        $logs = logModel::where('is_delete', false)->get();
+        $logs = logModel::all();
         return response()->json($logs);
     }
 
     public function getLogById($id)
     {
         $log = logModel::find($id);
-        if (!$log || $log->is_delete) {
-            return response()->json(['message' => 'Log not found'], 404);
-        }
+        // if (!$log || $log->is_delete) {
+        //     return response()->json(['message' => 'Log not found'], 404);
+        // }
         return response()->json($log);
     }
 
@@ -194,7 +191,7 @@ class LogController extends Controller
             $from = $convertDate($from);
             $to = $convertDate($to);
 
-            $query = logModel::where('is_delete', false);
+            $query = logModel::query();
 
             if ($date) {
                 $query->whereDate('created_at', $date);
@@ -254,7 +251,7 @@ class LogController extends Controller
             }
 
             $logs = logModel::where('username', $username)
-                ->where('is_delete', false)
+                // ->where('is_delete', false)
                 ->get();
 
             if ($logs->isEmpty()) {

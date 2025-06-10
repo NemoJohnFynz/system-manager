@@ -19,7 +19,6 @@ class logModel extends Model
         'sw_permission_user',
         'hw_permission_user',
         'permission_name',
-        'is_delete',
     ];
     public function software()
     {
@@ -66,7 +65,6 @@ class logModel extends Model
         return [
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
-            'is_delete' => 'boolean',
             'assigned_at' => 'datetime',
         ];
     }
