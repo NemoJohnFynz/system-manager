@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class rolesModel extends Model
 {
+    use HasFactory;
 
+    public $table = 'roles';
     public $primaryKey = 'role_name';
     public $incrementing = false; // khoá 9 0 tự tăng
     protected $keyType = 'string'; // Khóa chính là kiểu chuỗi (string)
@@ -22,6 +25,11 @@ class rolesModel extends Model
         'updated_at' => 'datetime',
         'assigned_at' => 'datetime',
     ];
+    }
+
+    public static function newFactory()
+    {
+        return \Database\Factories\RoleModelFactory::new();
     }
 
 }

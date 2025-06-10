@@ -16,10 +16,13 @@ class hardwareModel extends Model
         'dbname',
         'dbversion',
         'isVirtualServer',
+        'OS',
+        'OSver',
         'hdd',
         'ram',
         'is_delete',
         'services',
+        'is_active',
         'created_by',
     ];
 
@@ -28,6 +31,7 @@ class hardwareModel extends Model
         return [
             'isVirtualServer' => 'boolean',
             'is_delete' => 'boolean',
+            'is_active' => 'boolean',
             'services' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

@@ -533,8 +533,6 @@ class PermissionController extends Controller
                 'message' => "User $user->username updated permission from '{$oldName}' => '{$newName}'",
             ]);
 
-
-
             return response()->json([
                 'status' => 'success',
                 'message' => 'Permission updated successfully.',
