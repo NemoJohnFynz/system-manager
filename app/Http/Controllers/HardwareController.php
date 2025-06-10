@@ -131,6 +131,7 @@ class HardwareController extends Controller
             return response()->json(['status' => 'error', 'message' => 'You do not have permission to update this hardware.'], 403);
         }
 
+
         $oldData = $hardware->only([
         'ip',
         'dbname',
@@ -142,6 +143,7 @@ class HardwareController extends Controller
         'ram',
         'services',
     ]);
+
 
         // Cập nhật các trường nếu có truyền lên
         $hardware->ip = $request->input('ip', $hardware->ip);
