@@ -30,12 +30,12 @@ class HardwareController extends Controller
         $request->validate([
             'ip' => 'required|string|max:255',
             'dbname' => 'required|string|max:100',
-            'dbversion' => 'required|string|max:100|unique:hardware,serial_number',
-            'isVirtualServer' => 'nullable|string|max:255',
+            'dbversion' => 'required|string|max:100|',
+            'isVirtualServer' => 'nullable|boolean|max:255',
             'OS' => 'required|string|max:100',
             'OSver' => 'required|string|max:100',
-            'hdd' => 'required|in:active,inactive,maintenance',
-            'ram'=> 'required|in:active,inactive,maintenance',
+            'hdd' => 'required|string|max:255',
+            'ram'=> 'required|string|max:255',
             'services' => 'string|max:255',
             'created_by'=> $user->username,
         ]);

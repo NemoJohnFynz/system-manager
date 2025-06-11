@@ -305,8 +305,7 @@ class PermissionController extends Controller
 
             // Map resource và action như cũ...
             $resourceMap = [
-                'phần cứng' => 'hardware',
-                'hardware' => 'hardware',
+
                 'phần mềm' => 'software',
                 'software' => 'software',
                 'người dùng' => 'user',
@@ -324,6 +323,8 @@ class PermissionController extends Controller
                 'role' => 'role',
                 'quyền phần cứng' => 'hardwarepermission',
                 'hardware Permission' => 'hardwarepermission',
+                'phần cứng' => 'hardware',
+                'hardware' => 'hardware',
                 'quyền phần mềm' => 'softwarepermission',
                 'software permisison' => 'softwarepermission',
                 'quyền người dùng' => 'userrole',
@@ -333,16 +334,53 @@ class PermissionController extends Controller
             ];
 
             $actionMap = [
-                'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create', 'cấp' => 'create',
-                'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit', 'sửa thông tin' => 'edit', 'update thông tin' => 'edit',
-                'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
-                'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list', 'danh sách' => 'list',
-                'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
-                'tìm kiếm' => 'get', 'search' => 'get', 'lấy' => 'get', 'get' => 'get',
+                'thêm' => 'create',
+                'tạo' => 'create',
+                'add' => 'create',
+                'create' => 'create',
+                'cấp' => 'create',
+                'cập nhật' => 'edit',
+                'sửa' => 'edit',
+                'update' => 'edit',
+                'edit' => 'edit',
+                'sửa thông tin' => 'edit',
+                'update thông tin' => 'edit',
+                'xoá' => 'delete',
+                'thu hồi' => 'delete',
+                'delete' => 'delete',
+                'remove' => 'delete',
+                'xem danh sách' => 'list',
+                'lấy danh sách' => 'list',
+                'xem' => 'list',
+                'list' => 'list',
+                'view' => 'list',
+                'lấy toàn bộ' => 'list',
+                'xem tất cả' => 'list',
+                'lấy tất cả' => 'list',
+                'danh sách' => 'list',
+                'xem chi tiết' => 'detail',
+                'chi tiết' => 'detail',
+                'detail' => 'detail',
+                'xem thông tin' => 'detail',
+                'getdetail' => 'detail',
+                'get detail' => 'detail',
+                'tìm kiếm' => 'get',
+                'search' => 'get',
+                'lấy' => 'get',
+                'get' => 'get',
             ];
 
+
+            $input = mb_strtolower($request->permissions_name, 'UTF-8');
+            $defaultPermission = $request->permissions_name;
+
+            // Sắp xếp theo độ dài key giảm dần
+            uksort($resourceMap, fn($a, $b) => strlen($b) - strlen($a));
+            uksort($actionMap, fn($a, $b) => strlen($b) - strlen($a));
             $resource = '';
             $action = '';
+
+
 
             foreach ($resourceMap as $vi => $en) {
                 if (str_contains($input, $vi)) {
@@ -359,8 +397,10 @@ class PermissionController extends Controller
                 }
             }
 
-            if (!$resource) $resource = 'other';
-            if (!$action) $action = 'other';
+            if (!$resource)
+                $resource = 'other';
+            if (!$action)
+                $action = 'other';
 
             $permissions_name = $resource . '.' . $action;
 
@@ -646,7 +686,7 @@ class PermissionController extends Controller
 
             // Kiểm tra tồn tại trong permissions
             $permission = DB::table('permissions')->where('permissions_name', $permissionName)->first();
-            
+
             if (!$permission) {
                 return response()->json([
                     'status' => 'error',
@@ -1328,8 +1368,9 @@ class PermissionController extends Controller
             $to = $request->query('to');     // dạng: 05/06/2024
 
             // Hàm chuyển đổi d/m/Y sang Y-m-d
-            $convertDate = function($str) {
-                if (!$str) return null;
+            $convertDate = function ($str) {
+                if (!$str)
+                    return null;
                 $dt = \DateTime::createFromFormat('d/m/Y', $str);
                 return $dt ? $dt->format('Y-m-d') : null;
             };
@@ -1419,7 +1460,7 @@ class PermissionController extends Controller
                 'message' => 'Could not retrieve types. ' . $e->getMessage()
             ], 500);
         }
-   }
+    }
 
     public function getMyPermissions(Request $request)
     {
@@ -1483,6 +1524,6 @@ class PermissionController extends Controller
             ], 500);
         }
 
-        }
+    }
 }
 

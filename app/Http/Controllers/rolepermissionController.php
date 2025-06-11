@@ -65,7 +65,7 @@ class rolepermissionController extends Controller
                     ], 422);
                 }
             }
-            
+
 
             // Nếu xác định được roleType và nó khác permissionType thì báo lỗi
             if ($roleType && $roleType !== $permissionType) {
