@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Routing\Router;
@@ -13,7 +12,7 @@ Route::post('/createsoftware',[SoftwareController::class, 'createSoftware'])
 Route::get('/getallsoftware',[SoftwareController::class, 'getAllSoftware'])
     ->middleware('check.permission')
     ->name('software.list');
-Route::update('/updatesoftware/{id}', [SoftwareController::class, 'updateSoftware'])
+Route::put('/updatesoftware/{id}', [SoftwareController::class, 'updateSoftware'])
     ->middleware('check.permission')
     ->name('software.update');
 Route::delete('/deleteSoftware', [SoftwareController::class,'deleteSoftware'])

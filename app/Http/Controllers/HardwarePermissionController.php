@@ -25,7 +25,7 @@ class HardwarePermissionController extends Controller
         }
 
         $validated = $request->validate([
-            'hardware_ip' => 'required|string|exists:hardwares,ip',
+            'hardware_ip' => 'required|string|exists:hardware,ip',
             'user_name' => 'required|string|exists:users,username',
             'permissions_name' => 'required|string|max:255',
         ]);
@@ -49,7 +49,7 @@ class HardwarePermissionController extends Controller
             'hardware_ip' => $validated['hardware_ip'],
             'user_name' => $validated['user_name'],
             'permissions_name' => $validated['permissions_name'],
-            'user_createdby' => $user->username,
+            'user_createby' => $user->username,
             'assigned_at' => now(),
         ]);
 
@@ -136,7 +136,7 @@ class HardwarePermissionController extends Controller
 
         // Kiểm tra user và hardware tồn tại
         $userExists = DB::table('users')->where('username', $username)->exists();
-        $hardwareExists = DB::table('hardwares')->where('ip', $hardwareIp)->exists();
+        $hardwareExists = DB::table('hardware')->where('ip', $hardwareIp)->exists();
         if (!$userExists || !$hardwareExists) {
             return response()->json([
                 'status' => 'error',
@@ -206,7 +206,7 @@ class HardwarePermissionController extends Controller
 
         // Kiểm tra user và hardware tồn tại
         $userExists = DB::table('users')->where('username', $username)->exists();
-        $hardwareExists = DB::table('hardwares')->where('ip', $hardwareIp)->exists();
+        $hardwareExists = DB::table('hardware')->where('ip', $hardwareIp)->exists();
         if (!$userExists || !$hardwareExists) {
             return response()->json([
                 'status' => 'error',

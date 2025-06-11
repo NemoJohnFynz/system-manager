@@ -24,9 +24,9 @@ class SoftwareController extends Controller
         $request->validate([
             'softwareName' => 'required|string|max:255',
             'language' => 'required|string|max:100',
-            'version' => 'nullable|string|max:255',
+            'version' => 'required|string|max:255',
             'user_createby' => $user->username,
-            'description' => 'nullable|string|max:1000',
+            'description' => 'required|string|max:100',
         ]);
 
         // Create a new software record
@@ -36,8 +36,7 @@ class SoftwareController extends Controller
         $software->version = $request->input('version');
         $software->description = $request->input('description');
         $software->user_createby = $user->username;
-        $software->created_at = now();
-        $software->updated_at = now();
+
 
         // Save the software record
         if ($software->save()) {

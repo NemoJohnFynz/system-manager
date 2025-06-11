@@ -11,6 +11,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\PermissionService;
 
 
 
@@ -290,7 +291,8 @@ class PermissionController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                'permissions_name' => 'required|string|max:255',
+                'permissions_name' => 'required|string|max:255|unique:permissions',
+                'type' => 'required|string|max:255',
             ]);
 
             if ($validator->fails()) {

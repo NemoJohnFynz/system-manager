@@ -12,10 +12,6 @@ class softwareModel extends Model
         'language',
         'version',
         'user_createby',
-        'createdAt',
-        'updatedAt',
-        'is_delete',
-        'is_active',
         'description',
     ];
     protected function casts(): array

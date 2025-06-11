@@ -11,4 +11,4 @@ require __DIR__.'/rolesPermission.routes.php';
 require __DIR__.'/userRole.routes.php';
 require __DIR__.'/Log.routes.php';
 require __DIR__.'/Hardware.routes.php';
-
+require __DIR__.'/Software.routes.php';
