@@ -55,8 +55,8 @@ class SoftwarePermissionController extends Controller
             'software_id' => $validated['software_id'],
             'user_name' => $validated['user_name'],
             'permissions_name' => $validated['permissions_name'],
-            'user_createdby' => $user->username,
-            'assigned_at' => now(),
+            'create_by' => $user->username,
+            'created_at' => now(),
         ]);
 
         return response()->json([
@@ -347,8 +347,8 @@ class SoftwarePermissionController extends Controller
                 'software_id' => $validated['software_id'],
                 'user_name' => $validated['user_name'],
                 'permissions_name' => $validated['permissions_name'],
-                'user_createdby' => $user->username,
-                'assigned_at' => now(),
+                'create_by' => $user->username,
+                'created_at' => now(),
             ]);
 
             return response()->json([

@@ -10,10 +10,8 @@ class softwarePermissionModel extends Model
     protected $fillable = [
         'software_id',
         'user_name',
-        'user_createdby',
-        'assigned_at',
+        'create_by',
         'permissions_name',
-        
     ];
     public function software()
     {
@@ -23,10 +21,12 @@ class softwarePermissionModel extends Model
     {
         return $this->belongsTo('App\Models\UserModel', 'user_name', 'username');
     }
+    public function permission(){
+        return $this->belongsTo('App\Models\PermissionModel', 'permissions_name', 'permissions_name');
+    }
     protected function casts(): array
     {
         return [
-            'assigned_at' => 'datetime',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
