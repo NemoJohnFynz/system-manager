@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class domainModel extends Model
 {   
-
+    protected $table = "domain";
     protected $fillable = [
         'software_id',
         'name',
         'link',
+        
     ];
 
     protected function casts(): array

@@ -48,17 +48,25 @@ class rolepermissionController extends Controller
             } elseif (str_contains($roleName, 'phần mềm') || str_contains($roleName, 'software')) {
                 $roleType = 'software';
 
-            } elseif (str_contains($roleName, 'hệ thống') || str_contains($roleName, 'system')) {
+            } elseif (str_contains($roleName, 'quản lý hệ thống') || str_contains($roleName, 'system')) {
                 $roleType = 'system';
             }
             if ($roleType && $roleType !== $permissionType) {
-                // Cho phép admin (quản trị) nhận permission type 'user'
+
                 if (
-                    ($roleType === 'admin' || $roleType === 'quản trị' || $roleType === 'Quản trị viên' )
-                    && $permissionType === 'user' && $permissionType === 'role' && $permissionType === 'userrole' 
+                    in_array($roleType, ['admin', 'quản trị', 'quản trị viên'])
+                    && in_array($permissionType, ['user', 'role', 'userrole'])
                 ) {
-                    // Cho phép, không báo lỗi
-                } else {
+
+                }
+                // Cho phép system nhận permission type domain và hardwaredomain
+                elseif (
+                    $roleType === 'system'
+                    && in_array($permissionType, ['domain', 'hardwaredomain'])
+                ) {
+   
+                }
+                else {
                     return response()->json([
                         'status' => 'error',
                         'message' => "Role '{$request->input('role_name')}' is not allowed to add permission of type '{$permissionType}'."
@@ -66,14 +74,6 @@ class rolepermissionController extends Controller
                 }
             }
             
-
-            // Nếu xác định được roleType và nó khác permissionType thì báo lỗi
-            if ($roleType && $roleType !== $permissionType) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => "Role '{$request->input('role_name')}' is not allowed to add permission of type '{$permissionType}'."
-                ], 422);
-            }
 
             // Kiểm tra trùng lặp
             $exists = DB::table('role_permissions')

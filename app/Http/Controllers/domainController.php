@@ -24,7 +24,6 @@ class domainController extends Controller
             // Validate the request data
             $request->validate([
                 'name' => 'required|string|max:255',
-                'description' => 'nullable|string|max:1000',
                 'createBy' => $user->username,
                 'link' => 'required|string|max:255',
                 'software_id' => 'required|integer|exists:software,id',
@@ -35,8 +34,7 @@ class domainController extends Controller
             $domain->name = $request->input('name');
             $domain->link = $request->input('link', '');
             $domain->software_id = $request->input('software_id',);
-            $domain->description = $request->input('description');
-            $domain->user_createby = $user->username;
+            $domain->createBy = $user->username;
             $domain->created_at = now();
             $domain->updated_at = now();
 
