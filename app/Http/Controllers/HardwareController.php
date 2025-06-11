@@ -30,13 +30,13 @@ class HardwareController extends Controller
         $request->validate([
             'ip' => 'required|string|max:255',
             'dbname' => 'required|string|max:100',
-            'dbversion' => 'required|string|max:100|',
-            'isVirtualServer' => 'nullable|boolean|max:255',
+            'dbversion' => 'required|string|max:100',
+            'isVirtualServer' => 'required|boolean',
             'OS' => 'required|string|max:100',
             'OSver' => 'required|string|max:100',
-            'hdd' => 'required|string|max:255',
-            'ram'=> 'required|string|max:255',
-            'services' => 'string|max:255',
+            'hdd' => 'required|string|max:100',
+            'ram'=> 'required|string|max:100',
+            'services' => 'nullable|string|max:1000',
             'created_by'=> $user->username,
         ]);
 
@@ -71,10 +71,10 @@ class HardwareController extends Controller
         } catch (JWTException $e) {
             return response()->json(['status' => 'error', 'message' => 'Token is absent or could not be parsed.'], 401);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'Could not create domain. ' . $e->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'Could not create hardware. ' . $e->getMessage()], 500);
         }
 
-    }
+    } ///áhdakjsdajkgsdjhavsd
 
     public function getAllHardware()
     {   

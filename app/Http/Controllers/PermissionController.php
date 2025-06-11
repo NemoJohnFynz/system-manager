@@ -301,7 +301,7 @@ class PermissionController extends Controller
                     'message' => $validator->errors()
                 ], 422);
             }
-
+            // quản lý hệ thông sẽ có thể thêm luông domain và gép:[cứng, mềm, doamin, hardwaredomain]
             $input = mb_strtolower($request->permissions_name, 'UTF-8');
             $defaultPermission = $request->permissions_name;
 
@@ -333,52 +333,33 @@ class PermissionController extends Controller
                 'user role' => 'userrole',
                 'quyền hệ thống' => 'systempermission',
                 'system permission' => 'systempermission',
+                'tên miền' => 'domain',
+                'domain' => 'domain',
+                'phần cứng vào domain' => 'hardwaredomain',
+                'hardware domain' => 'hardwaredomain',
+                'phần cứng khỏi domain' => 'hardwaredomain',
+                'hardware khỏi domain' => 'hardwaredomain',
+                'phần cứng trong domain' => 'hardwaredomain',
+
+
             ];
 
             $actionMap = [
-                'thêm' => 'create',
-                'tạo' => 'create',
-                'add' => 'create',
-                'create' => 'create',
-                'cấp' => 'create',
-                'cập nhật' => 'edit',
-                'sửa' => 'edit',
-                'update' => 'edit',
-                'edit' => 'edit',
-                'sửa thông tin' => 'edit',
-                'update thông tin' => 'edit',
-                'xoá' => 'delete',
-                'thu hồi' => 'delete',
-                'delete' => 'delete',
-                'remove' => 'delete',
-                'xem danh sách' => 'list',
-                'lấy danh sách' => 'list',
-                'xem' => 'list',
-                'list' => 'list',
-                'view' => 'list',
-                'lấy toàn bộ' => 'list',
-                'xem tất cả' => 'list',
-                'lấy tất cả' => 'list',
-                'danh sách' => 'list',
-                'xem chi tiết' => 'detail',
-                'chi tiết' => 'detail',
-                'detail' => 'detail',
-                'xem thông tin' => 'detail',
-                'getdetail' => 'detail',
-                'get detail' => 'detail',
-                'tìm kiếm' => 'get',
-                'search' => 'get',
-                'lấy' => 'get',
-                'get' => 'get',
+                'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create', 'cấp' => 'create',
+                'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit', 'sửa thông tin' => 'edit', 'update thông tin' => 'edit', 'thay đổi' => 'edit', 'thay đổi thông tin' => 'edit',
+                'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
+                'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list', 'danh sách' => 'list',
+                'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
+                'tìm kiếm' => 'get', 'search' => 'get', 'lấy' => 'get', 'get' => 'get',
             ];
-
 
             $input = mb_strtolower($request->permissions_name, 'UTF-8');
             $defaultPermission = $request->permissions_name;
 
-            // Sắp xếp theo độ dài key giảm dần
+            
             uksort($resourceMap, fn($a, $b) => strlen($b) - strlen($a));
             uksort($actionMap, fn($a, $b) => strlen($b) - strlen($a));
+
             $resource = '';
             $action = '';
 

@@ -40,7 +40,6 @@ class SoftwareController extends Controller
 
         // Save the software record
         if ($software->save()) {
-            // Log the creation of the software
             LogController::createLogAuto([
                 'username' => $user->username,
                 'software_id' => $software->id,
