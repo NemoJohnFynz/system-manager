@@ -292,7 +292,6 @@ class PermissionController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'permissions_name' => 'required|string|max:255|unique:permissions',
-                'type' => 'required|string|max:255',
             ]);
 
             if ($validator->fails()) {
