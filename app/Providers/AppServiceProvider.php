@@ -1,46 +1,40 @@
 <?php
-
 namespace App\Providers;
-
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Blade;
-
 class AppServiceProvider extends ServiceProvider
 {
     public function register(): void {}
-
     public function boot(): void
     {
         View::composer('*', function ($view) {
             $permissions = $view->getData()['permissions'] ?? [];
             $permissionsRoute = $view->getData()['permissionsRoute'] ?? [];
             $permissionMap = [
-                // ánh xạ cụ thể
                 "user.edit" => "user.update",
                 "software.edit" => "software.update",
             ];
             $permissionMapEnd = [
-                // ánh xạ theo hậu tố
                 "edit" => "update",
                 "remove" => "delete",
             ];
             $userPermissionCodes = [];
             $userPermissionSource = $permissionsRoute;
             $normalizePermission = function ($code) use ($permissionMap, $permissionMapEnd) {
-                // Ưu tiên ánh xạ cụ thể
+                // cụ thể
                 if (isset($permissionMap[$code])) {
                     return $permissionMap[$code];
                 }
-                // Nếu không có ánh xạ cụ thể, kiểm tra theo hậu tố
+                // theo hậu tố
                 foreach ($permissionMapEnd as $suffix => $replaceWith) {
                     if (str_ends_with($code, '.' . $suffix)) {
                         return preg_replace('/\.' . preg_quote($suffix, '/') . '$/', '.' . $replaceWith, $code);
                     }
                 }
-                return $code; // Không thay đổi gì nếu không match
+                return $code;
             };
-            // Áp dụng ánh xạ cho các quyền người dùng
+            // Áp dụng
             if (!empty($permissions) && !empty($permissionsRoute)) {
                 foreach ($permissions as $permName) {
                     if (isset($permissionsRoute[$permName])) {
@@ -50,7 +44,6 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
             }
-            // Gửi dữ liệu sang view
             $view->with('userPermissionCodes', $userPermissionCodes);
             $view->with('userPermissionSource', $userPermissionSource);
             $view->with('permissionsRoute', $permissionsRoute);

@@ -1,12 +1,7 @@
-
-<!-- Khung modal rỗng -->
-<div class="modal fade" id="modalContainer" tabindex="-1">
-    <div class="modal-dialog">
+<div id="modalContainer" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content" id="modalContent">
-            <!-- nội dung modal được load từ server -->
+            <!-- Nội dung modal được chèn ở đây -->
         </div>
     </div>
 </div>
-
-
-

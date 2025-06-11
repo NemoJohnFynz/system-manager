@@ -5,12 +5,27 @@
     <div class="row">
         <div class="col-12 d-flex justify-content-between align-items-center mb-3">
             <h4 class="mb-0 font-size-18">Danh sách người dùng</h4>
-            <button onclick="loadModal('/create_user')">Xem Modal Từ Server</button>
             @hasPermission("user.create")
-            <a href="/users/create" class="btn btn-primary">Thêm người dùng</a>
+            <a href="#" class="btn btn-primary" onclick="loadModal('user_create')">Thêm người dùng</a> 
             @endhasPermission
         </div>
     </div>
+    <form id="filter-form" class="mb-3 row g-3">
+        <div class="col-md-3">
+            <input type="text" name="username" class="form-control" placeholder="Tìm theo họ và tên">
+        </div>
+        <div class="col-md-3">
+            <input type="text" name="email" class="form-control" placeholder="Tìm theo email">
+        </div>
+        <div class="col-md-3">
+            <select name="role" class="form-control" id="filter-role">
+                <option value="">Tất cả quyền</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-secondary">Lọc</button>
+        </div>
+    </form>
     <div class="row" aria-hidden="true">
         <div class="col-lg-12">
             <div class="card">
@@ -28,27 +43,14 @@
                                 </tr>
                             </thead>
                             <tbody id="user-table-body">
-                                <!-- Dữ liệu sẽ được load vào đây -->
                             </tbody>
                         </table>
                     </div>
-                    <!-- pagination ... -->
                 </div>
             </div>
         </div>
     </div>
 </div>
-@php
-// Truyền token cho JS
-$token = $token ?? null;
-@endphp
-<script>
-    window.appConfig = {
-        apiToken: @json($token),
-        apiUrl: '{{ url('
-        api / getallusers ') }}',
-    };
-</script>
-<script src="{{ asset('js/user_list.js') }}"></script>
+@vite('resources/js/pages/user_list.js')
 @endhasPermission
 @endsection

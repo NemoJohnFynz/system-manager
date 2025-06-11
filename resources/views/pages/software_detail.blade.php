@@ -23,7 +23,6 @@
                      <div>
                          <h5 class="font-size-15" style="display: inline;">Ngôn ngữ: </h5> JavaScript
                      </div>
-
                      <h5 class="font-size-15 mt-2">Mô tả phần mềm :</h5>
                      <p class="text-muted ">To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is. The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc,</p>
                      <h5 class="font-size-15 mt-2">Quy chế liên quan :</h5>
@@ -32,7 +31,6 @@
                          <p><i class="mdi mdi-chevron-right text-primary mr-1"></i> Separate existence is a myth.</p>
                          <p><i class="mdi mdi-chevron-right text-primary mr-1"></i> If several languages coalesce</p>
                      </div>
-
                      <div class="row task-dates">
                          <div class="col-sm-4 col-6">
                              <div class="mt-4">
