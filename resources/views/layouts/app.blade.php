@@ -19,6 +19,10 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
     <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
     <link href="assets\css\boxicons.min.css" rel="stylesheet" type="text/css">
     <link href="assets/css/materialdesignicons.min.css" rel="stylesheet">
+    <!-- role detail -->
+    <link href="assets\libs\summernote\summernote-bs4.min.css" rel="stylesheet" type="text/css">
+
+
     @if($cssPath && file_exists(public_path($cssPath)))
     <link href="{{ asset($cssPath) }}" rel="stylesheet" />
     @endif
@@ -57,5 +61,8 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
 <script src="assets\libs\jquery\jquery.min.js"></script>
 <script src="assets\libs\bootstrap\js\bootstrap.bundle.min.js"></script>
 <script src="assets\libs\metismenu\metisMenu.min.js"></script>
+
+<!-- role_detail -->
+<script src="assets\libs\summernote\summernote-bs4.min.js"></script>
 
 </html>

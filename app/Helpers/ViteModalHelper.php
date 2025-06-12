@@ -14,7 +14,6 @@ class ViteModalHelper
             $basename = basename($file, '.js');
             $assets[$basename] = 'resources/js/modals/' . $basename . '.js';
         }
-
         return $assets;
     }
 }

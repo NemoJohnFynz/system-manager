@@ -12,7 +12,7 @@
         <img src="images/logo.png" alt="logo_img" />
       </a>
       <span class="logo_name">System Manager</span>
-      
+
       <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
       <i class="bx bx-x" id="sidebar-close"></i>
     </div>
@@ -41,6 +41,12 @@
             <a data-key="users" class="link flex">
               <i class="bx bx-grid-alt"></i>
               <span>Users</span>
+            </a>
+          </li>
+          <li class="item">
+            <a data-key="roles" class="link flex">
+              <i class="bx bx-grid-alt"></i>
+              <span>Roles</span>
             </a>
           </li>
         </ul>

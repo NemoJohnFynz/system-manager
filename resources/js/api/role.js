@@ -8,5 +8,5 @@ export const get_all_role = async () => {
         headers: defaultHeaders(),
     });
     const data = await res.json();
-    return data.data || [];
+    return data || [];
 };

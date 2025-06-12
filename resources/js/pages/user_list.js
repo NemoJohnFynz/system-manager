@@ -21,20 +21,19 @@ function renderUsers(users) {
     if (!tbody) return;
 
     tbody.innerHTML = users
-        .map(
-            (u) => {
-                let actions = '';
-                if (hasPermission("user.delete")) {
-                    actions += `<li class="list-inline-item px-2"><a href="#"><i class="bx bx-trash"></i></a></li>`;
-                }
-                if (hasPermission("user.update")) {
-                    actions += `<li class="list-inline-item px-2"><a href="#"><i class="bx bx-wrench"></i></a></li>`;
-                }
+        .map((u) => {
+            let actions = "";
+            if (hasPermission("user.delete")) {
+                actions += `<li class="list-inline-item px-2"><a href="#"><i class="bx bx-trash"></i></a></li>`;
+            }
+            if (hasPermission("user.update")) {
+                actions += `<li class="list-inline-item px-2"><a href="#"><i class="bx bx-wrench"></i></a></li>`;
+            }
 
-                if (hasPermission("user.detail")) {
-                    actions += `<li class="list-inline-item px-2"><a href="#"><i class="bx bx-user-circle"></i></a></li>`;
-                }
-                return `
+            if (hasPermission("user.detail")) {
+                actions += `<li class="list-inline-item px-2"><a href="#"><i class="bx bx-user-circle"></i></a></li>`;
+            }
+            return `
                 <tr>
                     <td>
                         <div class="avatar-xs">
@@ -48,11 +47,18 @@ function renderUsers(users) {
                             <a href="#" class="text-dark">${u.username}</a>
                         </h5>
                     </td>
-                    <td>${u.email || "-"}</td>
-                    <td>${(u.roles || []).map(
-                        (r) =>
-                            `<a href="#" class="badge badge-soft-primary font-size-11 m-1">${r}</a>`
-                    ).join("")}</td>
+                    <td>${
+                        u.email ||
+                        `  <div class="team">
+                        <span class="badge badge-secondary">Chưa có dữ liệu</span>
+                    </div>`
+                    }</td>
+                    <td>${(u.roles || [])
+                        .map(
+                            (r) =>
+                                `<a href="#" class="badge badge-soft-primary font-size-11 m-1">${r}</a>`
+                        )
+                        .join("")}</td>
                     <td>${u.projects_count ?? 0}</td>
                     <td>
                         <ul class="list-inline font-size-20 contact-links mb-0">
@@ -60,8 +66,7 @@ function renderUsers(users) {
                         </ul>
                     </td>
                 </tr>`;
-            }
-        )
+        })
         .join("");
 }
 async function loadRolesForFilter() {
@@ -73,7 +78,7 @@ async function loadRolesForFilter() {
 
     try {
         const roles = await get_all_role();
-        roles.forEach((role) => {
+        roles.data.forEach((role) => {
             const opt = document.createElement("option");
             opt.value = role.role_name;
             opt.textContent =
@@ -112,13 +117,13 @@ window.initUserCreateModal = async function () {
 
     try {
         const roles = await get_all_role();
-        if (!roles.length) {
+        if (!roles.data.length) {
             container.innerHTML =
                 "<p class='text-muted'>Không có quyền nào để hiển thị</p>";
             return;
         }
 
-        container.innerHTML = roles
+        container.innerHTML = roles.data
             .map(
                 (r) => `
                 <div class="form-check">

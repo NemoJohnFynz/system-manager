@@ -1,8 +1,7 @@
 import { create_user } from "../api/user";
 import { get_all_role } from "../api/role";
 
-function initUserCreateModal() {
-    console.log("Khởi tạo modal tạo user");
+function initUserCreateModal() {  
     const createUserForm = document.getElementById("create-user-form");
     const roleContainer = document.getElementById("role-checkboxes");
 
@@ -17,9 +16,8 @@ function initUserCreateModal() {
     // Gọi API lấy danh sách roles
     async function fetchRoles() {
         try {
-            const roles = await get_all_role();
-            console.log(roles);
-            renderRoles(roles);
+            const roles = await get_all_role(); 
+            renderRoles(roles.data);
         } catch (err) {
             console.error("Lỗi khi tải danh sách quyền:", err);
             alert("Không thể tải danh sách quyền");

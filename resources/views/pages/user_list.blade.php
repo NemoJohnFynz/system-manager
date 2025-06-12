@@ -6,7 +6,7 @@
         <div class="col-12 d-flex justify-content-between align-items-center mb-3">
             <h4 class="mb-0 font-size-18">Danh sách người dùng</h4>
             @hasPermission("user.create")
-            <a href="#" class="btn btn-primary" onclick="loadModal('user_create')">Thêm người dùng</a> 
+            <a href="#" class="btn btn-primary" onclick="loadModal('user_create')">Thêm người dùng</a>
             @endhasPermission
         </div>
     </div>
@@ -45,7 +45,15 @@
                             <tbody id="user-table-body">
                             </tbody>
                         </table>
+
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center my-3">
+                            <a href="javascript:void(0);" class="text-success"><i class="bx bx-loader bx-spin font-size-18 align-middle mr-2"></i> Load more </a>
+                        </div>
+                    </div> <!-- end col-->
                 </div>
             </div>
         </div>
