@@ -18,7 +18,7 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
     <link href="assets\css\app.min.css" id="app-style" rel="stylesheet" type="text/css">
     <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
     <link href="assets\css\boxicons.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="assets/css/materialdesignicons.min.css" rel="stylesheet"> 
     <!-- role detail -->
     <link href="assets\libs\summernote\summernote-bs4.min.css" rel="stylesheet" type="text/css">
 
@@ -64,5 +64,6 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
 
 <!-- role_detail -->
 <script src="assets\libs\summernote\summernote-bs4.min.js"></script>
+<script src="assets\libs\summernote\email-summernote.init.js"></script>
 
 </html>

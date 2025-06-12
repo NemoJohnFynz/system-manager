@@ -43,8 +43,8 @@ function renderRoles(roles) {
                     </div>
                 </td>
                 <td>
-                    <div class="dropdown">
-                        <button class="btn btn-link p-0 dropdown-toggle" type="button" data-toggle="dropdown">
+                    <div class="dropdown" >
+                        <button class="btn btn-link p-0 dropdown-toggle" type="button" data-toggle="dropdown" onclick="loadModal('role_detail')">
                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
