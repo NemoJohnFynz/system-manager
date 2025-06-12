@@ -34,9 +34,9 @@ $scriptPath = isset($page) ? 'js/' . $page . '.js' : null;
 </body>
 <!-- script modal -->
 <script>
-    console.log("menu:", @json($permissionsRoute));
-    console.log("code:", @json($userPermissionCodes));
-    console.log("so:", @json($permissions));
+    // console.log("menu:", @json($permissionsRoute));
+    // console.log("code:", @json($userPermissionCodes));
+    // console.log("so:", @json($permissions));
     window.permissionsRoute = @json($permissionsRoute);
     window.userPermissionCodes = @json($userPermissionCodes);
     // end test 

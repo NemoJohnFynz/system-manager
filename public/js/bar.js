@@ -1,5 +1,3 @@
-console.log("Bar script loaded");
-
 document.getElementById("logout").addEventListener("click", function (e) {
     e.preventDefault();
     fetch("/api/logout", {

@@ -1,8 +1,11 @@
 import { create_user } from "../api/user";
+import { get_all_role } from "../api/role";
 
 function initUserCreateModal() {
     console.log("Khởi tạo modal tạo user");
     const createUserForm = document.getElementById("create-user-form");
+    const roleContainer = document.getElementById("role-checkboxes");
+
     if (!createUserForm) {
         console.error("Không tìm thấy form tạo user");
         return;
@@ -11,6 +14,47 @@ function initUserCreateModal() {
     if (createUserForm.dataset.initialized) return;
     createUserForm.dataset.initialized = "true";
 
+    // Gọi API lấy danh sách roles
+    async function fetchRoles() {
+        try {
+            const roles = await get_all_role();
+            console.log(roles);
+            renderRoles(roles);
+        } catch (err) {
+            console.error("Lỗi khi tải danh sách quyền:", err);
+            alert("Không thể tải danh sách quyền");
+        }
+    }
+
+    function renderRoles(roles) {
+        roleContainer.innerHTML = ""; // Clear cũ trước khi render
+
+        roles.forEach((role) => {
+            const div = document.createElement("div");
+            div.className = "form-check";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.className = "form-check-input";
+            checkbox.id = `role-${role.role_name}`;
+            checkbox.value = role.role_name;
+
+            const label = document.createElement("label");
+            label.className = "form-check-label";
+            label.htmlFor = `role-${role.role_name}`;
+            label.innerText = role.role_name;
+
+            div.appendChild(checkbox);
+            div.appendChild(label);
+
+            roleContainer.appendChild(div);
+        });
+    }
+
+    // Gọi API load roles khi khởi tạo
+    fetchRoles();
+
+    // Xử lý submit tạo user
     createUserForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
