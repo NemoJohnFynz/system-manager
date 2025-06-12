@@ -67,6 +67,14 @@ class rolepermissionController extends Controller
                 ) {
    
                 }
+
+                elseif (
+                    $roleType === 'hardware'
+                    && in_array($permissionType, ['hardware', 'hardwarepermission'])
+                ) {
+   
+                }
+
                 else {
                     return response()->json([
                         'status' => 'error',

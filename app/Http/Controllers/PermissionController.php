@@ -322,9 +322,9 @@ class PermissionController extends Controller
                 'category' => 'category',
                 'vai trò' => 'role',
                 'role' => 'role',
-                'quyền phần cứng' => 'hardwarepermission',
+                'người dùng quản lý phần cứng' => 'hardwarepermission',
                 'hardware Permission' => 'hardwarepermission',
-                'quyền phần mềm' => 'softwarepermission',
+                'người dùng quản lý phần mềm' => 'softwarepermission',
                 'software permisison' => 'softwarepermission',
                 'quyền người dùng' => 'userrole',
                 'user role' => 'userrole',
@@ -345,9 +345,9 @@ class PermissionController extends Controller
                 'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create', 'cấp' => 'create',
                 'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit', 'sửa thông tin' => 'edit', 'update thông tin' => 'edit', 'thay đổi' => 'edit', 'thay đổi thông tin' => 'edit',
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
-                'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list', 'danh sách' => 'list',
+                'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list', 'danh sách' => 'list',
                 'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
-                'tìm kiếm' => 'get', 'search' => 'get', 'lấy' => 'get', 'get' => 'get',
+                'tìm kiếm' => 'get', 'search' => 'get', 'lấy' => 'get', 'get' => 'get', 'xem' => 'get', 
             ];
 
             $input = mb_strtolower($request->permissions_name, 'UTF-8');
