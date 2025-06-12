@@ -291,7 +291,6 @@ class PermissionController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'permissions_name' => 'required|string|max:255',
-                'type' => 'required|string|max:50',
             ]);
 
             if ($validator->fails()) {
@@ -300,7 +299,7 @@ class PermissionController extends Controller
                     'message' => $validator->errors()
                 ], 422);
             }
-
+            // quản lý hệ thông sẽ có thể thêm luông domain và gép:[cứng, mềm, doamin, hardwaredomain]
             $input = mb_strtolower($request->permissions_name, 'UTF-8');
             $defaultPermission = $request->permissions_name;
 
@@ -321,7 +320,7 @@ class PermissionController extends Controller
                 'system' => 'system',
                 'danh mục' => 'category',
                 'category' => 'category',
-                'phân quyền' => 'role',
+                'vai trò' => 'role',
                 'role' => 'role',
                 'quyền phần cứng' => 'hardwarepermission',
                 'hardware Permission' => 'hardwarepermission',
@@ -331,16 +330,32 @@ class PermissionController extends Controller
                 'user role' => 'userrole',
                 'quyền hệ thống' => 'systempermission',
                 'system permission' => 'systempermission',
+                'tên miền' => 'domain',
+                'domain' => 'domain',
+                'phần cứng vào domain' => 'hardwaredomain',
+                'hardware domain' => 'hardwaredomain',
+                'phần cứng khỏi domain' => 'hardwaredomain',
+                'hardware khỏi domain' => 'hardwaredomain',
+                'phần cứng trong domain' => 'hardwaredomain',
+
+
             ];
 
             $actionMap = [
                 'thêm' => 'create', 'tạo' => 'create', 'add' => 'create', 'create' => 'create', 'cấp' => 'create',
-                'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit', 'sửa thông tin' => 'edit', 'update thông tin' => 'edit',
+                'cập nhật' => 'edit', 'sửa' => 'edit', 'update' => 'edit', 'edit' => 'edit', 'sửa thông tin' => 'edit', 'update thông tin' => 'edit', 'thay đổi' => 'edit', 'thay đổi thông tin' => 'edit',
                 'xoá' => 'delete', 'thu hồi' => 'delete', 'delete' => 'delete', 'remove' => 'delete',
-                'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list',
+                'xem danh sách' => 'list', 'lấy danh sách'=> 'list', 'xem' => 'list', 'list' => 'list', 'view' => 'list', 'lấy toàn bộ' => 'list', 'xem tất cả' => 'list', 'lấy tất cả' => 'list', 'danh sách' => 'list',
                 'xem chi tiết' => 'detail', 'chi tiết' => 'detail', 'detail' => 'detail', 'xem thông tin' => 'detail', 'getdetail' => 'detail', 'get detail'=> 'detail',
                 'tìm kiếm' => 'get', 'search' => 'get', 'lấy' => 'get', 'get' => 'get',
             ];
+
+            $input = mb_strtolower($request->permissions_name, 'UTF-8');
+            $defaultPermission = $request->permissions_name;
+
+            
+            uksort($resourceMap, fn($a, $b) => strlen($b) - strlen($a));
+            uksort($actionMap, fn($a, $b) => strlen($b) - strlen($a));
 
             $resource = '';
             $action = '';
@@ -1420,5 +1435,70 @@ class PermissionController extends Controller
                 'message' => 'Could not retrieve types. ' . $e->getMessage()
             ], 500);
         }
-    }
+   }
+
+    public function getMyPermissions(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['message' => 'Please login to use this function'], 401);
+            }
+            $roles = DB::table('user_role')
+                ->where('username', $user->username)
+                ->pluck('role_name');
+
+            if ($roles->isEmpty()) {
+                return response()->json([
+                    'status' => 'success',
+                    'permissions' => [],
+                    'message' => 'User has no roles.'
+                ]);
+            }
+
+            // Lấy tất cả permission_name từ role_permission
+            $permissionNames = DB::table('role_permissions')
+                ->whereIn('role_name', $roles)
+                ->pluck('permission_name');
+
+            if ($permissionNames->isEmpty()) {
+                return response()->json([
+                    'status' => 'success',
+                    'permissions' => [],
+                    'message' => 'User roles have no permissions.'
+                ]);
+            }
+
+            // Lấy thông tin permission
+            $permissions = DB::table('permissions')
+                ->whereIn('permissions_name', $permissionNames)
+                ->get();
+
+            return response()->json([
+                'status' => 'success',
+                'permissions' => $permissions,
+            ]);
+        } catch (TokenExpiredException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token has expired.'
+            ], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid.'
+            ], 401);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is absent or could not be parsed.'
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not retrieve permissions. ' . $e->getMessage()
+            ], 500);
+        }
+
+        }
 }
+

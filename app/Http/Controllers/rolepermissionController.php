@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class role_permissionController extends Controller
+class rolepermissionController extends Controller
 {
     public function createRolePermission(Request $request)
     {
@@ -47,22 +48,33 @@ class role_permissionController extends Controller
                 $roleType = 'hardware';
             } elseif (str_contains($roleName, 'phần mềm') || str_contains($roleName, 'software')) {
                 $roleType = 'software';
-            } elseif (str_contains($roleName, 'người dùng') || str_contains($roleName, 'user')) {
-                $roleType = 'user';
-            } elseif (str_contains($roleName, 'hệ thống') || str_contains($roleName, 'system')) {
+
+            } elseif (str_contains($roleName, 'quản lý hệ thống') || str_contains($roleName, 'system')) {
                 $roleType = 'system';
-            }  elseif (str_contains($roleName, 'quản trị') || str_contains($roleName, 'admin')) {
-                $roleType = 'admin';
+            }
+            if ($roleType && $roleType !== $permissionType) {
+
+                if (
+                    in_array($roleType, ['admin', 'quản trị', 'quản trị viên'])
+                    && in_array($permissionType, ['user', 'role', 'userrole'])
+                ) {
+
+                }
+                // Cho phép system nhận permission type domain và hardwaredomain
+                elseif (
+                    $roleType === 'system'
+                    && in_array($permissionType, ['domain', 'hardwaredomain'])
+                ) {
+   
+                }
+                else {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => "Role '{$request->input('role_name')}' is not allowed to add permission of type '{$permissionType}'."
+                    ], 422);
+                }
             }
             
-
-            // Nếu xác định được roleType và nó khác permissionType thì báo lỗi
-            if ($roleType && $roleType !== $permissionType) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => "Role '{$request->input('role_name')}' is not allowed to add permission of type '{$permissionType}'."
-                ], 422);
-            }
 
             // Kiểm tra trùng lặp
             $exists = DB::table('role_permissions')
@@ -91,6 +103,12 @@ class role_permissionController extends Controller
                     'message' => "User {$user->username} created role permission '{$request->input('role_name')}' with permission '{$request->input('permission_name')}'.",
                     'is_delete' => false
                 ]);
+
+                $usernames = DB::table('user_role')->where('role_name', $request->input('role_name'))->pluck('username');
+                foreach ($usernames as $username) {
+                    Cache::forget('user_permissions_' . $username);
+                }
+
                 return response()->json(['message' => 'Role permission created successfully'], 201);
             } else {
                 return response()->json(['message' => 'Failed to create role permission'], 500);
@@ -170,6 +188,11 @@ class role_permissionController extends Controller
                 'is_delete' => false
             ]);
 
+                $usernames = DB::table('user_role')->where('role_name', $request->input('role_name'))->pluck('username');
+                foreach ($usernames as $username) {
+                    Cache::forget('user_permissions_' . $username);
+                }
+
             if ($updated) {
                 return response()->json(['message' => 'Role permission updated successfully'], 200);
             } else {
@@ -225,6 +248,12 @@ class role_permissionController extends Controller
                     'message' => "User {$user->username} deleted role permission '{$request->input('role_name')}' with permission '{$request->input('permission_name')}'.",
                     'is_delete' => true
                 ]);
+
+                $usernames = DB::table('user_role')->where('role_name', $request->input('role_name'))->pluck('username');
+                foreach ($usernames as $username) {
+                    Cache::forget('user_permissions_' . $username);
+                }
+
                 return response()->json(['message' => 'Role permission deleted successfully'], 200);
             } else {
                 return response()->json(['message' => 'Failed to delete role permission'], 500);

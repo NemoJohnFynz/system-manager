@@ -6,7 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
 route::post('/createrole', [rolesController::class, 'createRole'])
-    ->middleware('check.permission')
+    ->middleware(middleware: 'check.permission')
     ->name('role.create');
 
 route::delete('/deleterole',[rolesController::class,'deleteRole'])
