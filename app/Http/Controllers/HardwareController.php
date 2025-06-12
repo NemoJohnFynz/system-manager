@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -79,24 +80,44 @@ class HardwareController extends Controller
     } ///áhdakjsdajkgsdjhavsd
 
     public function getAllHardware()
-    {   
+    {
         try {
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);
             }
 
-        $hardware = hardwareModel::all();
-        $total = $hardware->count();
+            // Lấy tất cả role của user
+            $roles = DB::table('user_role')->where('username', $user->username)->pluck('role_name')->map(function($r) {
+                return mb_strtolower($r, 'UTF-8');
+            });
 
-        if ($hardware->isEmpty()) {
-            return response()->json(['status' => 'error', 'message' => 'No hardware found', 'total' => 0], 404);
-        }
+            if ($roles->contains('quản lý phần cứng')) {
+                // Nếu là quản lý phần cứng, lấy toàn bộ hardware
+                $hardware = hardwareModel::all();
+            } elseif ($roles->contains('phòng ban phần cứng')) {
+                // Nếu là phòng ban phần cứng, chỉ lấy hardware mà user có quyền
+                $hardwareIps = DB::table('hardware_permissions')
+                    ->where('user_name', $user->username)
+                    ->pluck('hardware_ip')
+                    ->unique();
 
-        return response()->json([
-            'status' => 'success',
-            'total' => $total,
-            'data' => $hardware
-        ]);
+                $hardware = hardwareModel::whereIn('ip', $hardwareIps)->get();
+            } else {
+                // Không có quyền
+                return response()->json(['status' => 'error', 'message' => 'You do not have permission to view hardware'], 403);
+            }
+
+            $total = $hardware->count();
+
+            if ($hardware->isEmpty()) {
+                return response()->json(['status' => 'error', 'message' => 'No hardware found', 'total' => 0], 404);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'total' => $total,
+                'data' => $hardware
+            ]);
 
         } catch (TokenExpiredException $e) {
             return response()->json(['status' => 'error', 'message' => 'Token has expired.'], 401);
