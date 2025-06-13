@@ -69,20 +69,16 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            // Nếu là user đầu tiên thì không có $user để log
-            if ($userCount > 0) {
-                LogController::createLogAuto([
-                    'username' => $user->username, 
-                    'message' => "{$user->username} đã tạo tài khoản có username là '{$usercreate->username}'",
-                ]);
-            }
+            LogController::createLogAuto([
+                'username' => $user->username,
+                'message' => "{$user->username} đã tạo tài khoản có username là '{$usercreate->username}'",
+            ]);
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'User created successfully',
                 'user' => $usercreate,
             ], 201);
-
         } catch (TokenExpiredException $e) {
             return response()->json([
                 'status' => 'error',
@@ -154,7 +150,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'token' => $token,
-        ]);
+        ])->withCookie(cookie('auth_token', $token, 60, '/', null, false, false));
     }
 
     /**
@@ -172,11 +168,23 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
+        try {
+            $token = $request->cookie('auth_token') ?? $request->bearerToken();
+            if ($token) {
+                JWTAuth::setToken($token)->invalidate(); // Hủy token
+            } 
+            $cookie = cookie()->forget('auth_token');
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Successfully logged out',
-        ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successfully logged out',
+            ])->withCookie($cookie);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to logout, please try again.'
+            ], 500);
+        }
     }
 
     /**
@@ -261,96 +269,96 @@ class AuthController extends Controller
      * }
      * @return \Illuminate\Http\JsonResponse
      */
-public function updateUser(Request $request)
-{
-    try {
-        if (!$user = JWTAuth::parseToken()->authenticate()) {
+    public function updateUser(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User not found.'
+                ], 404);
+            }
+        } catch (TokenExpiredException $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'User not found.'
-            ], 404);
+                'message' => 'Token has expired.'
+            ], 401);
+        } catch (TokenInvalidException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is invalid.'
+            ], 401);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token is absent or could not be parsed.'
+            ], 401);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not authenticate user. ' . $e->getMessage()
+            ], 500);
         }
-    } catch (TokenExpiredException $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Token has expired.'
-        ], 401);
-    } catch (TokenInvalidException $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Token is invalid.'
-        ], 401);
-    } catch (JWTException $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Token is absent or could not be parsed.'
-        ], 401);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Could not authenticate user. ' . $e->getMessage()
-        ], 500);
-    }
 
-    $validator = Validator::make($request->all(), [
-        'fullName' => 'sometimes|string|max:100',
-        'email' => [
-            'sometimes',
-            'string',
-            'email',
-            'max:100',
-            $request->filled('email') ? 'unique:users,email,' . $user->username . ',username' : '',
-        ],
-        'phone_number' => 'sometimes|nullable|string|max:12',
-    ]);
+        $validator = Validator::make($request->all(), [
+            'fullName' => 'sometimes|string|max:100',
+            'email' => [
+                'sometimes',
+                'string',
+                'email',
+                'max:100',
+                $request->filled('email') ? 'unique:users,email,' . $user->username . ',username' : '',
+            ],
+            'phone_number' => 'sometimes|nullable|string|max:12',
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Validation failed.',
-            'errors' => $validator->errors()
-        ], 422);
-    }
-
-    $validatedData = $validator->validated();
-
-    // Lưu thông tin cũ trước khi update
-    $oldData = $user->only(['fullName', 'email', 'phone_number']);
-
-    try {
-        $user->update($validatedData);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Failed to update user. ' . $e->getMessage(),
-        ], 500);
-    }
-
-    // Lấy thông tin mới sau khi update
-    $newData = $user->fresh()->only(['fullName', 'email', 'phone_number']);
-
-    // Tạo chuỗi mô tả thay đổi
-    $changes = [];
-    foreach ($oldData as $key => $oldValue) {
-        $newValue = $newData[$key];
-        if ($oldValue != $newValue) {
-            $changes[] = "$key: '$oldValue' → '$newValue'";
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed.',
+                'errors' => $validator->errors()
+            ], 422);
         }
+
+        $validatedData = $validator->validated();
+
+        // Lưu thông tin cũ trước khi update
+        $oldData = $user->only(['fullName', 'email', 'phone_number']);
+
+        try {
+            $user->update($validatedData);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to update user. ' . $e->getMessage(),
+            ], 500);
+        }
+
+        // Lấy thông tin mới sau khi update
+        $newData = $user->fresh()->only(['fullName', 'email', 'phone_number']);
+
+        // Tạo chuỗi mô tả thay đổi
+        $changes = [];
+        foreach ($oldData as $key => $oldValue) {
+            $newValue = $newData[$key];
+            if ($oldValue != $newValue) {
+                $changes[] = "$key: '$oldValue' → '$newValue'";
+            }
+        }
+        $changeString = $changes ? implode(', ', $changes) : 'Không có thay đổi';
+
+        // Ghi log
+        LogController::createLogAuto([
+            'username' => $user->username,
+            'message' => "{$user->username} đã cập nhật thông tin tài khoản từ ($changeString)",
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User updated successfully.',
+            'users' => $user->fresh(),
+        ]);
     }
-    $changeString = $changes ? implode(', ', $changes) : 'Không có thay đổi';
-
-    // Ghi log
-    LogController::createLogAuto([
-        'username' => $user->username,
-        'message' => "{$user->username} đã cập nhật thông tin tài khoản từ ($changeString)",
-    ]);
-
-    return response()->json([
-        'status' => 'success',
-        'message' => 'User updated successfully.',
-        'users' => $user->fresh(),
-    ]);
-}
     /**
      * Change the authenticated user's password.
      *

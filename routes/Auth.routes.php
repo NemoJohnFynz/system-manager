@@ -13,7 +13,8 @@ Route::post('/createUser', [AuthController::class, 'CreateUser'])
     ->middleware('check.permission')
     ->name('user.create');
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/getuser',[AuthController::class, 'getAuthenticatedUser']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/getuser', [AuthController::class, 'getAuthenticatedUser']);
 Route::patch('/updateuser', [AuthController::class, 'updateUser']);
 Route::patch('/changepassword', [AuthController::class, 'changePassword']);
 // Route::get('/getuserbyid/{id}', [UserController::class, 'getUserById']);
