@@ -85,28 +85,12 @@ class HardwareController extends Controller
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);
             }
-
-            // Lấy tất cả role của user
-            $roles = DB::table('user_role')->where('username', $user->username)->pluck('role_name')->map(function($r) {
-                return mb_strtolower($r, 'UTF-8');
-            });
-
-            if ($roles->contains('quản lý phần cứng')) {
-                // Nếu là quản lý phần cứng, lấy toàn bộ hardware
-                $hardware = hardwareModel::all();
-            } elseif ($roles->contains('phòng ban phần cứng')) {
-                // Nếu là phòng ban phần cứng, chỉ lấy hardware mà user có quyền
-                $hardwareIps = DB::table('hardware_permissions')
-                    ->where('user_name', $user->username)
-                    ->pluck('hardware_ip')
-                    ->unique();
-
-                $hardware = hardwareModel::whereIn('ip', $hardwareIps)->get();
-            } else {
-                // Không có quyền
-                return response()->json(['status' => 'error', 'message' => 'You do not have permission to view hardware'], 403);
+            
+            if ($user->cannot('viewAny', hardwareModel::class)) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have permission to view hardware'], 403);
             }
 
+            $hardware = hardwareModel::all();
             $total = $hardware->count();
 
             if ($hardware->isEmpty()) {
