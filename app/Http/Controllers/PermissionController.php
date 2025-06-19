@@ -1443,6 +1443,8 @@ class PermissionController extends Controller
             if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['message' => 'Please login to use this function'], 401);
             }
+
+            // Lấy tất cả role của user
             $roles = DB::table('user_role')
                 ->where('username', $user->username)
                 ->pluck('role_name');
@@ -1450,32 +1452,32 @@ class PermissionController extends Controller
             if ($roles->isEmpty()) {
                 return response()->json([
                     'status' => 'success',
-                    'permissions' => [],
+                    'role' => [],
                     'message' => 'User has no roles.'
                 ]);
             }
 
-            // Lấy tất cả permission_name từ role_permission
-            $permissionNames = DB::table('role_permissions')
-                ->whereIn('role_name', $roles)
-                ->pluck('permission_name');
+            $result = [];
+            foreach ($roles as $roleName) {
+                // Lấy tất cả permission_name từ role_permission cho từng role
+                $permissionNames = DB::table('role_permission')
+                    ->where('role_name', $roleName)
+                    ->pluck('permission_name');
 
-            if ($permissionNames->isEmpty()) {
-                return response()->json([
-                    'status' => 'success',
-                    'permissions' => [],
-                    'message' => 'User roles have no permissions.'
-                ]);
+                // Lấy đầy đủ thông tin permission
+                $permissions = DB::table('permissions')
+                    ->whereIn('permissions_name', $permissionNames)
+                    ->get();
+
+                $result[] = [
+                    'rolename' => $roleName,
+                    'permission' => $permissions
+                ];
             }
-
-            // Lấy thông tin permission
-            $permissions = DB::table('permissions')
-                ->whereIn('permissions_name', $permissionNames)
-                ->get();
 
             return response()->json([
                 'status' => 'success',
-                'permissions' => $permissions,
+                'role' => $result,
             ]);
         } catch (TokenExpiredException $e) {
             return response()->json([
@@ -1498,7 +1500,6 @@ class PermissionController extends Controller
                 'message' => 'Could not retrieve permissions. ' . $e->getMessage()
             ], 500);
         }
-
-        }
+    }
 }
 

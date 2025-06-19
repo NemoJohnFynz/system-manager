@@ -9,6 +9,7 @@ class softwareFileModel extends Model
     protected $table = 'software_file';
     protected $fillable = [
         'software_id',
+        'username',
         'file_name',
         'file_path',
         'description',
@@ -22,7 +23,6 @@ class softwareFileModel extends Model
         return [
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
-            'assigned_at' => 'datetime',
         ];
     }
 }
