@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class hardwarePemisssionModel extends Model
 {
-    protected $table = 'hardware_permission';
+    protected $table = 'hardware_permissions';
     protected $fillable = [
         'hardware_ip',
         'user_name',
         'permissions_name',
-        'user_createdby',
+        'user_createby',
         'assigned_at',
     ];
     public function user()
@@ -26,6 +26,12 @@ class hardwarePemisssionModel extends Model
     {
         return $this->belongsTo('App\Models\UserModel', 'user_createdby', 'username');
     }
+
+        public function hardware()
+    {
+        return $this->belongsTo('App\Models\hardwareModel', 'hardware_ip', 'ip');
+    }
+
     protected function casts(): array
     {
         return [

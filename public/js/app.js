@@ -7,21 +7,22 @@ if (token) {
         return originalFetch(url, options);
     };
 }
-function loadModal(modalName) {
+function loadModal(modalName, data = null) {
+    console.log("Loading modal:", modalName, "with data:", data);
     fetch("/modal/" + modalName)
         .then(res => res.text())
         .then(html => {
             document.getElementById("modalContent").innerHTML = html;
 
-            // Khi modal render xong thì shohw
             const modal = new bootstrap.Modal(document.getElementById("modalContainer"));
             modal.show();
 
-            // Sau khi hiển thị mới load script
             loadScript(modalName, function () {
                 const initFuncName = 'init' + toPascalCase(modalName) + 'Modal';
+
                 if (typeof window[initFuncName] === "function") {
-                    window[initFuncName]();
+                    // ✅ Gọi hàm init kèm data
+                    window[initFuncName](data);
                 }
             });
         });

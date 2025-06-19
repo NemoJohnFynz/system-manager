@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     initLoginForm();
-});
-console.log("Login script loaded");
+}); 
 function initLoginForm() {
     const form = document.getElementById("loginForm");
     if (!form) return;
@@ -41,7 +40,7 @@ function initLoginForm() {
 
                 alert(data.message || "Đăng nhập thành công!");
                 window.location.href = data.redirect || "/";
-                errorDiv.textContent = data.message || "Đăng nhập thất bại";
+                errorDiv.textContent = data.message || data.status || "Đăng nhập thành công!";
             }
         } catch {
             errorDiv.textContent = "Lỗi server, vui lòng thử lại sau.";
